@@ -38,4 +38,19 @@ public class EmployeeMapper {
 
         return employeeOutputDto;
     }
+
+    public static Employee fromEmployeeToUpdatedEmployee(Employee e, Employee eUpdate) {
+
+        e.setFirstName(eUpdate.getFirstName());
+        e.setLastName(eUpdate.getLastName());
+        e.setUsername(eUpdate.getUsername());
+        e.setPassword(eUpdate.getPassword());
+        e.setEmail(eUpdate.getEmail());
+        e.setPhoneNumber(eUpdate.getPhoneNumber());
+        e.setNotes(eUpdate.getNotes());
+        e.setRole(eUpdate.getRole());
+        e.setSalary(eUpdate.getSalary());
+
+        return e;
+    }
 }

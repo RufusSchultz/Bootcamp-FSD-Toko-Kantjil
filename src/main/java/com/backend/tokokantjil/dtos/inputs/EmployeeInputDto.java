@@ -3,9 +3,10 @@ package com.backend.tokokantjil.dtos.inputs;
 import com.backend.tokokantjil.enumerations.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.PositiveOrZero;
 
 public class EmployeeInputDto {
-    public Long id;
     @NotBlank
     public String firstName;
     @NotBlank
@@ -16,11 +17,11 @@ public class EmployeeInputDto {
     public String password;
     @Email
     public String email;
-    @NotBlank
+    //custom validation needed
     public Long phoneNumber;
     public String notes;
-    @NotBlank
+    //custom validation needed
     public Role role;
-    @NotBlank
+    @PositiveOrZero
     public double salary;
 }

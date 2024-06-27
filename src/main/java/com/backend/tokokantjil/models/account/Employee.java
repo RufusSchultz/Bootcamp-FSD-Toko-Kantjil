@@ -3,8 +3,10 @@ package com.backend.tokokantjil.models.account;
 import com.backend.tokokantjil.enumerations.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "employees")
 public class Employee extends Account{
     @Column(nullable = false)
     private Role role;

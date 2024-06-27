@@ -1,4 +1,4 @@
-package com.servicedto.techiteasy.exceptions;
+package com.backend.tokokantjil.exceptions;
 
 public class RecordNotFoundException extends RuntimeException {
     public RecordNotFoundException() {

@@ -3,7 +3,7 @@ package com.backend.tokokantjil.models.account;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "accounts")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 abstract class Account {
     @Id
     @GeneratedValue

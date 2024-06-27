@@ -1,4 +1,4 @@
-package com.servicedto.techiteasy.helpers;
+package com.backend.tokokantjil.helpers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -6,7 +6,7 @@ import org.springframework.validation.FieldError;
 
 public class ValidationChecker {
 
-    public static ResponseEntity<String> validationCheckToNullOrResponse(BindingResult br) {
+    public static ResponseEntity<String> validationChecker(BindingResult br) {
         if (br.hasFieldErrors()) {
             StringBuilder sb = new StringBuilder();
             for (FieldError fe : br.getFieldErrors()) {
