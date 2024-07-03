@@ -1,7 +1,6 @@
 package com.backend.tokokantjil.dtos.outputs;
 
 import com.backend.tokokantjil.enumerations.State;
-import jakarta.persistence.Column;
 
 public class ProductOutputDto {
     private Long id;

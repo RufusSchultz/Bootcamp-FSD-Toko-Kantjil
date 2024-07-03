@@ -1,4 +1,4 @@
-package com.backend.tokokantjil.mappers;
+package com.backend.tokokantjil.dtos.mappers;
 
 import com.backend.tokokantjil.dtos.inputs.DishInputDto;
 import com.backend.tokokantjil.dtos.outputs.DishOutputDto;

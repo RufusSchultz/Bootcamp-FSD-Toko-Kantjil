@@ -3,7 +3,7 @@ package com.backend.tokokantjil.services;
 import com.backend.tokokantjil.dtos.inputs.DishInputDto;
 import com.backend.tokokantjil.dtos.outputs.DishOutputDto;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
-import com.backend.tokokantjil.mappers.DishMapper;
+import com.backend.tokokantjil.dtos.mappers.DishMapper;
 import com.backend.tokokantjil.models.Dish;
 import com.backend.tokokantjil.repositories.DishRepository;
 import org.springframework.stereotype.Service;

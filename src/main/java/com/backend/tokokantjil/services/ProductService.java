@@ -3,7 +3,7 @@ package com.backend.tokokantjil.services;
 import com.backend.tokokantjil.dtos.inputs.ProductInputDto;
 import com.backend.tokokantjil.dtos.outputs.ProductOutputDto;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
-import com.backend.tokokantjil.mappers.ProductMapper;
+import com.backend.tokokantjil.dtos.mappers.ProductMapper;
 import com.backend.tokokantjil.models.Product;
 import com.backend.tokokantjil.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
