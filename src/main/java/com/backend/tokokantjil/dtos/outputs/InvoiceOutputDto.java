@@ -1,27 +1,21 @@
-package com.backend.tokokantjil.models;
+package com.backend.tokokantjil.dtos.outputs;
+
 
 import com.backend.tokokantjil.models.account.Customer;
-import jakarta.persistence.*;
 
-@Entity
-@Table(name = "invoices")
-public class Invoice {
-    @Id
-    @GeneratedValue
+public class InvoiceOutputDto {
     private Long id;
-    @Column
     private double totalPrice;
-    @Column
     private boolean isPaid;
-    @Column
     private String notes;
-
-    @ManyToOne()
-    @JoinColumn
     private Customer customer;
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public double getTotalPrice() {
