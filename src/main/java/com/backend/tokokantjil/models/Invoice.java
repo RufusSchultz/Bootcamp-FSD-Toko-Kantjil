@@ -1,6 +1,5 @@
 package com.backend.tokokantjil.models;
 
-import com.backend.tokokantjil.models.users.Customer;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,9 +15,6 @@ public class Invoice {
     @Column
     private String notes;
 
-    @ManyToOne()
-    @JoinColumn
-    private Customer customer;
 
     public Long getId() {
         return id;
@@ -48,11 +44,5 @@ public class Invoice {
         this.notes = notes;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
 }

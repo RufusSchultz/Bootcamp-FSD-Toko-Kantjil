@@ -4,7 +4,7 @@ import com.backend.tokokantjil.dtos.inputs.CustomerInputDto;
 import com.backend.tokokantjil.dtos.outputs.CustomerOutputDto;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
 import com.backend.tokokantjil.dtos.mappers.CustomerMapper;
-import com.backend.tokokantjil.models.users.Customer;
+import com.backend.tokokantjil.models.Customer;
 import com.backend.tokokantjil.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
