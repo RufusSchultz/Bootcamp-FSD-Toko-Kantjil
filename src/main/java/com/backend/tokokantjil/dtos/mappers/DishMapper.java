@@ -7,15 +7,15 @@ import com.backend.tokokantjil.models.Dish;
 public class DishMapper {
 
     public static Dish fromDishInputDtoToDish(DishInputDto dishInputDto) {
-        Dish d = new Dish();
+        Dish dish = new Dish();
 
-        d.setName(dishInputDto.name);
-        d.setServings(dishInputDto.servings);
-        d.setProductionPrice(dishInputDto.productionPrice);
-        d.setSellPrice(dishInputDto.sellPrice);
-        d.setNotes(dishInputDto.notes);
+        dish.setName(dishInputDto.name);
+        dish.setServings(dishInputDto.servings);
+        dish.setProductionPrice(dishInputDto.productionPrice);
+        dish.setSellPrice(dishInputDto.sellPrice);
+        dish.setNotes(dishInputDto.notes);
 
-        return d;
+        return dish;
     }
 
     public static DishOutputDto fromDishToDishOutputDto(Dish dish) {
@@ -31,14 +31,14 @@ public class DishMapper {
         return dishOutputDto;
     }
 
-    public static Dish fromDishToUpdatedDish(Dish d, Dish dUpdate) {
-        d.setName(dUpdate.getName());
-        d.setServings(dUpdate.getServings());
-        d.setProductionPrice(dUpdate.getProductionPrice());
-        d.setSellPrice(dUpdate.getSellPrice());
-        d.setNotes(dUpdate.getNotes());
+    public static Dish fromDishToUpdatedDish(Dish dish, Dish dishUpdate) {
+        dish.setName(dishUpdate.getName());
+        dish.setServings(dishUpdate.getServings());
+        dish.setProductionPrice(dishUpdate.getProductionPrice());
+        dish.setSellPrice(dishUpdate.getSellPrice());
+        dish.setNotes(dishUpdate.getNotes());
 
-        return d;
+        return dish;
     }
 
 }

@@ -6,14 +6,14 @@ import com.backend.tokokantjil.models.Catering;
 
 public class CateringMapper {
     public static Catering fromCateringInputDtoToCatering(CateringInputDto cateringInputDto) {
-        Catering c = new Catering();
+        Catering catering = new Catering();
 
-        c.setDateAndTime(cateringInputDto.dateAndTime);
-        c.setNumberOfPeople(cateringInputDto.numberOfPeople);
-        c.setPrice(cateringInputDto.price);
-        c.setNotes(cateringInputDto.notes);
+        catering.setDateAndTime(cateringInputDto.dateAndTime);
+        catering.setNumberOfPeople(cateringInputDto.numberOfPeople);
+        catering.setPrice(cateringInputDto.price);
+        catering.setNotes(cateringInputDto.notes);
 
-        return c;
+        return catering;
     }
 
     public static CateringOutputDto fromCateringToCateringOutputDto(Catering catering) {
@@ -28,13 +28,13 @@ public class CateringMapper {
         return cateringOutputDto;
     }
 
-    public static Catering fromCateringToUpdatedCatering(Catering c, Catering cUpdate) {
+    public static Catering fromCateringToUpdatedCatering(Catering catering, Catering cateringUpdate) {
 
-        c.setDateAndTime(cUpdate.getDateAndTime());
-        c.setNumberOfPeople(cUpdate.getNumberOfPeople());
-        c.setPrice(cUpdate.getPrice());
-        c.setNotes(cUpdate.getNotes());
+        catering.setDateAndTime(cateringUpdate.getDateAndTime());
+        catering.setNumberOfPeople(cateringUpdate.getNumberOfPeople());
+        catering.setPrice(cateringUpdate.getPrice());
+        catering.setNotes(cateringUpdate.getNotes());
 
-        return c;
+        return catering;
     }
 }

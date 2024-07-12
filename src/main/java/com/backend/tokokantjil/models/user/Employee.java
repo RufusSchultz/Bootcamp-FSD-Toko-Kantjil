@@ -1,4 +1,4 @@
-package com.backend.tokokantjil.models.account;
+package com.backend.tokokantjil.models.user;
 
 import com.backend.tokokantjil.enumerations.Role;
 import jakarta.persistence.Column;
@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "employees")
-public class Employee extends Account{
+public class Employee extends User {
     @Column(nullable = false)
     private Role role;
     @Column(nullable = false)

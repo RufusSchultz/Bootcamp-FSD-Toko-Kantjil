@@ -7,18 +7,18 @@ import com.backend.tokokantjil.models.Product;
 public class ProductMapper {
 
     public static Product fromProductInputDtoToProduct(ProductInputDto productInputDto) {
-        Product p = new Product();
+        Product product = new Product();
 
-        p.setName(productInputDto.name);
-        p.setState(productInputDto.state);
-        p.setAmount(productInputDto.amount);
-        p.setAmountUnit(productInputDto.amountUnit);
-        p.setBuyPrice(productInputDto.buyPrice);
-        p.setSellPrice(productInputDto.sellPrice);
-        p.setForRetail(productInputDto.isForRetail);
-        p.setNotes(productInputDto.notes);
+        product.setName(productInputDto.name);
+        product.setState(productInputDto.state);
+        product.setAmount(productInputDto.amount);
+        product.setAmountUnit(productInputDto.amountUnit);
+        product.setBuyPrice(productInputDto.buyPrice);
+        product.setSellPrice(productInputDto.sellPrice);
+        product.setForRetail(productInputDto.isForRetail);
+        product.setNotes(productInputDto.notes);
 
-        return p;
+        return product;
     }
 
     public static ProductOutputDto fromProductToProductOutputDto(Product product) {
@@ -37,17 +37,17 @@ public class ProductMapper {
         return productOutputDto;
     }
 
-    public static Product fromProductToUpdatedProduct(Product p, Product pUpdate) {
+    public static Product fromProductToUpdatedProduct(Product product, Product productUpdate) {
 
-        p.setName(pUpdate.getName());
-        p.setState(pUpdate.getState());
-        p.setAmount(pUpdate.getAmount());
-        p.setAmountUnit(pUpdate.getAmountUnit());
-        p.setBuyPrice(pUpdate.getBuyPrice());
-        p.setSellPrice(pUpdate.getSellPrice());
-        p.setForRetail(pUpdate.isForRetail());
-        p.setNotes(pUpdate.getNotes());
+        product.setName(productUpdate.getName());
+        product.setState(productUpdate.getState());
+        product.setAmount(productUpdate.getAmount());
+        product.setAmountUnit(productUpdate.getAmountUnit());
+        product.setBuyPrice(productUpdate.getBuyPrice());
+        product.setSellPrice(productUpdate.getSellPrice());
+        product.setForRetail(productUpdate.isForRetail());
+        product.setNotes(productUpdate.getNotes());
 
-        return p;
+        return product;
     }
 }

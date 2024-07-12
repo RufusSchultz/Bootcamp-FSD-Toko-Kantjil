@@ -6,14 +6,14 @@ import com.backend.tokokantjil.models.Invoice;
 
 public class InvoiceMapper {
     public static Invoice fromInvoiceInputDtoToInvoice(InvoiceInputDto invoiceInputDto) {
-        Invoice i = new Invoice();
+        Invoice invoice = new Invoice();
 
-        i.setTotalPrice(invoiceInputDto.totalPrice);
-        i.setPaid(invoiceInputDto.isPaid);
-        i.setNotes(invoiceInputDto.notes);
-        i.setCustomer(invoiceInputDto.customer);
+        invoice.setTotalPrice(invoiceInputDto.totalPrice);
+        invoice.setPaid(invoiceInputDto.isPaid);
+        invoice.setNotes(invoiceInputDto.notes);
+        invoice.setCustomer(invoiceInputDto.customer);
 
-        return i;
+        return invoice;
     }
 
     public static InvoiceOutputDto fromInvoiceToInvoiceOutputDto(Invoice invoice) {
@@ -28,12 +28,12 @@ public class InvoiceMapper {
         return invoiceOutputDto;
     }
 
-    public static Invoice fromInvoiceToUpdatedInvoice(Invoice i, Invoice iUpdate) {
-        i.setTotalPrice(iUpdate.getTotalPrice());
-        i.setPaid(iUpdate.isPaid());
-        i.setNotes(iUpdate.getNotes());
-        i.setCustomer(iUpdate.getCustomer());
+    public static Invoice fromInvoiceToUpdatedInvoice(Invoice invoice, Invoice invoiceUpdate) {
+        invoice.setTotalPrice(invoiceUpdate.getTotalPrice());
+        invoice.setPaid(invoiceUpdate.isPaid());
+        invoice.setNotes(invoiceUpdate.getNotes());
+        invoice.setCustomer(invoiceUpdate.getCustomer());
 
-        return i;
+        return invoice;
     }
 }

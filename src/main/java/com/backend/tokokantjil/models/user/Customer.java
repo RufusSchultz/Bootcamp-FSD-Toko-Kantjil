@@ -1,4 +1,4 @@
-package com.backend.tokokantjil.models.account;
+package com.backend.tokokantjil.models.user;
 
 import com.backend.tokokantjil.models.Invoice;
 import jakarta.persistence.*;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "customers")
-public class Customer extends Account {
+public class Customer extends User {
     @Column
     @OneToMany(mappedBy = "customer")
     //werkt dit goed??

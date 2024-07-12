@@ -2,21 +2,21 @@ package com.backend.tokokantjil.dtos.mappers;
 
 import com.backend.tokokantjil.dtos.inputs.CustomerInputDto;
 import com.backend.tokokantjil.dtos.outputs.CustomerOutputDto;
-import com.backend.tokokantjil.models.account.Customer;
+import com.backend.tokokantjil.models.user.Customer;
 
 public class CustomerMapper {
     public static Customer fromCustomerInputDtoToCustomer(CustomerInputDto customerInputDto) {
-        Customer e = new Customer();
+        Customer customer = new Customer();
 
-        e.setFirstName(customerInputDto.firstName);
-        e.setLastName(customerInputDto.lastName);
-        e.setUsername(customerInputDto.username);
-        e.setPassword(customerInputDto.password);
-        e.setEmail(customerInputDto.email);
-        e.setPhoneNumber(customerInputDto.phoneNumber);
-        e.setNotes(customerInputDto.notes);
+        customer.setFirstName(customerInputDto.firstName);
+        customer.setLastName(customerInputDto.lastName);
+        customer.setUsername(customerInputDto.username);
+        customer.setPassword(customerInputDto.password);
+        customer.setEmail(customerInputDto.email);
+        customer.setPhoneNumber(customerInputDto.phoneNumber);
+        customer.setNotes(customerInputDto.notes);
 
-        return e;
+        return customer;
     }
 
     public static CustomerOutputDto fromCustomerToCustomerOutputDto(Customer customer) {
@@ -34,16 +34,16 @@ public class CustomerMapper {
         return customerOutputDto;
     }
 
-    public static Customer fromCustomerToUpdatedCustomer(Customer c, Customer cUpdate) {
+    public static Customer fromCustomerToUpdatedCustomer(Customer customer, Customer customerUpdate) {
 
-        c.setFirstName(cUpdate.getFirstName());
-        c.setLastName(cUpdate.getLastName());
-        c.setUsername(cUpdate.getUsername());
-        c.setPassword(cUpdate.getPassword());
-        c.setEmail(cUpdate.getEmail());
-        c.setPhoneNumber(cUpdate.getPhoneNumber());
-        c.setNotes(cUpdate.getNotes());
+        customer.setFirstName(customerUpdate.getFirstName());
+        customer.setLastName(customerUpdate.getLastName());
+        customer.setUsername(customerUpdate.getUsername());
+        customer.setPassword(customerUpdate.getPassword());
+        customer.setEmail(customerUpdate.getEmail());
+        customer.setPhoneNumber(customerUpdate.getPhoneNumber());
+        customer.setNotes(customerUpdate.getNotes());
 
-        return c;
+        return customer;
     }
 }

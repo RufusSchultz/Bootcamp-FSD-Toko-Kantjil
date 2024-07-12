@@ -2,24 +2,24 @@ package com.backend.tokokantjil.dtos.mappers;
 
 import com.backend.tokokantjil.dtos.inputs.EmployeeInputDto;
 import com.backend.tokokantjil.dtos.outputs.EmployeeOutputDto;
-import com.backend.tokokantjil.models.account.Employee;
+import com.backend.tokokantjil.models.user.Employee;
 
 public class EmployeeMapper {
 
     public static Employee fromEmployeeInputDtoToEmployee(EmployeeInputDto employeeInputDto) {
-        Employee e = new Employee();
+        Employee employee = new Employee();
 
-        e.setFirstName(employeeInputDto.firstName);
-        e.setLastName(employeeInputDto.lastName);
-        e.setUsername(employeeInputDto.username);
-        e.setPassword(employeeInputDto.password);
-        e.setEmail(employeeInputDto.email);
-        e.setPhoneNumber(employeeInputDto.phoneNumber);
-        e.setNotes(employeeInputDto.notes);
-        e.setRole(employeeInputDto.role);
-        e.setSalary(employeeInputDto.salary);
+        employee.setFirstName(employeeInputDto.firstName);
+        employee.setLastName(employeeInputDto.lastName);
+        employee.setUsername(employeeInputDto.username);
+        employee.setPassword(employeeInputDto.password);
+        employee.setEmail(employeeInputDto.email);
+        employee.setPhoneNumber(employeeInputDto.phoneNumber);
+        employee.setNotes(employeeInputDto.notes);
+        employee.setRole(employeeInputDto.role);
+        employee.setSalary(employeeInputDto.salary);
 
-        return e;
+        return employee;
     }
 
     public static EmployeeOutputDto fromEmployeeToEmployeeOutputDto(Employee employee) {
@@ -39,18 +39,18 @@ public class EmployeeMapper {
         return employeeOutputDto;
     }
 
-    public static Employee fromEmployeeToUpdatedEmployee(Employee e, Employee eUpdate) {
+    public static Employee fromEmployeeToUpdatedEmployee(Employee employee, Employee employeeUpdate) {
 
-        e.setFirstName(eUpdate.getFirstName());
-        e.setLastName(eUpdate.getLastName());
-        e.setUsername(eUpdate.getUsername());
-        e.setPassword(eUpdate.getPassword());
-        e.setEmail(eUpdate.getEmail());
-        e.setPhoneNumber(eUpdate.getPhoneNumber());
-        e.setNotes(eUpdate.getNotes());
-        e.setRole(eUpdate.getRole());
-        e.setSalary(eUpdate.getSalary());
+        employee.setFirstName(employeeUpdate.getFirstName());
+        employee.setLastName(employeeUpdate.getLastName());
+        employee.setUsername(employeeUpdate.getUsername());
+        employee.setPassword(employeeUpdate.getPassword());
+        employee.setEmail(employeeUpdate.getEmail());
+        employee.setPhoneNumber(employeeUpdate.getPhoneNumber());
+        employee.setNotes(employeeUpdate.getNotes());
+        employee.setRole(employeeUpdate.getRole());
+        employee.setSalary(employeeUpdate.getSalary());
 
-        return e;
+        return employee;
     }
 }

@@ -7,13 +7,13 @@ import com.backend.tokokantjil.models.Order;
 public class OrderMapper {
 
     public static Order fromOrderInputDtoToOrder(OrderInputDto orderInputDto) {
-        Order o = new Order();
+        Order order = new Order();
 
-        o.setTitle(orderInputDto.title);
-        o.setStatus(orderInputDto.status);
-        o.setCatering(orderInputDto.isCatering);
+        order.setTitle(orderInputDto.title);
+        order.setStatus(orderInputDto.status);
+        order.setCatering(orderInputDto.isCatering);
 
-        return o;
+        return order;
     }
 
     public static OrderOutputDto fromOrderToOrderOutputDto(Order order) {
@@ -28,12 +28,12 @@ public class OrderMapper {
         return orderOutputDto;
     }
 
-    public static Order fromOrderToUpdatedOrder(Order o, Order oUpdate) {
+    public static Order fromOrderToUpdatedOrder(Order order, Order orderUpdate) {
 
-        o.setTitle(oUpdate.getTitle());
-        o.setStatus(oUpdate.getStatus());
-        o.setCatering(oUpdate.isCatering());
+        order.setTitle(orderUpdate.getTitle());
+        order.setStatus(orderUpdate.getStatus());
+        order.setCatering(orderUpdate.isCatering());
 
-        return o;
+        return order;
     }
 }

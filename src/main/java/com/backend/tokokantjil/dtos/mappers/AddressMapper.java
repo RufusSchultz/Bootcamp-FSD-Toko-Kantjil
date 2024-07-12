@@ -6,17 +6,17 @@ import com.backend.tokokantjil.models.Address;
 
 public class AddressMapper {
     public static Address fromAddressInputDtoToAddress(AddressInputDto addressInputDto) {
-        Address p = new Address();
+        Address address = new Address();
 
-        p.setName(addressInputDto.name);
-        p.setStreet(addressInputDto.street);
-        p.setHouseNumber(addressInputDto.houseNumber);
-        p.setHouseNumberSuffix(addressInputDto.houseNumberSuffix);
-        p.setPostalCode(addressInputDto.postalCode);
-        p.setCity(addressInputDto.city);
-        p.setNotes(addressInputDto.notes);
+        address.setName(addressInputDto.name);
+        address.setStreet(addressInputDto.street);
+        address.setHouseNumber(addressInputDto.houseNumber);
+        address.setHouseNumberSuffix(addressInputDto.houseNumberSuffix);
+        address.setPostalCode(addressInputDto.postalCode);
+        address.setCity(addressInputDto.city);
+        address.setNotes(addressInputDto.notes);
 
-        return p;
+        return address;
     }
 
     public static AddressOutputDto fromAddressToAddressOutputDto(Address address) {
@@ -34,16 +34,16 @@ public class AddressMapper {
         return addressOutputDto;
     }
 
-    public static Address fromAddressToUpdatedAddress(Address a, Address aUpdate) {
+    public static Address fromAddressToUpdatedAddress(Address address, Address addressUpdate) {
 
-        a.setName(aUpdate.getName());
-        a.setStreet(aUpdate.getStreet());
-        a.setHouseNumber(aUpdate.getHouseNumber());
-        a.setHouseNumberSuffix(aUpdate.getHouseNumberSuffix());
-        a.setPostalCode(aUpdate.getPostalCode());
-        a.setCity(aUpdate.getCity());
-        a.setNotes(aUpdate.getNotes());
+        address.setName(addressUpdate.getName());
+        address.setStreet(addressUpdate.getStreet());
+        address.setHouseNumber(addressUpdate.getHouseNumber());
+        address.setHouseNumberSuffix(addressUpdate.getHouseNumberSuffix());
+        address.setPostalCode(addressUpdate.getPostalCode());
+        address.setCity(addressUpdate.getCity());
+        address.setNotes(addressUpdate.getNotes());
 
-        return a;
+        return address;
     }
 }

@@ -4,7 +4,7 @@ import com.backend.tokokantjil.dtos.inputs.EmployeeInputDto;
 import com.backend.tokokantjil.dtos.outputs.EmployeeOutputDto;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
 import com.backend.tokokantjil.dtos.mappers.EmployeeMapper;
-import com.backend.tokokantjil.models.account.Employee;
+import com.backend.tokokantjil.models.user.Employee;
 import com.backend.tokokantjil.repositories.EmployeeRepository;
 import org.springframework.stereotype.Service;
 

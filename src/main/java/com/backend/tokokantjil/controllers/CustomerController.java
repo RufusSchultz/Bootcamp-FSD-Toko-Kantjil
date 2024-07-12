@@ -2,7 +2,6 @@ package com.backend.tokokantjil.controllers;
 
 import com.backend.tokokantjil.dtos.inputs.CustomerInputDto;
 import com.backend.tokokantjil.dtos.outputs.CustomerOutputDto;
-import com.backend.tokokantjil.models.account.Customer;
 import com.backend.tokokantjil.services.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

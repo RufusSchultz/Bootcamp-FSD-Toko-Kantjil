@@ -1,7 +1,7 @@
 package com.backend.tokokantjil.dtos.outputs;
 
 
-import com.backend.tokokantjil.models.account.Customer;
+import com.backend.tokokantjil.models.user.Customer;
 
 public class InvoiceOutputDto {
     private Long id;

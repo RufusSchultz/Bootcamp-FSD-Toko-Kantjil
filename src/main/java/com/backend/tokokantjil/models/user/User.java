@@ -1,10 +1,10 @@
-package com.backend.tokokantjil.models.account;
+package com.backend.tokokantjil.models.user;
 
 import jakarta.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-abstract class Account {
+abstract class User {
     @Id
     @GeneratedValue
     private Long id;
