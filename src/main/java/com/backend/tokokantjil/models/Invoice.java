@@ -1,6 +1,6 @@
 package com.backend.tokokantjil.models;
 
-import com.backend.tokokantjil.models.user.Customer;
+import com.backend.tokokantjil.models.users.Customer;
 import jakarta.persistence.*;
 
 @Entity

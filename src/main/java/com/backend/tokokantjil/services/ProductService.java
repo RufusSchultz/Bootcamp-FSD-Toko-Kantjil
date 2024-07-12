@@ -28,13 +28,13 @@ public class ProductService {
     }
 
     public ProductOutputDto getProductById(Long id) {
-        Product p = this.productRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No product with id " + id + " found."));
-        return ProductMapper.fromProductToProductOutputDto(p);
+        Product product = this.productRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No product with id " + id + " found."));
+        return ProductMapper.fromProductToProductOutputDto(product);
     }
 
     public ProductOutputDto createProduct(ProductInputDto productInputDto) {
-        Product p = this.productRepository.save(ProductMapper.fromProductInputDtoToProduct(productInputDto));
-        return ProductMapper.fromProductToProductOutputDto(p);
+        Product product = this.productRepository.save(ProductMapper.fromProductInputDtoToProduct(productInputDto));
+        return ProductMapper.fromProductToProductOutputDto(product);
     }
 
     public void deleteProduct(Long id) {
@@ -46,10 +46,10 @@ public class ProductService {
     }
 
     public ProductOutputDto updateProduct(Long id, ProductInputDto productInputDto) {
-        Product p1 = this.productRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No product with id " + id + " found."));
-        Product p2 = ProductMapper.fromProductInputDtoToProduct(productInputDto);
-        Product p3 = this.productRepository.save(ProductMapper.fromProductToUpdatedProduct(p1, p2));
+        Product oldProduct = this.productRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No product with id " + id + " found."));
+        Product productUpdate = ProductMapper.fromProductInputDtoToProduct(productInputDto);
+        Product newProduct = this.productRepository.save(ProductMapper.fromProductToUpdatedProduct(oldProduct, productUpdate));
 
-        return ProductMapper.fromProductToProductOutputDto(p3);
+        return ProductMapper.fromProductToProductOutputDto(newProduct);
     }
 }

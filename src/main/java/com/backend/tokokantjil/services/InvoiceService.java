@@ -28,13 +28,13 @@ public class InvoiceService {
     }
 
     public InvoiceOutputDto getInvoiceById(Long id) {
-        Invoice p = this.invoiceRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No invoice with id " + id + " found."));
-        return InvoiceMapper.fromInvoiceToInvoiceOutputDto(p);
+        Invoice invoice = this.invoiceRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No invoice with id " + id + " found."));
+        return InvoiceMapper.fromInvoiceToInvoiceOutputDto(invoice);
     }
 
     public InvoiceOutputDto createInvoice(InvoiceInputDto invoiceInputDto) {
-        Invoice p = this.invoiceRepository.save(InvoiceMapper.fromInvoiceInputDtoToInvoice(invoiceInputDto));
-        return InvoiceMapper.fromInvoiceToInvoiceOutputDto(p);
+        Invoice invoice = this.invoiceRepository.save(InvoiceMapper.fromInvoiceInputDtoToInvoice(invoiceInputDto));
+        return InvoiceMapper.fromInvoiceToInvoiceOutputDto(invoice);
     }
 
     public void deleteInvoice(Long id) {
@@ -46,10 +46,10 @@ public class InvoiceService {
     }
 
     public InvoiceOutputDto updateInvoice(Long id, InvoiceInputDto invoiceInputDto) {
-        Invoice i1 = this.invoiceRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No invoice with id " + id + " found."));
-        Invoice i2 = InvoiceMapper.fromInvoiceInputDtoToInvoice(invoiceInputDto);
-        Invoice i3 = this.invoiceRepository.save(InvoiceMapper.fromInvoiceToUpdatedInvoice(i1, i2));
+        Invoice oldInvoice = this.invoiceRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No invoice with id " + id + " found."));
+        Invoice invoiceUpdate = InvoiceMapper.fromInvoiceInputDtoToInvoice(invoiceInputDto);
+        Invoice newInvoice = this.invoiceRepository.save(InvoiceMapper.fromInvoiceToUpdatedInvoice(oldInvoice, invoiceUpdate));
 
-        return InvoiceMapper.fromInvoiceToInvoiceOutputDto(i3);
+        return InvoiceMapper.fromInvoiceToInvoiceOutputDto(newInvoice);
     }
 }

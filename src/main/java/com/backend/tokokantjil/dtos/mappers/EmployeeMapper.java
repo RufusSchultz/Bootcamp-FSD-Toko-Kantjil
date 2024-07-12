@@ -2,7 +2,7 @@ package com.backend.tokokantjil.dtos.mappers;
 
 import com.backend.tokokantjil.dtos.inputs.EmployeeInputDto;
 import com.backend.tokokantjil.dtos.outputs.EmployeeOutputDto;
-import com.backend.tokokantjil.models.user.Employee;
+import com.backend.tokokantjil.models.users.Employee;
 
 public class EmployeeMapper {
 

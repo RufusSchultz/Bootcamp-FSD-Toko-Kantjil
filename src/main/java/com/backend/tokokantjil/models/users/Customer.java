@@ -1,4 +1,4 @@
-package com.backend.tokokantjil.models.user;
+package com.backend.tokokantjil.models.users;
 
 import com.backend.tokokantjil.models.Invoice;
 import jakarta.persistence.*;

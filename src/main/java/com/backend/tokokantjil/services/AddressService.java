@@ -28,13 +28,13 @@ public class AddressService {
     }
 
     public AddressOutputDto getAddressById(Long id) {
-        Address p = this.addressRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No address with id " + id + " found."));
-        return AddressMapper.fromAddressToAddressOutputDto(p);
+        Address address = this.addressRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No address with id " + id + " found."));
+        return AddressMapper.fromAddressToAddressOutputDto(address);
     }
 
     public AddressOutputDto createAddress(AddressInputDto addressInputDto) {
-        Address p = this.addressRepository.save(AddressMapper.fromAddressInputDtoToAddress(addressInputDto));
-        return AddressMapper.fromAddressToAddressOutputDto(p);
+        Address address = this.addressRepository.save(AddressMapper.fromAddressInputDtoToAddress(addressInputDto));
+        return AddressMapper.fromAddressToAddressOutputDto(address);
     }
 
     public void deleteAddress(Long id) {
@@ -46,10 +46,10 @@ public class AddressService {
     }
 
     public AddressOutputDto updateAddress(Long id, AddressInputDto addressInputDto) {
-        Address a1 = this.addressRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No address with id " + id + " found."));
-        Address a2 = AddressMapper.fromAddressInputDtoToAddress(addressInputDto);
-        Address a3 = this.addressRepository.save(AddressMapper.fromAddressToUpdatedAddress(a1, a2));
+        Address oldAddress = this.addressRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No address with id " + id + " found."));
+        Address addressUpdate = AddressMapper.fromAddressInputDtoToAddress(addressInputDto);
+        Address newAddress = this.addressRepository.save(AddressMapper.fromAddressToUpdatedAddress(oldAddress, addressUpdate));
 
-        return AddressMapper.fromAddressToAddressOutputDto(a3);
+        return AddressMapper.fromAddressToAddressOutputDto(newAddress);
     }
 }

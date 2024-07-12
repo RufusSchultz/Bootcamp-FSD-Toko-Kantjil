@@ -28,13 +28,13 @@ public class OrderService {
     }
 
     public OrderOutputDto getOrderById(Long id) {
-        Order p = this.orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No order with id " + id + " found."));
-        return OrderMapper.fromOrderToOrderOutputDto(p);
+        Order order = this.orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No order with id " + id + " found."));
+        return OrderMapper.fromOrderToOrderOutputDto(order);
     }
 
     public OrderOutputDto createOrder(OrderInputDto orderInputDto) {
-        Order p = this.orderRepository.save(OrderMapper.fromOrderInputDtoToOrder(orderInputDto));
-        return OrderMapper.fromOrderToOrderOutputDto(p);
+        Order order = this.orderRepository.save(OrderMapper.fromOrderInputDtoToOrder(orderInputDto));
+        return OrderMapper.fromOrderToOrderOutputDto(order);
     }
 
     public void deleteOrder(Long id) {
@@ -46,10 +46,10 @@ public class OrderService {
     }
 
     public OrderOutputDto updateOrder(Long id, OrderInputDto orderInputDto) {
-        Order o1 = this.orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No order with id " + id + " found."));
-        Order o2 = OrderMapper.fromOrderInputDtoToOrder(orderInputDto);
-        Order o3 = this.orderRepository.save(OrderMapper.fromOrderToUpdatedOrder(o1, o2));
+        Order oldOrder = this.orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No order with id " + id + " found."));
+        Order orderUpdate = OrderMapper.fromOrderInputDtoToOrder(orderInputDto);
+        Order newOrder = this.orderRepository.save(OrderMapper.fromOrderToUpdatedOrder(oldOrder, orderUpdate));
 
-        return OrderMapper.fromOrderToOrderOutputDto(o3);
+        return OrderMapper.fromOrderToOrderOutputDto(newOrder);
     }
 }

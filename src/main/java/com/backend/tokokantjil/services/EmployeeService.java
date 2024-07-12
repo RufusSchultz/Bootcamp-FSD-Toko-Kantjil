@@ -4,7 +4,7 @@ import com.backend.tokokantjil.dtos.inputs.EmployeeInputDto;
 import com.backend.tokokantjil.dtos.outputs.EmployeeOutputDto;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
 import com.backend.tokokantjil.dtos.mappers.EmployeeMapper;
-import com.backend.tokokantjil.models.user.Employee;
+import com.backend.tokokantjil.models.users.Employee;
 import com.backend.tokokantjil.repositories.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +28,13 @@ public class EmployeeService {
     }
 
     public EmployeeOutputDto getEmployeeById(Long id) {
-        Employee e = this.employeeRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No employee with id " + id + " found."));
-        return EmployeeMapper.fromEmployeeToEmployeeOutputDto(e);
+        Employee employee = this.employeeRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No employee with id " + id + " found."));
+        return EmployeeMapper.fromEmployeeToEmployeeOutputDto(employee);
     }
 
     public EmployeeOutputDto createEmployee(EmployeeInputDto employeeInputDto) {
-        Employee e = this.employeeRepository.save(EmployeeMapper.fromEmployeeInputDtoToEmployee(employeeInputDto));
-        return EmployeeMapper.fromEmployeeToEmployeeOutputDto(e);
+        Employee employee = this.employeeRepository.save(EmployeeMapper.fromEmployeeInputDtoToEmployee(employeeInputDto));
+        return EmployeeMapper.fromEmployeeToEmployeeOutputDto(employee);
     }
 
     public void deleteEmployee(Long id) {
@@ -46,10 +46,10 @@ public class EmployeeService {
     }
 
     public EmployeeOutputDto updateEmployee(Long id, EmployeeInputDto employeeInputDto) {
-        Employee e1 = this.employeeRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No employee with id " + id + " found."));
-        Employee e2 = EmployeeMapper.fromEmployeeInputDtoToEmployee(employeeInputDto);
-        Employee e3 = this.employeeRepository.save(EmployeeMapper.fromEmployeeToUpdatedEmployee(e1, e2));
+        Employee oldEmployee = this.employeeRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No employee with id " + id + " found."));
+        Employee employeeUpdate = EmployeeMapper.fromEmployeeInputDtoToEmployee(employeeInputDto);
+        Employee newEmployee = this.employeeRepository.save(EmployeeMapper.fromEmployeeToUpdatedEmployee(oldEmployee, employeeUpdate));
 
-        return EmployeeMapper.fromEmployeeToEmployeeOutputDto(e3);
+        return EmployeeMapper.fromEmployeeToEmployeeOutputDto(newEmployee);
     }
 }

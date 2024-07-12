@@ -28,13 +28,13 @@ public class CateringService {
     }
 
     public CateringOutputDto getCateringById(Long id) {
-        Catering p = this.cateringRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No catering with id " + id + " found."));
-        return CateringMapper.fromCateringToCateringOutputDto(p);
+        Catering catering = this.cateringRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No catering with id " + id + " found."));
+        return CateringMapper.fromCateringToCateringOutputDto(catering);
     }
 
     public CateringOutputDto createCatering(CateringInputDto cateringInputDto) {
-        Catering p = this.cateringRepository.save(CateringMapper.fromCateringInputDtoToCatering(cateringInputDto));
-        return CateringMapper.fromCateringToCateringOutputDto(p);
+        Catering catering = this.cateringRepository.save(CateringMapper.fromCateringInputDtoToCatering(cateringInputDto));
+        return CateringMapper.fromCateringToCateringOutputDto(catering);
     }
 
     public void deleteCatering(Long id) {
@@ -46,10 +46,10 @@ public class CateringService {
     }
 
     public CateringOutputDto updateCatering(Long id, CateringInputDto cateringInputDto) {
-        Catering c1 = this.cateringRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No catering with id " + id + " found."));
-        Catering c2 = CateringMapper.fromCateringInputDtoToCatering(cateringInputDto);
-        Catering c3 = this.cateringRepository.save(CateringMapper.fromCateringToUpdatedCatering(c1, c2));
+        Catering oldCatering = this.cateringRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No catering with id " + id + " found."));
+        Catering cateringUpdate = CateringMapper.fromCateringInputDtoToCatering(cateringInputDto);
+        Catering newCatering = this.cateringRepository.save(CateringMapper.fromCateringToUpdatedCatering(oldCatering, cateringUpdate));
 
-        return CateringMapper.fromCateringToCateringOutputDto(c3);
+        return CateringMapper.fromCateringToCateringOutputDto(newCatering);
     }
 }

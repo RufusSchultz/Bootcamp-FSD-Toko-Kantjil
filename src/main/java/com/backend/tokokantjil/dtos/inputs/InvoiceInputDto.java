@@ -1,7 +1,7 @@
 package com.backend.tokokantjil.dtos.inputs;
 
 
-import com.backend.tokokantjil.models.user.Customer;
+import com.backend.tokokantjil.models.users.Customer;
 import jakarta.validation.constraints.PositiveOrZero;
 
 public class InvoiceInputDto {

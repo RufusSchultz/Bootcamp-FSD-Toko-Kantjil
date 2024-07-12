@@ -2,7 +2,7 @@ package com.backend.tokokantjil.dtos.mappers;
 
 import com.backend.tokokantjil.dtos.inputs.CustomerInputDto;
 import com.backend.tokokantjil.dtos.outputs.CustomerOutputDto;
-import com.backend.tokokantjil.models.user.Customer;
+import com.backend.tokokantjil.models.users.Customer;
 
 public class CustomerMapper {
     public static Customer fromCustomerInputDtoToCustomer(CustomerInputDto customerInputDto) {
