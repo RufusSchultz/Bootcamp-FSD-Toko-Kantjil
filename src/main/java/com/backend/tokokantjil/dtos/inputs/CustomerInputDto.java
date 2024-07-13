@@ -8,10 +8,6 @@ public class CustomerInputDto {
     public String firstName;
     @NotBlank
     public String lastName;
-    @NotBlank
-    public String username;
-    @NotBlank
-    public String password;
     @Email
     public String email;
     //custom validation needed

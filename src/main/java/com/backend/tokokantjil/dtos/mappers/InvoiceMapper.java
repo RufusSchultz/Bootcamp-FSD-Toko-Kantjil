@@ -11,7 +11,6 @@ public class InvoiceMapper {
         invoice.setTotalPrice(invoiceInputDto.totalPrice);
         invoice.setPaid(invoiceInputDto.isPaid);
         invoice.setNotes(invoiceInputDto.notes);
-        invoice.setCustomer(invoiceInputDto.customer);
 
         return invoice;
     }
@@ -23,7 +22,6 @@ public class InvoiceMapper {
         invoiceOutputDto.setTotalPrice(invoice.getTotalPrice());
         invoiceOutputDto.setPaid(invoice.isPaid());
         invoiceOutputDto.setNotes(invoice.getNotes());
-        invoiceOutputDto.setCustomer(invoice.getCustomer());
 
         return invoiceOutputDto;
     }
@@ -32,7 +30,6 @@ public class InvoiceMapper {
         invoice.setTotalPrice(invoiceUpdate.getTotalPrice());
         invoice.setPaid(invoiceUpdate.isPaid());
         invoice.setNotes(invoiceUpdate.getNotes());
-        invoice.setCustomer(invoiceUpdate.getCustomer());
 
         return invoice;
     }
