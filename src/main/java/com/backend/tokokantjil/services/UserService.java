@@ -4,19 +4,25 @@ import com.backend.tokokantjil.dtos.inputs.UserInputDto;
 import com.backend.tokokantjil.dtos.outputs.UserOutputDto;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
 import com.backend.tokokantjil.dtos.mappers.UserMapper;
+import com.backend.tokokantjil.models.Role;
 import com.backend.tokokantjil.models.User;
+import com.backend.tokokantjil.repositories.RoleRepository;
 import com.backend.tokokantjil.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     public List<UserOutputDto> getAllUsers() {
@@ -33,7 +39,14 @@ public class UserService {
     }
 
     public UserOutputDto createUser(UserInputDto userInputDto) {
-        User user = this.userRepository.save(UserMapper.fromUserInputDtoToUser(userInputDto));
+        User user = UserMapper.fromUserInputDtoToUserWithoutRoles(userInputDto);
+        Set<Role> userRoles = user.getRoles();
+        for (String rolename : userInputDto.roles) {
+            Optional<Role> optionalRoles = roleRepository.findById("ROLE_" + rolename);
+            optionalRoles.ifPresent(userRoles::add);
+        }
+        this.userRepository.save(user);
+
         return UserMapper.fromUserToUserOutputDto(user);
     }
 
@@ -47,7 +60,14 @@ public class UserService {
 
     public UserOutputDto updateUser(String id, UserInputDto userInputDto) {
         User oldUser = this.userRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No user with username " + id + " found."));
-        User userUpdate = UserMapper.fromUserInputDtoToUser(userInputDto);
+        User userUpdate = UserMapper.fromUserInputDtoToUserWithoutRoles(userInputDto);
+
+        Set<Role> userRoles = userUpdate.getRoles();
+        for (String rolename : userInputDto.roles) {
+            Optional<Role> optionalRoles = roleRepository.findById("ROLE_" + rolename);
+            optionalRoles.ifPresent(userRoles::add);
+        }
+
         User newUser = this.userRepository.save(UserMapper.fromUserToUpdatedUser(oldUser, userUpdate));
 
         return UserMapper.fromUserToUserOutputDto(newUser);

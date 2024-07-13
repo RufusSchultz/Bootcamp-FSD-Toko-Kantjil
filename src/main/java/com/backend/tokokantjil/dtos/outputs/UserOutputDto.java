@@ -1,8 +1,13 @@
 package com.backend.tokokantjil.dtos.outputs;
 
+import com.backend.tokokantjil.models.Role;
+
+import java.util.Set;
+
 public class UserOutputDto {
     private String username;
     private String password;
+    private Set<Role> roles;
     private String firstName;
     private String lastName;
     private String email;
@@ -24,6 +29,14 @@ public class UserOutputDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public String getFirstName() {

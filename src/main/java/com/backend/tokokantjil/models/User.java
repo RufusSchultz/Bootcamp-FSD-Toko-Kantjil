@@ -3,6 +3,9 @@ package com.backend.tokokantjil.models;
 import jakarta.persistence.*;
 import org.hibernate.validator.constraints.UniqueElements;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -11,6 +14,8 @@ public class User {
     private String username;
     @Column(nullable = false)
     private String password;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles = new HashSet<>();
     @Column(nullable = false)
     private String firstName;
     @Column(nullable = false)
@@ -19,7 +24,7 @@ public class User {
     private String email;
     @Column(nullable = false)
     private Long phoneNumber;
-    @Column
+    @Column(nullable = false)
     private double salary;
     @Column
     private String notes;
@@ -38,6 +43,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public String getFirstName() {
@@ -87,4 +100,6 @@ public class User {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+
 }
