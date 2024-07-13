@@ -70,6 +70,5 @@ public class UserController {
         } catch (Exception ex) {
             return ResponseEntity.unprocessableEntity().body("Failed to update user.");
         }
-
     }
 }
