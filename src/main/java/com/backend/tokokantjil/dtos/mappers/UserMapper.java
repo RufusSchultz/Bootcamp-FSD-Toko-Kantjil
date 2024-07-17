@@ -6,11 +6,11 @@ import com.backend.tokokantjil.models.User;
 
 public class UserMapper {
 
-    public static User fromUserInputDtoToUserWithoutRoles(UserInputDto userInputDto) {
+    public static User fromUserInputDtoToUser(UserInputDto userInputDto) {
         User user = new User();
 
         user.setUsername(userInputDto.username);
-        user.setPassword(userInputDto.password);
+//        user.setPassword(userInputDto.password);
         user.setFirstName(userInputDto.firstName);
         user.setLastName(userInputDto.lastName);
         user.setEmail(userInputDto.email);
@@ -25,7 +25,7 @@ public class UserMapper {
         UserOutputDto userOutputDto = new UserOutputDto();
 
         userOutputDto.setUsername(user.getUsername());
-        userOutputDto.setPassword(user.getPassword());
+//        userOutputDto.setPassword(user.getPassword());
         userOutputDto.setRoles(user.getRoles());
         userOutputDto.setFirstName(user.getFirstName());
         userOutputDto.setLastName(user.getLastName());
@@ -40,7 +40,7 @@ public class UserMapper {
     public static User fromUserToUpdatedUser(User user, User userUpdate) {
 
         user.setUsername(userUpdate.getUsername());
-        user.setPassword(userUpdate.getPassword());
+//        user.setPassword(userUpdate.getPassword());
         user.setFirstName(userUpdate.getFirstName());
         user.setLastName(userUpdate.getLastName());
         user.setEmail(userUpdate.getEmail());
