@@ -3,11 +3,13 @@ package com.backend.tokokantjil.models;
 import com.backend.tokokantjil.enumerations.State;
 import jakarta.persistence.*;
 
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Table(name = "products")
 public class Product {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
     @Column
     private String name;
