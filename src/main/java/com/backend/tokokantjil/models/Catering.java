@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -21,6 +23,8 @@ public class Catering {
     private double price;
     @Column
     private String notes;
+    @ManyToMany(mappedBy = "caterings")
+    private List<Product> products = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -56,5 +60,13 @@ public class Catering {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

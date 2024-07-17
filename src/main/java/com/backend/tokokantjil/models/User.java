@@ -15,6 +15,7 @@ public class User {
     @Column(nullable = false)
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles")
     private Set<Role> roles = new HashSet<>();
     @Column(nullable = false)
     private String firstName;

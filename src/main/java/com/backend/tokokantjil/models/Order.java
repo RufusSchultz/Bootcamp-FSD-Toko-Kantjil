@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -23,6 +25,9 @@ public class Order {
     private Status status;
     @Column
     private boolean isCatering;
+
+    @ManyToMany(mappedBy = "orders")
+    private List<Product> products = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -54,5 +59,13 @@ public class Order {
 
     public void setCatering(boolean catering) {
         isCatering = catering;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

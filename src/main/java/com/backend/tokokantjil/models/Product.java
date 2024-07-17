@@ -3,6 +3,11 @@ package com.backend.tokokantjil.models;
 import com.backend.tokokantjil.enumerations.State;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -27,6 +32,15 @@ public class Product {
     private boolean isForRetail;
     @Column
     private String notes;
+    @ManyToMany
+    @JoinTable(name = "order_products")
+    private List<Order> orders = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "dish_products")
+    private List<Dish> dishes = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "catering_products")
+    private List<Catering> caterings = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -94,5 +108,29 @@ public class Product {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<Dish> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(List<Dish> dishes) {
+        this.dishes = dishes;
+    }
+
+    public List<Catering> getCaterings() {
+        return caterings;
+    }
+
+    public void setCaterings(List<Catering> caterings) {
+        this.caterings = caterings;
     }
 }

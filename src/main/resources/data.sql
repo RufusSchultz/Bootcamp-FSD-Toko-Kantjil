@@ -7,7 +7,7 @@ values ('BigBoss', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.
        ('janjanssen', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Jan', 'Jansen', 'j.janssen@kantjil.nl', 31687654321, 3000, ''),
        ('supermiep', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Miep', 'LaStrade', 'supermiep@mieperdemiep.miep', 31656783421, 2500, '');
 
-insert into users_roles(users_username, roles_role_name)
+insert into user_roles(users_username, roles_role_name)
 values ('BigBoss', 'ROLE_ADMIN'),
        ('BigBoss', 'ROLE_STAFF'),
        ('janjanssen', 'ROLE_STAFF'),

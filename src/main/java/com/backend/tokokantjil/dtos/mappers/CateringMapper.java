@@ -2,7 +2,11 @@ package com.backend.tokokantjil.dtos.mappers;
 
 import com.backend.tokokantjil.dtos.inputs.CateringInputDto;
 import com.backend.tokokantjil.dtos.outputs.CateringOutputDto;
+import com.backend.tokokantjil.dtos.outputs.ProductOutputDto;
 import com.backend.tokokantjil.models.Catering;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CateringMapper {
     public static Catering fromCateringInputDtoToCatering(CateringInputDto cateringInputDto) {
@@ -25,6 +29,15 @@ public class CateringMapper {
         cateringOutputDto.setPrice(catering.getPrice());
         cateringOutputDto.setNotes(catering.getNotes());
 
+        if (catering.getProducts() != null) {
+            List<ProductOutputDto> productOutputDtoList = new ArrayList<>();
+            for (int i = catering.getProducts().size(); i < catering.getProducts().size(); i++) {
+                productOutputDtoList.add(ProductMapper.fromProductToProductOutputDto(catering.getProducts().get(i)));
+            }
+            cateringOutputDto.setProductOutputDtos(productOutputDtoList);
+        }
+
+
         return cateringOutputDto;
     }
 
@@ -34,6 +47,7 @@ public class CateringMapper {
         catering.setNumberOfPeople(cateringUpdate.getNumberOfPeople());
         catering.setPrice(cateringUpdate.getPrice());
         catering.setNotes(cateringUpdate.getNotes());
+        catering.setProducts(cateringUpdate.getProducts());
 
         return catering;
     }

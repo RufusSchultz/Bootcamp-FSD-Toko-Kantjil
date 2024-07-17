@@ -1,9 +1,7 @@
 package com.backend.tokokantjil.dtos.outputs;
 
-import jakarta.persistence.Column;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class CateringOutputDto {
     private Long id;
@@ -11,6 +9,7 @@ public class CateringOutputDto {
     private int numberOfPeople;
     private double price;
     private String notes;
+    private List<ProductOutputDto> productOutputDtos;
 
     public Long getId() {
         return id;
@@ -50,5 +49,13 @@ public class CateringOutputDto {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public List<ProductOutputDto> getProductOutputDtos() {
+        return productOutputDtos;
+    }
+
+    public void setProductOutputDtos(List<ProductOutputDto> productOutputDtos) {
+        this.productOutputDtos = productOutputDtos;
     }
 }
