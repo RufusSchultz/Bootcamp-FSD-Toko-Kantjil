@@ -1,9 +1,11 @@
-package com.backend.tokokantjil.security;
+package com.backend.tokokantjil.configurations;
 
 import com.backend.tokokantjil.repositories.UserRepository;
+import com.backend.tokokantjil.filters.JwtRequestFilter;
+import com.backend.tokokantjil.utilities.JwtService;
+import com.backend.tokokantjil.security.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;

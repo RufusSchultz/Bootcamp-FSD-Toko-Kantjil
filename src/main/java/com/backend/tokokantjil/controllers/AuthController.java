@@ -1,7 +1,7 @@
 package com.backend.tokokantjil.controllers;
 
 import com.backend.tokokantjil.dtos.inputs.AuthInputDto;
-import com.backend.tokokantjil.security.JwtService;
+import com.backend.tokokantjil.utilities.JwtService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

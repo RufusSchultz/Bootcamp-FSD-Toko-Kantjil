@@ -1,4 +1,4 @@
-package com.backend.tokokantjil.security;
+package com.backend.tokokantjil.utilities;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static com.backend.tokokantjil.helpers.RandomStringGenerator.generateAlphaNumeric;
+import static com.backend.tokokantjil.utilities.RandomStringGenerator.generateAlphaNumeric;
 
 @Service
 public class JwtService {

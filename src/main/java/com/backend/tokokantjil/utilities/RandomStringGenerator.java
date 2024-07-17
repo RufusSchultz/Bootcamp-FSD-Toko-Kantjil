@@ -1,4 +1,4 @@
-package com.backend.tokokantjil.helpers;
+package com.backend.tokokantjil.utilities;
 import java.util.Random;
 
 public class RandomStringGenerator {
