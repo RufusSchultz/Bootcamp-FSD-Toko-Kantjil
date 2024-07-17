@@ -2,11 +2,13 @@ package com.backend.tokokantjil.models;
 
 import jakarta.persistence.*;
 
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Table(name = "addresses")
 public class Address {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
     @Column
     private String name;
