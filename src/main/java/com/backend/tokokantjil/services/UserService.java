@@ -8,6 +8,7 @@ import com.backend.tokokantjil.models.Role;
 import com.backend.tokokantjil.models.User;
 import com.backend.tokokantjil.repositories.RoleRepository;
 import com.backend.tokokantjil.repositories.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,10 +20,12 @@ import java.util.Set;
 public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder encoder;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.encoder = encoder;
     }
 
     public List<UserOutputDto> getAllUsers() {
@@ -39,7 +42,8 @@ public class UserService {
     }
 
     public UserOutputDto createUser(UserInputDto userInputDto) {
-        User user = UserMapper.fromUserInputDtoToUserWithoutRoles(userInputDto);
+        User user = UserMapper.fromUserInputDtoToUser(userInputDto);
+        user.setPassword(encoder.encode(userInputDto.password));
         Set<Role> userRoles = user.getRoles();
         for (String rolename : userInputDto.roles) {
             Optional<Role> optionalRoles = roleRepository.findById("ROLE_" + rolename);
@@ -60,8 +64,9 @@ public class UserService {
 
     public UserOutputDto updateUser(String id, UserInputDto userInputDto) {
         User oldUser = this.userRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No user with username " + id + " found."));
-        User userUpdate = UserMapper.fromUserInputDtoToUserWithoutRoles(userInputDto);
+        User userUpdate = UserMapper.fromUserInputDtoToUser(userInputDto);
 
+        userUpdate.setPassword(encoder.encode(userInputDto.password));
         Set<Role> userRoles = userUpdate.getRoles();
         for (String rolename : userInputDto.roles) {
             Optional<Role> optionalRoles = roleRepository.findById("ROLE_" + rolename);
