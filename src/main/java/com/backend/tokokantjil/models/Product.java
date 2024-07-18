@@ -4,9 +4,7 @@ import com.backend.tokokantjil.enumerations.State;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -21,7 +19,7 @@ public class Product {
     @Column(nullable = false)
     private State state;
     @Column(nullable = false)
-    private int amount;
+    private double amount;
     @Column(nullable = false)
     private String amountUnit;
     @Column(nullable = false)
@@ -62,11 +60,11 @@ public class Product {
         this.state = state;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

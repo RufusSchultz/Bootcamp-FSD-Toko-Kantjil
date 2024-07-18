@@ -5,19 +5,22 @@ import com.backend.tokokantjil.dtos.outputs.DishOutputDto;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
 import com.backend.tokokantjil.dtos.mappers.DishMapper;
 import com.backend.tokokantjil.models.Dish;
+import com.backend.tokokantjil.models.Product;
 import com.backend.tokokantjil.repositories.DishRepository;
+import com.backend.tokokantjil.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class DishService {
     private final DishRepository dishRepository;
+    private final ProductRepository productRepository;
 
-    public DishService(DishRepository dishRepository) {
+    public DishService(DishRepository dishRepository, ProductRepository productRepository) {
         this.dishRepository = dishRepository;
+        this.productRepository = productRepository;
     }
 
     public List<DishOutputDto> getAllDishes() {
@@ -52,5 +55,16 @@ public class DishService {
         Dish newDish = this.dishRepository.save(DishMapper.fromDishToUpdatedDish(oldDish, dishUpdate));
 
         return DishMapper.fromDishToDishOutputDto(newDish);
+    }
+
+    public DishOutputDto addProductToDish(Long dishId, Long productId, double amountModifier) {
+        Dish dish = this.dishRepository.findById(dishId).orElseThrow(() -> new RecordNotFoundException("No dish with id " + dishId + "found."));
+        Product product = this.productRepository.findById(productId).orElseThrow(() -> new RecordNotFoundException("No product with id " + dishId + "found."));
+
+        product.setAmount(product.getAmount() * amountModifier);
+        dish.getProducts().add(product);
+        this.dishRepository.save(dish);
+
+        return DishMapper.fromDishToDishOutputDto(dish);
     }
 }

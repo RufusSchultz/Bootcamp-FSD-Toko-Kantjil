@@ -12,7 +12,7 @@ public class ProductInputDto {
     @NotBlank
     public String name;
     @Positive
-    public int amount;
+    public double amount;
     @NotBlank
     public String amountUnit;
     @PositiveOrZero

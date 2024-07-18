@@ -69,6 +69,15 @@ public class DishController {
         } catch (Exception ex) {
             return ResponseEntity.unprocessableEntity().body("Failed to update dish.");
         }
+    }
 
+    @PostMapping("/{dishId}/add-product")
+    public ResponseEntity<?> addProductToDish(@PathVariable Long dishId, @RequestParam Long productId, double amountModifier) {
+        try {
+            this.service.addProductToDish(dishId, productId, amountModifier);
+            return ResponseEntity.ok("Adding product " + productId + " to dish " + dishId + " succeeded!");
+        } catch (Exception ex) {
+            return ResponseEntity.unprocessableEntity().body("Failed to add product to dish.");
+        }
     }
 }

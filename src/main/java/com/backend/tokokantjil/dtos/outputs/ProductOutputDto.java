@@ -6,7 +6,7 @@ public class ProductOutputDto {
     private Long id;
     private String name;
     private State state;
-    private int amount;
+    private double amount;
     private String amountUnit;
     private double buyPrice;
     private double sellPrice;
@@ -37,11 +37,11 @@ public class ProductOutputDto {
         this.state = state;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

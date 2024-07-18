@@ -3,13 +3,13 @@ values ('ROLE_ADMIN'),
        ('ROLE_STAFF');
 
 insert into users(username, password, first_name, last_name, email, phone_number, salary, notes)
-values ('BigBoss', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Al', 'Patron', 'a.patron@kantjil.nl', 31612345678, 4000, ''),
+values ('Patron', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Al', 'Patron', 'a.patron@kantjil.nl', 31612345678, 4000, ''),
        ('janjanssen', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Jan', 'Jansen', 'j.janssen@kantjil.nl', 31687654321, 3000, ''),
        ('supermiep', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Miep', 'LaStrade', 'supermiep@mieperdemiep.miep', 31656783421, 2500, '');
 
 insert into user_roles(users_username, roles_role_name)
-values ('BigBoss', 'ROLE_ADMIN'),
-       ('BigBoss', 'ROLE_STAFF'),
+values ('Patron', 'ROLE_ADMIN'),
+       ('Patron', 'ROLE_STAFF'),
        ('janjanssen', 'ROLE_STAFF'),
        ('supermiep', 'ROLE_STAFF');
 
