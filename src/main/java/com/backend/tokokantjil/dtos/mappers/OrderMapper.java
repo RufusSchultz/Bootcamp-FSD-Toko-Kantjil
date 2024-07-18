@@ -29,6 +29,7 @@ public class OrderMapper {
         orderOutputDto.setCreatedAt(order.getCreatedAt());
         orderOutputDto.setStatus(order.getStatus());
         orderOutputDto.setCatering(order.isCatering());
+        orderOutputDto.setCateringOutputDto(CateringMapper.fromCateringToCateringOutputDto(order.getCatering()));
 
         if (order.getProducts() != null) {
             List<ProductOutputDto> productOutputDtoList = new ArrayList<>();

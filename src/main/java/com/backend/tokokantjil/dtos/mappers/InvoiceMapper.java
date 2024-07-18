@@ -22,6 +22,7 @@ public class InvoiceMapper {
         invoiceOutputDto.setTotalPrice(invoice.getTotalPrice());
         invoiceOutputDto.setPaid(invoice.isPaid());
         invoiceOutputDto.setNotes(invoice.getNotes());
+        invoiceOutputDto.setOrderOutputDto(OrderMapper.fromOrderToOrderOutputDto(invoice.getOrder()));
 
         return invoiceOutputDto;
     }

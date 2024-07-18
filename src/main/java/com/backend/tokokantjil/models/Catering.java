@@ -29,6 +29,8 @@ public class Catering {
     private List<Dish> dishes = new ArrayList<>();
     @ManyToOne
     private Address address;
+    @OneToOne
+    private Order order;
 
 
     public Long getId() {
@@ -89,5 +91,13 @@ public class Catering {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

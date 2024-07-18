@@ -1,6 +1,7 @@
 package com.backend.tokokantjil.dtos.outputs;
 
 import com.backend.tokokantjil.enumerations.Status;
+import com.backend.tokokantjil.models.Catering;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,6 +15,7 @@ public class OrderOutputDto {
 
     private List<ProductOutputDto> productOutputDtoList;
     private List<DishOutputDto> dishOutputDtoList;
+    private CateringOutputDto cateringOutputDto;
 
     public Long getId() {
         return id;
@@ -69,5 +71,13 @@ public class OrderOutputDto {
 
     public void setDishOutputDtoList(List<DishOutputDto> dishOutputDtoList) {
         this.dishOutputDtoList = dishOutputDtoList;
+    }
+
+    public CateringOutputDto getCateringOutputDto() {
+        return cateringOutputDto;
+    }
+
+    public void setCateringOutputDto(CateringOutputDto cateringOutputDto) {
+        this.cateringOutputDto = cateringOutputDto;
     }
 }
