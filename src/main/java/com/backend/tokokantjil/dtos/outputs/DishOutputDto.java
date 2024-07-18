@@ -10,7 +10,7 @@ public class DishOutputDto {
     private double productionPrice;
     private double sellPrice;
     private String notes;
-    private List<ProductOutputDto> productOutputDtos;
+    private List<ProductOutputDto> productOutputDtoList;
 
     public Long getId() {
         return id;
@@ -60,11 +60,11 @@ public class DishOutputDto {
         this.notes = notes;
     }
 
-    public List<ProductOutputDto> getProductOutputDtos() {
-        return productOutputDtos;
+    public List<ProductOutputDto> getProductOutputDtoList() {
+        return productOutputDtoList;
     }
 
-    public void setProductOutputDtos(List<ProductOutputDto> productOutputDtos) {
-        this.productOutputDtos = productOutputDtos;
+    public void setProductOutputDtoList(List<ProductOutputDto> productOutputDtoList) {
+        this.productOutputDtoList = productOutputDtoList;
     }
 }

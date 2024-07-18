@@ -12,7 +12,8 @@ public class OrderOutputDto {
     private Status status;
     private boolean isCatering;
 
-    private List<ProductOutputDto> productOutputDtos;
+    private List<ProductOutputDto> productOutputDtoList;
+    private List<DishOutputDto> dishOutputDtoList;
 
     public Long getId() {
         return id;
@@ -54,11 +55,19 @@ public class OrderOutputDto {
         isCatering = catering;
     }
 
-    public List<ProductOutputDto> getProductOutputDtos() {
-        return productOutputDtos;
+    public List<ProductOutputDto> getProductOutputDtoList() {
+        return productOutputDtoList;
     }
 
-    public void setProductOutputDtos(List<ProductOutputDto> productOutputDtos) {
-        this.productOutputDtos = productOutputDtos;
+    public void setProductOutputDtoList(List<ProductOutputDto> productOutputDtoList) {
+        this.productOutputDtoList = productOutputDtoList;
+    }
+
+    public List<DishOutputDto> getDishOutputDtoList() {
+        return dishOutputDtoList;
+    }
+
+    public void setDishOutputDtoList(List<DishOutputDto> dishOutputDtoList) {
+        this.dishOutputDtoList = dishOutputDtoList;
     }
 }

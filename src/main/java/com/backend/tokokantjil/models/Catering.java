@@ -26,6 +26,9 @@ public class Catering {
     @ManyToMany(mappedBy = "caterings")
     private List<Product> products = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "caterings")
+    private List<Dish> dishes = new ArrayList<>();
+
     public Long getId() {
         return id;
     }
@@ -68,5 +71,13 @@ public class Catering {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public List<Dish> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(List<Dish> dishes) {
+        this.dishes = dishes;
     }
 }

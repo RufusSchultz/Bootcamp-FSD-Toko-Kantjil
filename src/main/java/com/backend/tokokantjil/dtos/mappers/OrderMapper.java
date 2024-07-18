@@ -1,6 +1,7 @@
 package com.backend.tokokantjil.dtos.mappers;
 
 import com.backend.tokokantjil.dtos.inputs.OrderInputDto;
+import com.backend.tokokantjil.dtos.outputs.DishOutputDto;
 import com.backend.tokokantjil.dtos.outputs.OrderOutputDto;
 import com.backend.tokokantjil.dtos.outputs.ProductOutputDto;
 import com.backend.tokokantjil.models.Order;
@@ -34,7 +35,15 @@ public class OrderMapper {
             for (int i = order.getProducts().size(); i < order.getProducts().size(); i++) {
                 productOutputDtoList.add(ProductMapper.fromProductToProductOutputDto(order.getProducts().get(i)));
             }
-            orderOutputDto.setProductOutputDtos(productOutputDtoList);
+            orderOutputDto.setProductOutputDtoList(productOutputDtoList);
+        }
+
+        if (order.getDishes() != null) {
+            List<DishOutputDto> dishOutputDtoList = new ArrayList<>();
+            for (int i = order.getDishes().size(); i < order.getDishes().size(); i++) {
+                dishOutputDtoList.add(DishMapper.fromDishToDishOutputDto(order.getDishes().get(i)));
+            }
+            orderOutputDto.setDishOutputDtoList(dishOutputDtoList);
         }
 
         return orderOutputDto;

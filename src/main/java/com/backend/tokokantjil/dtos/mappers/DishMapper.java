@@ -37,7 +37,7 @@ public class DishMapper {
             for (int i = dish.getProducts().size(); i < dish.getProducts().size(); i++) {
                 productOutputDtoList.add(ProductMapper.fromProductToProductOutputDto(dish.getProducts().get(i)));
             }
-            dishOutputDto.setProductOutputDtos(productOutputDtoList);
+            dishOutputDto.setProductOutputDtoList(productOutputDtoList);
         }
 
         return dishOutputDto;
