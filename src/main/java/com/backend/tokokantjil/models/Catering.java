@@ -25,9 +25,11 @@ public class Catering {
     private String notes;
     @ManyToMany(mappedBy = "caterings")
     private List<Product> products = new ArrayList<>();
-
     @ManyToMany(mappedBy = "caterings")
     private List<Dish> dishes = new ArrayList<>();
+    @ManyToOne
+    private Address address;
+
 
     public Long getId() {
         return id;
@@ -79,5 +81,13 @@ public class Catering {
 
     public void setDishes(List<Dish> dishes) {
         this.dishes = dishes;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

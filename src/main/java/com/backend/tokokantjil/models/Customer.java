@@ -24,6 +24,8 @@ public class Customer {
     private Long phoneNumber;
     @Column
     private String notes;
+    @ManyToOne
+    private Address address;
 
     public Long getId() {
         return id;
@@ -67,5 +69,13 @@ public class Customer {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
