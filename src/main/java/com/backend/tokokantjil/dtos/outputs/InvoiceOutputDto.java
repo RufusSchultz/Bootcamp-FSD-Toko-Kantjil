@@ -8,7 +8,7 @@ public class InvoiceOutputDto {
     private double totalPrice;
     private boolean isPaid;
     private String notes;
-    private Customer customer;
+    private OrderOutputDto orderOutputDto;
 
     public Long getId() {
         return id;
@@ -42,11 +42,11 @@ public class InvoiceOutputDto {
         this.notes = notes;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public OrderOutputDto getOrderOutputDto() {
+        return orderOutputDto;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setOrderOutputDto(OrderOutputDto orderOutputDto) {
+        this.orderOutputDto = orderOutputDto;
     }
 }

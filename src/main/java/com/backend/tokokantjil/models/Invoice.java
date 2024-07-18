@@ -14,6 +14,8 @@ public class Invoice {
     private boolean isPaid;
     @Column
     private String notes;
+    @OneToOne
+    private Order order;
 
 
     public Long getId() {
@@ -44,5 +46,11 @@ public class Invoice {
         this.notes = notes;
     }
 
+    public Order getOrder() {
+        return order;
+    }
 
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 }

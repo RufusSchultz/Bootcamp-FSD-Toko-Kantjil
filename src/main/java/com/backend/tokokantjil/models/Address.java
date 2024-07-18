@@ -2,6 +2,9 @@ package com.backend.tokokantjil.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -24,6 +27,10 @@ public class Address {
     private String city;
     @Column
     private String notes;
+    @OneToMany(mappedBy = "address")
+    List<Catering> caterings = new ArrayList<>();
+    @OneToMany(mappedBy = "address")
+    List<Customer> customers = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -83,5 +90,21 @@ public class Address {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public List<Catering> getCaterings() {
+        return caterings;
+    }
+
+    public void setCaterings(List<Catering> caterings) {
+        this.caterings = caterings;
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
     }
 }

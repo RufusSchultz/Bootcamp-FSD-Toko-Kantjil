@@ -1,8 +1,13 @@
 package com.backend.tokokantjil.dtos.mappers;
 
 import com.backend.tokokantjil.dtos.inputs.UserInputDto;
+import com.backend.tokokantjil.dtos.outputs.OrderOutputDto;
 import com.backend.tokokantjil.dtos.outputs.UserOutputDto;
+import com.backend.tokokantjil.models.Order;
 import com.backend.tokokantjil.models.User;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserMapper {
 
@@ -33,6 +38,15 @@ public class UserMapper {
         userOutputDto.setPhoneNumber(user.getPhoneNumber());
         userOutputDto.setSalary(user.getSalary());
         userOutputDto.setNotes(user.getNotes());
+
+        if (user.getOrders() != null) {
+            Set<OrderOutputDto> orderOutputDtoSet = new HashSet<>();
+            for (Order order :
+                    user.getOrders()) {
+                orderOutputDtoSet.add(OrderMapper.fromOrderToOrderOutputDto(order));
+            }
+            userOutputDto.setOrderOutputDtoSet(orderOutputDtoSet);
+        }
 
         return userOutputDto;
     }

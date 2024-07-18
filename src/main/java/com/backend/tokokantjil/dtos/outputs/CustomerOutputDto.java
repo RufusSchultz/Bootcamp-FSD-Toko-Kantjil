@@ -1,5 +1,9 @@
 package com.backend.tokokantjil.dtos.outputs;
 
+import com.backend.tokokantjil.models.Order;
+
+import java.util.Set;
+
 public class CustomerOutputDto {
     private Long id;
     private String firstName;
@@ -7,6 +11,7 @@ public class CustomerOutputDto {
     private String email;
     private Long phoneNumber;
     private String notes;
+    private Set<OrderOutputDto> orderOutputDtoSet;
 
     public Long getId() {
         return id;
@@ -54,5 +59,13 @@ public class CustomerOutputDto {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public Set<OrderOutputDto> getOrderOutputDtoSet() {
+        return orderOutputDtoSet;
+    }
+
+    public void setOrderOutputDtoSet(Set<OrderOutputDto> orderOutputDtoSet) {
+        this.orderOutputDtoSet = orderOutputDtoSet;
     }
 }

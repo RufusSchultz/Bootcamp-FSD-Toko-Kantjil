@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -23,6 +25,19 @@ public class Order {
     private Status status;
     @Column
     private boolean isCatering;
+    @ManyToMany(mappedBy = "orders")
+    private List<Product> products = new ArrayList<>();
+    @ManyToMany(mappedBy = "orders")
+    private List<Dish> dishes = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private User user;
+    @OneToOne(mappedBy = "order")
+    private Catering catering;
+    @ManyToOne
+    private Customer customer;
+    @OneToOne(mappedBy = "order")
+    private Invoice invoice;
 
     public Long getId() {
         return id;
@@ -54,5 +69,53 @@ public class Order {
 
     public void setCatering(boolean catering) {
         isCatering = catering;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public List<Dish> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(List<Dish> dishes) {
+        this.dishes = dishes;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Catering getCatering() {
+        return catering;
+    }
+
+    public void setCatering(Catering catering) {
+        this.catering = catering;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 }

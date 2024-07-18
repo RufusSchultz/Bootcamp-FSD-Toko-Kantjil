@@ -1,6 +1,8 @@
 package com.backend.tokokantjil.dtos.outputs;
 
 
+import java.util.List;
+
 public class AddressOutputDto {
     private Long id;
     private String name;
@@ -10,6 +12,8 @@ public class AddressOutputDto {
     private String postalCode;
     private String city;
     private String notes;
+    private List<CateringOutputDto> cateringOutputDtoList;
+    private List<CustomerOutputDto> customerOutputDtoList;
 
     public Long getId() {
         return id;
@@ -73,5 +77,21 @@ public class AddressOutputDto {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public List<CateringOutputDto> getCateringOutputDtoList() {
+        return cateringOutputDtoList;
+    }
+
+    public void setCateringOutputDtoList(List<CateringOutputDto> cateringOutputDtoList) {
+        this.cateringOutputDtoList = cateringOutputDtoList;
+    }
+
+    public List<CustomerOutputDto> getCustomerOutputDtoList() {
+        return customerOutputDtoList;
+    }
+
+    public void setCustomerOutputDtoList(List<CustomerOutputDto> customerOutputDtoList) {
+        this.customerOutputDtoList = customerOutputDtoList;
     }
 }

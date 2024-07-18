@@ -2,7 +2,12 @@ package com.backend.tokokantjil.dtos.mappers;
 
 import com.backend.tokokantjil.dtos.inputs.AddressInputDto;
 import com.backend.tokokantjil.dtos.outputs.AddressOutputDto;
+import com.backend.tokokantjil.dtos.outputs.CateringOutputDto;
+import com.backend.tokokantjil.dtos.outputs.CustomerOutputDto;
 import com.backend.tokokantjil.models.Address;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddressMapper {
     public static Address fromAddressInputDtoToAddress(AddressInputDto addressInputDto) {
@@ -30,6 +35,22 @@ public class AddressMapper {
         addressOutputDto.setPostalCode(address.getPostalCode());
         addressOutputDto.setCity(address.getCity());
         addressOutputDto.setNotes(address.getNotes());
+
+        if (address.getCaterings() != null) {
+            List<CateringOutputDto> cateringOutputDtoList = new ArrayList<>();
+            for (int i = address.getCaterings().size(); i < address.getCaterings().size(); i++) {
+                cateringOutputDtoList.add(CateringMapper.fromCateringToCateringOutputDto(address.getCaterings().get(i)));
+            }
+            addressOutputDto.setCateringOutputDtoList(cateringOutputDtoList);
+        }
+
+        if (address.getCustomers() != null) {
+            List<CustomerOutputDto> customerOutputDtoList = new ArrayList<>();
+            for (int i = address.getCustomers().size(); i < address.getCustomers().size(); i++) {
+                customerOutputDtoList.add(CustomerMapper.fromCustomerToCustomerOutputDto(address.getCustomers().get(i)));
+            }
+            addressOutputDto.setCustomerOutputDtoList(customerOutputDtoList);
+        }
 
         return addressOutputDto;
     }

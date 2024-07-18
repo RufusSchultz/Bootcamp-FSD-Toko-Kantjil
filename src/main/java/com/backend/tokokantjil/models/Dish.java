@@ -2,6 +2,9 @@ package com.backend.tokokantjil.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -20,6 +23,16 @@ public class Dish {
     private double sellPrice;
     @Column
     private String notes;
+    @ManyToMany(mappedBy = "dishes")
+    private List<Product> products = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "Order_dishes")
+    private List<Order> orders = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "Catering_dishes")
+    private List<Catering> caterings = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -63,5 +76,29 @@ public class Dish {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<Catering> getCaterings() {
+        return caterings;
+    }
+
+    public void setCaterings(List<Catering> caterings) {
+        this.caterings = caterings;
     }
 }
