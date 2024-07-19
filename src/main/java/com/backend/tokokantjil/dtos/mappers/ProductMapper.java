@@ -16,6 +16,7 @@ public class ProductMapper {
         product.setBuyPrice(productInputDto.buyPrice);
         product.setSellPrice(productInputDto.sellPrice);
         product.setForRetail(productInputDto.isForRetail);
+        product.setStock(productInputDto.stock);
         product.setNotes(productInputDto.notes);
 
         return product;
@@ -32,6 +33,7 @@ public class ProductMapper {
         productOutputDto.setBuyPrice(product.getBuyPrice());
         productOutputDto.setSellPrice(product.getSellPrice());
         productOutputDto.setForRetail(product.isForRetail());
+        productOutputDto.setStock(product.getStock());
         productOutputDto.setNotes(product.getNotes());
 
         return productOutputDto;
@@ -46,6 +48,7 @@ public class ProductMapper {
         product.setBuyPrice(productUpdate.getBuyPrice());
         product.setSellPrice(productUpdate.getSellPrice());
         product.setForRetail(productUpdate.isForRetail());
+        product.setStock(productUpdate.getStock());
         product.setNotes(productUpdate.getNotes());
 
         return product;

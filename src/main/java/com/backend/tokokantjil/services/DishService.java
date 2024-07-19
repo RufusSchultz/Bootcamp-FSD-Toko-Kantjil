@@ -1,7 +1,9 @@
 package com.backend.tokokantjil.services;
 
 import com.backend.tokokantjil.dtos.inputs.DishInputDto;
+import com.backend.tokokantjil.dtos.mappers.ProductMapper;
 import com.backend.tokokantjil.dtos.outputs.DishOutputDto;
+import com.backend.tokokantjil.exceptions.NotEnoughInStockException;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
 import com.backend.tokokantjil.dtos.mappers.DishMapper;
 import com.backend.tokokantjil.models.Dish;
@@ -57,14 +59,30 @@ public class DishService {
         return DishMapper.fromDishToDishOutputDto(newDish);
     }
 
-    public DishOutputDto addProductToDish(Long dishId, Long productId, double amountModifier) {
-        Dish dish = this.dishRepository.findById(dishId).orElseThrow(() -> new RecordNotFoundException("No dish with id " + dishId + "found."));
-        Product product = this.productRepository.findById(productId).orElseThrow(() -> new RecordNotFoundException("No product with id " + dishId + "found."));
+    public DishOutputDto addProduct(Long dishId, Long productId, double amountMultiplier) {
+        Dish dish = this.dishRepository.findById(dishId).orElseThrow(() -> new RecordNotFoundException("No dish with id " + dishId + " found."));
+        Product product = this.productRepository.findById(productId).orElseThrow(() -> new RecordNotFoundException("No product with id " + productId + " found."));
 
-        product.setAmount(product.getAmount() * amountModifier);
+//        if (product.getStock() - amountMultiplier >= 0) {
+//
+//            product.setStock(product.getStock() - amountMultiplier);
+//
+//            dish.setProductionPrice(dish.getProductionPrice() + product.getBuyPrice() * amountMultiplier);
+//            dish.setSellPrice(dish.getSellPrice() + product.getSellPrice() * amountMultiplier);
+//            dish.getProducts().add(product);
+//
+//            this.productRepository.save(product);
+//            this.dishRepository.save(dish);
+//            return (DishMapper.fromDishToDishOutputDto(dish));
+//        } else {
+//            throw new NotEnoughInStockException("Not enough of product " + productId + " in stock!");
+//        }
+
+        dish.setProductionPrice(dish.getProductionPrice() + product.getBuyPrice() * amountMultiplier);
+        dish.setSellPrice(dish.getSellPrice() + product.getSellPrice() * amountMultiplier);
         dish.getProducts().add(product);
         this.dishRepository.save(dish);
+        return (DishMapper.fromDishToDishOutputDto(dish));
 
-        return DishMapper.fromDishToDishOutputDto(dish);
     }
 }

@@ -11,6 +11,7 @@ public class ProductOutputDto {
     private double buyPrice;
     private double sellPrice;
     private boolean isForRetail;
+    private double stock;
     private String notes;
 
     public Long getId() {
@@ -75,6 +76,14 @@ public class ProductOutputDto {
 
     public void setForRetail(boolean forRetail) {
         isForRetail = forRetail;
+    }
+
+    public double getStock() {
+        return stock;
+    }
+
+    public void setStock(double stock) {
+        this.stock = stock;
     }
 
     public String getNotes() {

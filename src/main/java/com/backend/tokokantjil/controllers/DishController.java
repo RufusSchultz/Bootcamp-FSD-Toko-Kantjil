@@ -72,12 +72,15 @@ public class DishController {
     }
 
     @PostMapping("/{dishId}/add-product")
-    public ResponseEntity<?> addProductToDish(@PathVariable Long dishId, @RequestParam Long productId, double amountModifier) {
-        try {
-            this.service.addProductToDish(dishId, productId, amountModifier);
-            return ResponseEntity.ok("Adding product " + productId + " to dish " + dishId + " succeeded!");
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to add product to dish.");
-        }
+    public ResponseEntity<?> addProductToDish(@PathVariable Long dishId, @RequestParam Long productId, double amountMultiplier) {
+//        try {
+           DishOutputDto d = this.service.addProduct(dishId, productId, amountMultiplier);
+            return ResponseEntity.ok("Added product " + productId + " to dish " + dishId + " with a multiplier of " + amountMultiplier + ".");
+//        return ResponseEntity.ok(d);
+
+//            return ResponseEntity.ok(dishOutputDto);
+//        } catch (Exception ex) {
+//            return ResponseEntity.unprocessableEntity().body("Failed to add product to dish.");
+//        }
     }
 }

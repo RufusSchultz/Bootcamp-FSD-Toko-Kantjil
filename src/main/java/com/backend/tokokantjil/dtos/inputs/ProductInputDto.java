@@ -21,6 +21,8 @@ public class ProductInputDto {
     public double sellPrice;
     @NotNull
     public boolean isForRetail;
+    @PositiveOrZero
+    public double stock;
 
     public String notes;
 }

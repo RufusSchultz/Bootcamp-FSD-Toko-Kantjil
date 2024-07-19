@@ -1,7 +1,7 @@
 package com.backend.tokokantjil.dtos.outputs;
 
-
 import java.util.List;
+import java.util.Set;
 
 public class DishOutputDto {
     private Long id;
@@ -10,7 +10,7 @@ public class DishOutputDto {
     private double productionPrice;
     private double sellPrice;
     private String notes;
-    private List<ProductOutputDto> productOutputDtoList;
+    private List<ProductOutputDto> products;
 
     public Long getId() {
         return id;
@@ -60,11 +60,11 @@ public class DishOutputDto {
         this.notes = notes;
     }
 
-    public List<ProductOutputDto> getProductOutputDtoList() {
-        return productOutputDtoList;
+    public List<ProductOutputDto> getProducts() {
+        return products;
     }
 
-    public void setProductOutputDtoList(List<ProductOutputDto> productOutputDtoList) {
-        this.productOutputDtoList = productOutputDtoList;
+    public void setProducts(List<ProductOutputDto> products) {
+        this.products = products;
     }
 }
