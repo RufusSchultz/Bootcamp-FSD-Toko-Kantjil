@@ -59,17 +59,31 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateProduct(@Valid @PathVariable Long id, @RequestBody ProductInputDto productInputDto, BindingResult br) {
-        try {
-            if (validationChecker(br) == null) {
-                ProductOutputDto productOutputDto = service.updateProduct(id, productInputDto);
-                return ResponseEntity.ok("Updated product " + id + ".");
-            } else {
-                return validationChecker(br);
-            }
-
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to update product.");
+        if (validationChecker(br) == null) {
+            ProductOutputDto productOutputDto = service.updateProduct(id, productInputDto);
+            return ResponseEntity.ok(productOutputDto);
+        } else {
+            return validationChecker(br);
         }
+    }
 
+    @PostMapping("/{id}/increase-stock")
+    public ResponseEntity<String> stockProduct(@PathVariable long id, @RequestParam int amount) {
+        ProductOutputDto productOutputDto = service.increaseStock(id, amount);
+        String response = "Stock increased to " + productOutputDto.getStock() + ".";
+        if (productOutputDto.getStock() < 0) {
+            response = "Stock is still less than zero! " + response;
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/decrease-stock")
+    public ResponseEntity<String> writeOffProduct(@PathVariable long id, @RequestParam int amount) {
+        ProductOutputDto productOutputDto = service.decreaseStock(id, amount);
+        String response = "Stock decreased to " + productOutputDto.getStock() + ".";
+        if (productOutputDto.getStock() < 0) {
+            response = "Stock is now less than zero! " + response;
+        }
+        return ResponseEntity.ok(response);
     }
 }

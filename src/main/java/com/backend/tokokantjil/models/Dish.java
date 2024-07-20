@@ -29,12 +29,10 @@ public class Dish {
     @JoinTable(name = "dish_products")
     private Set<Product> products = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "Order_dishes")
+    @ManyToMany(mappedBy = "dishes")
     private List<Order> orders = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(name = "Catering_dishes")
+    @ManyToMany(mappedBy = "dishes")
     private List<Catering> caterings = new ArrayList<>();
 
     public Long getId() {

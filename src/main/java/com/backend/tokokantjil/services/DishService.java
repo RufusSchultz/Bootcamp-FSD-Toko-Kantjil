@@ -27,7 +27,7 @@ public class DishService {
 
     public List<DishOutputDto> getAllDishes() {
         List<DishOutputDto> list = new ArrayList<>();
-        for (Dish i: this.dishRepository.findAll()) {
+        for (Dish i : this.dishRepository.findAll()) {
             list.add(DishMapper.fromDishToDishOutputDto(i));
         }
         return list;
@@ -44,7 +44,7 @@ public class DishService {
     }
 
     public void deleteDish(Long id) {
-        if(this.dishRepository.findById(id).isPresent()) {
+        if (this.dishRepository.findById(id).isPresent()) {
             this.dishRepository.deleteById(id);
         } else {
             throw new RecordNotFoundException("No dish with id " + id + " found.");

@@ -25,9 +25,11 @@ public class Order {
     private Status status;
     @Column
     private boolean isCatering;
-    @ManyToMany(mappedBy = "orders")
+    @ManyToMany
+    @JoinTable(name = "order_products")
     private List<Product> products = new ArrayList<>();
-    @ManyToMany(mappedBy = "orders")
+    @ManyToMany
+    @JoinTable(name = "Order_dishes")
     private List<Dish> dishes = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "created_by")

@@ -21,7 +21,7 @@ public class ProductService {
 
     public List<ProductOutputDto> getAllProducts() {
         List<ProductOutputDto> list = new ArrayList<>();
-        for (Product i: this.productRepository.findAll()) {
+        for (Product i : this.productRepository.findAll()) {
             list.add(ProductMapper.fromProductToProductOutputDto(i));
         }
         return list;
@@ -38,7 +38,7 @@ public class ProductService {
     }
 
     public void deleteProduct(Long id) {
-        if(this.productRepository.findById(id).isPresent()) {
+        if (this.productRepository.findById(id).isPresent()) {
             this.productRepository.deleteById(id);
         } else {
             throw new RecordNotFoundException("No product with id " + id + " found.");
@@ -51,5 +51,23 @@ public class ProductService {
         Product newProduct = this.productRepository.save(ProductMapper.fromProductToUpdatedProduct(oldProduct, productUpdate));
 
         return ProductMapper.fromProductToProductOutputDto(newProduct);
+    }
+
+    public ProductOutputDto increaseStock(Long id, int amount) {
+        Product product = this.productRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No product with id " + id + " found."));
+
+        product.setStock(product.getStock() + amount);
+        this.productRepository.save(product);
+
+        return ProductMapper.fromProductToProductOutputDto(product);
+    }
+
+    public ProductOutputDto decreaseStock(Long id, int amount) {
+        Product product = this.productRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No product with id " + id + " found."));
+
+        product.setStock(product.getStock() - amount);
+        this.productRepository.save(product);
+
+        return ProductMapper.fromProductToProductOutputDto(product);
     }
 }

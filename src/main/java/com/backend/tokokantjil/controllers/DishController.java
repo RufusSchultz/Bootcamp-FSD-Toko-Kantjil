@@ -58,29 +58,20 @@ public class DishController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateDish(@Valid @PathVariable Long id, @RequestBody DishInputDto dishInputDto, BindingResult br) {
-        try {
-            if (validationChecker(br) == null) {
-                DishOutputDto dishOutputDto = service.updateDish(id, dishInputDto);
-                return ResponseEntity.ok("Updated dish " + id + ".");
-            } else {
-                return validationChecker(br);
-            }
 
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to update dish.");
+        if (validationChecker(br) == null) {
+            DishOutputDto dishOutputDto = service.updateDish(id, dishInputDto);
+            return ResponseEntity.ok(dishOutputDto);
+        } else {
+            return validationChecker(br);
         }
     }
 
     @PostMapping("/{dishId}/add-product")
     public ResponseEntity<?> addProductToDish(@PathVariable Long dishId, @RequestParam Long productId, double amountMultiplier) {
-//        try {
-           DishOutputDto d = this.service.addProduct(dishId, productId, amountMultiplier);
-            return ResponseEntity.ok("Added product " + productId + " to dish " + dishId + " with a multiplier of " + amountMultiplier + ".");
-//        return ResponseEntity.ok(d);
 
-//            return ResponseEntity.ok(dishOutputDto);
-//        } catch (Exception ex) {
-//            return ResponseEntity.unprocessableEntity().body("Failed to add product to dish.");
-//        }
+        //amountMultiplier only modifies productionPrice and sellPrice of Dish right now, and does nothing with stock of Product. This is for future development.
+        DishOutputDto dishOutputDto = this.service.addProduct(dishId, productId, amountMultiplier);
+        return ResponseEntity.ok("Added product " + productId + " to dish " + dishId + " with a multiplier of " + amountMultiplier + ".");
     }
 }

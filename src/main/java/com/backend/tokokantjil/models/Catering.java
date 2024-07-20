@@ -23,9 +23,11 @@ public class Catering {
     private double price;
     @Column
     private String notes;
-    @ManyToMany(mappedBy = "caterings")
+    @ManyToMany
+    @JoinTable(name = "catering_products")
     private List<Product> products = new ArrayList<>();
-    @ManyToMany(mappedBy = "caterings")
+    @ManyToMany
+    @JoinTable(name = "Catering_dishes")
     private List<Dish> dishes = new ArrayList<>();
     @ManyToOne
     private Address address;

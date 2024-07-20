@@ -21,7 +21,7 @@ public class Product {
     @Column(nullable = false)
     private State state;
     @Column(nullable = false)
-    private double amount;
+    private int amount;
     @Column(nullable = false)
     private String amountUnit;
     @Column(nullable = false)
@@ -34,15 +34,12 @@ public class Product {
     private double stock;
     @Column
     private String notes;
-    @ManyToMany
-    @JoinTable(name = "order_products")
-    private List<Order> orders = new ArrayList<>();
+    @ManyToMany(mappedBy = "products")
+    private List<Order> orders = new ArrayList<>(); //only isForRetail = true
     @ManyToMany(mappedBy = "products")
     private Set<Dish> dishes = new HashSet<>();
-    @ManyToMany
-    @JoinTable(name = "catering_products")
-    private List<Catering> caterings = new ArrayList<>();
-
+    @ManyToMany(mappedBy = "products")
+    private List<Catering> caterings = new ArrayList<>(); //only isForRetail = true
     public Long getId() {
         return id;
     }
@@ -63,11 +60,11 @@ public class Product {
         this.state = state;
     }
 
-    public double getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
