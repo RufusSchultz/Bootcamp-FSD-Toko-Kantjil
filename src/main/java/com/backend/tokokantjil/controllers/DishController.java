@@ -25,11 +25,11 @@ public class DishController {
 
     @GetMapping
     public ResponseEntity<List<DishOutputDto>> getAllDishes() {
-        return ResponseEntity.ok(service.getAllDishes());
+        return ResponseEntity.ok(service.getEveryDish());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DishOutputDto> getDishById(@PathVariable Long id) {
+    public ResponseEntity<DishOutputDto> getDish(@PathVariable Long id) {
         return ResponseEntity.ok(service.getDishById(id));
     }
 
@@ -37,7 +37,7 @@ public class DishController {
     public ResponseEntity<?> createDish(@Valid @RequestBody DishInputDto dishInputDto, BindingResult br) {
         try {
             if (validationChecker(br) == null) {
-                DishOutputDto dishOutputDto = service.createDish(dishInputDto);
+                DishOutputDto dishOutputDto = service.createNewDish(dishInputDto);
                 URI uri = URI.create(ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/" + dishOutputDto.getId()).toUriString());
@@ -52,7 +52,7 @@ public class DishController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteDish(@PathVariable Long id) {
-        service.deleteDish(id);
+        service.deleteDishById(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -60,7 +60,7 @@ public class DishController {
     public ResponseEntity<?> updateDish(@Valid @PathVariable Long id, @RequestBody DishInputDto dishInputDto, BindingResult br) {
 
         if (validationChecker(br) == null) {
-            DishOutputDto dishOutputDto = service.updateDish(id, dishInputDto);
+            DishOutputDto dishOutputDto = service.updateDishWithNewDishInputDto(id, dishInputDto);
             return ResponseEntity.ok(dishOutputDto);
         } else {
             return validationChecker(br);
@@ -71,7 +71,39 @@ public class DishController {
     public ResponseEntity<?> addProductToDish(@PathVariable Long dishId, @RequestParam Long productId, double amountMultiplier) {
 
         //amountMultiplier only modifies productionPrice and sellPrice of Dish right now, and does nothing with stock of Product. This is for future development.
-        DishOutputDto dishOutputDto = this.service.addProduct(dishId, productId, amountMultiplier);
+        DishOutputDto dishOutputDto = this.service.addProductToCollectionOfDish(dishId, productId, amountMultiplier);
         return ResponseEntity.ok("Added product " + productId + " to dish " + dishId + " with a multiplier of " + amountMultiplier + ".");
+    }
+
+    @PostMapping("/{id}/increase-stock")
+    public ResponseEntity<String> stockDish(@PathVariable long id, @RequestParam int amount) {
+        DishOutputDto dishOutputDto = service.increaseDishStock(id, amount);
+        String response = "Stock increased to " + dishOutputDto.getStock() + ".";
+        if (dishOutputDto.getStock() < 0) {
+            response = "Stock is still less than zero! " + response;
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/decrease-stock")
+    public ResponseEntity<String> consumeDish(@PathVariable long id, @RequestParam int amount) {
+        DishOutputDto dishOutputDto = service.decreaseDishStock(id, amount);
+        String response = "Stock decreased to " + dishOutputDto.getStock() + ".";
+        if (dishOutputDto.getStock() < 0) {
+            response = "Stock is now less than zero! " + response;
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/set-prices")
+    public ResponseEntity<String> setDishPrices(@PathVariable long id, @RequestParam double laborCost) {
+        String response = service.calculatePrices(id, laborCost);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/reset-prices")
+    public ResponseEntity<DishOutputDto> resetPrices (@PathVariable long id) {
+        DishOutputDto dishOutputDto = service.setPricesToZero(id);
+        return ResponseEntity.ok(dishOutputDto);
     }
 }

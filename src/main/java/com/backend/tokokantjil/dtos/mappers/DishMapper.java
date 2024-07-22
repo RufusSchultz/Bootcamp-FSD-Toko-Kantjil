@@ -21,6 +21,8 @@ public class DishMapper {
         dish.setServings(dishInputDto.servings);
         dish.setProductionPrice(dishInputDto.productionPrice);
         dish.setSellPrice(dishInputDto.sellPrice);
+        dish.setStock((dishInputDto.stock));
+        dish.setAppraised(false);
         dish.setNotes(dishInputDto.notes);
 
         return dish;
@@ -34,12 +36,13 @@ public class DishMapper {
         dishOutputDto.setServings(dish.getServings());
         dishOutputDto.setProductionPrice(dish.getProductionPrice());
         dishOutputDto.setSellPrice(dish.getSellPrice());
+        dishOutputDto.setStock(dish.getStock());
+        dishOutputDto.setAppraised(dish.isAppraised());
         dishOutputDto.setNotes(dish.getNotes());
 
         if (dish.getProducts() != null) {
             List<ProductOutputDto> productOutputDtoSet = new ArrayList<>();
-            for (Product product :
-                    dish.getProducts()) {
+            for (Product product : dish.getProducts()) {
                 productOutputDtoSet.add(ProductMapper.fromProductToProductOutputDto(product));
             }
             dishOutputDto.setProducts(productOutputDtoSet);
@@ -60,6 +63,8 @@ public class DishMapper {
         dish.setServings(dishUpdate.getServings());
         dish.setProductionPrice(dishUpdate.getProductionPrice());
         dish.setSellPrice(dishUpdate.getSellPrice());
+        dish.setStock(dishUpdate.getStock());
+        dish.setAppraised(dishUpdate.isAppraised());
         dish.setNotes(dishUpdate.getNotes());
 
         return dish;

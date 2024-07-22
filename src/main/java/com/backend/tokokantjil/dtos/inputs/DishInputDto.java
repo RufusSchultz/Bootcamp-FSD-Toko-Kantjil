@@ -2,6 +2,7 @@ package com.backend.tokokantjil.dtos.inputs;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 public class DishInputDto {
     @NotBlank
@@ -12,6 +13,8 @@ public class DishInputDto {
     public double productionPrice;
     @Positive
     public double sellPrice;
+    @PositiveOrZero
+    public double stock;
 
     public String notes;
 }

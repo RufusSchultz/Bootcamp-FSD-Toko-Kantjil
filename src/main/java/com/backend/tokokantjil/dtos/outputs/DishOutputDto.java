@@ -9,6 +9,8 @@ public class DishOutputDto {
     private int servings;
     private double productionPrice;
     private double sellPrice;
+    private double stock;
+    private boolean isAppraised;
     private String notes;
     private List<ProductOutputDto> products;
 
@@ -50,6 +52,22 @@ public class DishOutputDto {
 
     public void setSellPrice(double sellPrice) {
         this.sellPrice = sellPrice;
+    }
+
+    public double getStock() {
+        return stock;
+    }
+
+    public void setStock(double stock) {
+        this.stock = stock;
+    }
+
+    public boolean isAppraised() {
+        return isAppraised;
+    }
+
+    public void setAppraised(boolean appraised) {
+        isAppraised = appraised;
     }
 
     public String getNotes() {

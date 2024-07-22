@@ -32,13 +32,14 @@ values ('jasmine rice', 1, 10, 'kilo', 28.5, 50, false, 5, ''),
        ('small shrimp', 0, 1, 'kilo', 15.36, 28.99, false, 8, ''),
        ('kroepoek', 1, 100, 'gram', 0.65, 1.29, true, 24, '');
 
-insert into dishes(name, servings, production_price, sell_price, notes)
-values ('nasi goreng', 5, 0, 0, ''),
-       ('sate babi', 8, 0, 0, ''),
-       ('spring rolls', 6, 0, 0, '');
+insert into dishes(name, servings, production_price, sell_price, is_appraised, stock, notes)
+values ('nasi goreng', 5, 0, 0, false, 1, ''),
+       ('sate babi', 8, 0, 0, false,  1, ''),
+       ('spring rolls', 6, 0, 0, false, 1, '');
 
 insert into dish_products(dishes_id, products_id)
-values (1, 2),
+values (1, 1),
+       (1, 2),
        (1, 3);
 
 insert into caterings(date_and_time, number_of_people, price, notes)

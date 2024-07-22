@@ -15,14 +15,18 @@ public class Dish {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-    @Column
+    @Column(nullable = false)
     private String name;
-    @Column
+    @Column(nullable = false)
     private int servings;
-    @Column
+    @Column(nullable = false)
     private double productionPrice;
-    @Column
+    @Column(nullable = false)
     private double sellPrice;
+    @Column(nullable = false)
+    private boolean isAppraised;
+    @Column(nullable = false)
+    private double stock;
     @Column
     private String notes;
     @ManyToMany
@@ -69,6 +73,22 @@ public class Dish {
 
     public void setSellPrice(double sellPrice) {
         this.sellPrice = sellPrice;
+    }
+
+    public double getStock() {
+        return stock;
+    }
+
+    public void setStock(double stock) {
+        this.stock = stock;
+    }
+
+    public boolean isAppraised() {
+        return isAppraised;
+    }
+
+    public void setAppraised(boolean appraised) {
+        isAppraised = appraised;
     }
 
     public String getNotes() {
