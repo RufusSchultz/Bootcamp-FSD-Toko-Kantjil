@@ -17,6 +17,7 @@ public class CateringMapper {
         catering.setNumberOfPeople(cateringInputDto.numberOfPeople);
         catering.setPrice(cateringInputDto.price);
         catering.setNotes(cateringInputDto.notes);
+        catering.setAppraised(false);
 
         return catering;
     }
@@ -28,6 +29,7 @@ public class CateringMapper {
         cateringOutputDto.setDateAndTime(catering.getDateAndTime());
         cateringOutputDto.setNumberOfPeople(catering.getNumberOfPeople());
         cateringOutputDto.setPrice(catering.getPrice());
+        cateringOutputDto.setAppraised(catering.isAppraised());
         cateringOutputDto.setNotes(catering.getNotes());
 
         if (catering.getProducts() != null) {
@@ -35,15 +37,17 @@ public class CateringMapper {
             for (int i = catering.getProducts().size(); i < catering.getProducts().size(); i++) {
                 productOutputDtoList.add(ProductMapper.fromProductToProductOutputDto(catering.getProducts().get(i)));
             }
-            cateringOutputDto.setProductOutputDtoList(productOutputDtoList);
+            cateringOutputDto.setProducts(productOutputDtoList);
         }
-
         if (catering.getDishes() != null) {
             List<DishOutputDto> dishOutputDtoList = new ArrayList<>();
             for (int i = catering.getDishes().size(); i < catering.getDishes().size(); i++) {
                 dishOutputDtoList.add(DishMapper.fromDishToDishOutputDto(catering.getDishes().get(i)));
             }
-            cateringOutputDto.setDishOutputDtoList(dishOutputDtoList);
+            cateringOutputDto.setDishes(dishOutputDtoList);
+        }
+        if (catering.getAddress() != null) {
+            cateringOutputDto.setAddress(AddressMapper.fromAddressToAddressOutputDto(catering.getAddress()));
         }
 
 
@@ -55,6 +59,7 @@ public class CateringMapper {
         catering.setDateAndTime(cateringUpdate.getDateAndTime());
         catering.setNumberOfPeople(cateringUpdate.getNumberOfPeople());
         catering.setPrice(cateringUpdate.getPrice());
+        catering.setAppraised(cateringUpdate.isAppraised());
         catering.setNotes(cateringUpdate.getNotes());
         catering.setProducts(cateringUpdate.getProducts());
 

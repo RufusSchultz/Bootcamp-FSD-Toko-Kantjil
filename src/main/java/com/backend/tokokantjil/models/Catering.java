@@ -15,12 +15,14 @@ public class Catering {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-    @Column
+    @Column(nullable = false)
     private LocalDateTime dateAndTime;
-    @Column
+    @Column(nullable = false)
     private int numberOfPeople;
-    @Column
+    @Column(nullable = false)
     private double price;
+    @Column(nullable = false)
+    private boolean isAppraised;
     @Column
     private String notes;
     @ManyToMany
@@ -61,6 +63,14 @@ public class Catering {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public boolean isAppraised() {
+        return isAppraised;
+    }
+
+    public void setAppraised(boolean appraised) {
+        isAppraised = appraised;
     }
 
     public String getNotes() {

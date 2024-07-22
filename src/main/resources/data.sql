@@ -42,9 +42,9 @@ values (1, 1),
        (1, 2),
        (1, 3);
 
-insert into caterings(date_and_time, number_of_people, price, notes)
-values ('2024-10-28T15:00:00', 20, 5000, ''),
-       ('2024-09-20T12:00:00', 12, 3000, '');
+insert into caterings(date_and_time, number_of_people, price, is_appraised, notes)
+values ('2024-10-28T15:00:00', 20, 5000, false, ''),
+       ('2024-09-20T12:00:00', 12, 3000, false, '');
 
 insert into addresses(name, street, house_number, house_number_suffix, postal_code, city, notes)
 values ('Bert Steentjes residence', 'Nachtegaalstraat', 34, '', '1234AB', 'Hogermolenveen', ''),

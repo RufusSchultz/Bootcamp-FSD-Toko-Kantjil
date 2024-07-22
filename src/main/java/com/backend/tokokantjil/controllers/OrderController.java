@@ -58,17 +58,11 @@ public class OrderController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateOrder(@Valid @PathVariable Long id, @RequestBody OrderInputDto orderInputDto, BindingResult br) {
-        try {
             if (validationChecker(br) == null) {
                 OrderOutputDto orderOutputDto = service.updateOrder(id, orderInputDto);
-                return ResponseEntity.ok("Updated order " + id + ".");
+                return ResponseEntity.ok(orderOutputDto);
             } else {
                 return validationChecker(br);
             }
-
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to update order.");
-        }
-
     }
 }

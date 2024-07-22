@@ -58,17 +58,11 @@ public class CustomerController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCustomer(@Valid @PathVariable Long id, @RequestBody CustomerInputDto customerInputDto, BindingResult br) {
-        try {
             if (validationChecker(br) == null) {
                 CustomerOutputDto customerOutputDto = service.updateCustomer(id, customerInputDto);
-                return ResponseEntity.ok("Updated customer " + id + ".");
+                return ResponseEntity.ok(customerOutputDto);
             } else {
                 return validationChecker(br);
             }
-
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to update customer.");
-        }
-
     }
 }

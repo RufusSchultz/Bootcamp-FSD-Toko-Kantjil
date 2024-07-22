@@ -58,17 +58,11 @@ public class AddressController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAddress(@Valid @PathVariable Long id, @RequestBody AddressInputDto addressInputDto, BindingResult br) {
-        try {
             if (validationChecker(br) == null) {
                 AddressOutputDto addressOutputDto = service.updateAddress(id, addressInputDto);
-                return ResponseEntity.ok("Updated address " + id + ".");
+                return ResponseEntity.ok(addressOutputDto);
             } else {
                 return validationChecker(br);
             }
-
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to update address.");
-        }
-
     }
 }

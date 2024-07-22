@@ -58,7 +58,6 @@ public class DishController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateDish(@Valid @PathVariable Long id, @RequestBody DishInputDto dishInputDto, BindingResult br) {
-
         if (validationChecker(br) == null) {
             DishOutputDto dishOutputDto = service.updateDishWithNewDishInputDto(id, dishInputDto);
             return ResponseEntity.ok(dishOutputDto);
@@ -102,7 +101,7 @@ public class DishController {
     }
 
     @PostMapping("/{id}/reset-prices")
-    public ResponseEntity<DishOutputDto> resetPrices (@PathVariable long id) {
+    public ResponseEntity<DishOutputDto> resetPrices(@PathVariable long id) {
         DishOutputDto dishOutputDto = service.setPricesToZero(id);
         return ResponseEntity.ok(dishOutputDto);
     }

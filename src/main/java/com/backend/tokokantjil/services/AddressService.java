@@ -21,8 +21,8 @@ public class AddressService {
 
     public List<AddressOutputDto> getAllAddresss() {
         List<AddressOutputDto> list = new ArrayList<>();
-        for (Address i: this.addressRepository.findAll()) {
-            list.add(AddressMapper.fromAddressToAddressOutputDto(i));
+        for (Address address: this.addressRepository.findAll()) {
+            list.add(AddressMapper.fromAddressToAddressOutputDto(address));
         }
         return list;
     }

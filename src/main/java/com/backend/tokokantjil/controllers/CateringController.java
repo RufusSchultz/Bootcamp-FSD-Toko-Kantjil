@@ -25,11 +25,11 @@ public class CateringController {
 
     @GetMapping
     public ResponseEntity<List<CateringOutputDto>> getAllCaterings() {
-        return ResponseEntity.ok(service.getAllCaterings());
+        return ResponseEntity.ok(service.getEveryCatering());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CateringOutputDto> getCateringById(@PathVariable Long id) {
+    public ResponseEntity<CateringOutputDto> getCatering(@PathVariable Long id) {
         return ResponseEntity.ok(service.getCateringById(id));
     }
 
@@ -37,7 +37,7 @@ public class CateringController {
     public ResponseEntity<?> createCatering(@Valid @RequestBody CateringInputDto cateringInputDto, BindingResult br) {
         try {
             if (validationChecker(br) == null) {
-                CateringOutputDto cateringOutputDto = service.createCatering(cateringInputDto);
+                CateringOutputDto cateringOutputDto = service.createNewCatering(cateringInputDto);
                 URI uri = URI.create(ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/" + cateringOutputDto.getId()).toUriString());
@@ -52,23 +52,23 @@ public class CateringController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCatering(@PathVariable Long id) {
-        service.deleteCatering(id);
+        service.deleteCateringById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCatering(@Valid @PathVariable Long id, @RequestBody CateringInputDto cateringInputDto, BindingResult br) {
-        try {
             if (validationChecker(br) == null) {
-                CateringOutputDto cateringOutputDto = service.updateCatering(id, cateringInputDto);
-                return ResponseEntity.ok("Updated catering " + id + ".");
+                CateringOutputDto cateringOutputDto = service.updateCateringWithNewCateringInputDto(id, cateringInputDto);
+                return ResponseEntity.ok(cateringOutputDto);
             } else {
                 return validationChecker(br);
             }
+    }
 
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to update catering.");
-        }
-
+    @PostMapping("/{id}/address")
+    public ResponseEntity<String> setAddress(@PathVariable Long id, @RequestParam Long addressId) {
+        CateringOutputDto cateringOutputDto = service.setCateringAddress(id, addressId);
+        return ResponseEntity.ok("Address " + addressId + " set for catering " + id);
     }
 }

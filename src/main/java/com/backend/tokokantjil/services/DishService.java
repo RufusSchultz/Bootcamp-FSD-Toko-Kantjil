@@ -61,21 +61,6 @@ public class DishService {
         Dish dish = this.dishRepository.findById(dishId).orElseThrow(() -> new RecordNotFoundException("No dish with id " + dishId + " found."));
         Product product = this.productRepository.findById(productId).orElseThrow(() -> new RecordNotFoundException("No product with id " + productId + " found."));
 
-//        if (product.getStock() - amountMultiplier >= 0) {
-//
-//            product.setStock(product.getStock() - amountMultiplier);
-//
-//            dish.setProductionPrice(dish.getProductionPrice() + product.getBuyPrice() * amountMultiplier);
-//            dish.setSellPrice(dish.getSellPrice() + product.getSellPrice() * amountMultiplier);
-//            dish.getProducts().add(product);
-//
-//            this.productRepository.save(product);
-//            this.dishRepository.save(dish);
-//            return (DishMapper.fromDishToDishOutputDto(dish));
-//        } else {
-//            throw new NotEnoughInStockException("Not enough of product " + productId + " in stock!");
-//        }
-
         dish.setProductionPrice(dish.getProductionPrice() + product.getBuyPrice() * amountMultiplier);
         dish.setSellPrice(dish.getSellPrice() + product.getSellPrice() * amountMultiplier);
         dish.getProducts().add(product);

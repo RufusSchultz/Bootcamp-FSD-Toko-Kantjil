@@ -58,17 +58,11 @@ public class InvoiceController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateInvoice(@Valid @PathVariable Long id, @RequestBody InvoiceInputDto invoiceInputDto, BindingResult br) {
-        try {
             if (validationChecker(br) == null) {
                 InvoiceOutputDto invoiceOutputDto = service.updateInvoice(id, invoiceInputDto);
-                return ResponseEntity.ok("Updated invoice " + id + ".");
+                return ResponseEntity.ok(invoiceOutputDto);
             } else {
                 return validationChecker(br);
             }
-
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to update invoice.");
-        }
-
     }
 }
