@@ -66,43 +66,41 @@ public class DishController {
         }
     }
 
-    @PostMapping("/{dishId}/add-product")
-    public ResponseEntity<?> addProductToDish(@PathVariable Long dishId, @RequestParam Long productId, double amountMultiplier) {
+    @PostMapping("/{id}/products")
+    public ResponseEntity<?> addProductToDish(@PathVariable Long id, @RequestParam Long productId, double amountMultiplier) {
 
         //amountMultiplier only modifies productionPrice and sellPrice of Dish right now, and does nothing with stock of Product. This is for future development.
-        DishOutputDto dishOutputDto = this.service.addProductToCollectionOfDish(dishId, productId, amountMultiplier);
-        return ResponseEntity.ok("Added product " + productId + " to dish " + dishId + " with a multiplier of " + amountMultiplier + ".");
+        DishOutputDto dishOutputDto = this.service.addProductToCollectionOfDish(id, productId, amountMultiplier);
+        return ResponseEntity.ok("Added product " + productId + " to dish " + dishOutputDto.getId() + " with a multiplier of " + amountMultiplier + ".");
+    }
+
+    @DeleteMapping("/{id}/products")
+    public ResponseEntity<String> removeProductFromDish(@PathVariable Long id, @RequestParam Long productId) {
+        String response = service.removeProductFromCollectionOfDish(id, productId);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/{id}/increase-stock")
     public ResponseEntity<String> stockDish(@PathVariable long id, @RequestParam int amount) {
-        DishOutputDto dishOutputDto = service.increaseDishStock(id, amount);
-        String response = "Stock increased to " + dishOutputDto.getStock() + ".";
-        if (dishOutputDto.getStock() < 0) {
-            response = "Stock is still less than zero! " + response;
-        }
+        String response = service.increaseDishStock(id, amount);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/{id}/decrease-stock")
     public ResponseEntity<String> consumeDish(@PathVariable long id, @RequestParam int amount) {
-        DishOutputDto dishOutputDto = service.decreaseDishStock(id, amount);
-        String response = "Stock decreased to " + dishOutputDto.getStock() + ".";
-        if (dishOutputDto.getStock() < 0) {
-            response = "Stock is now less than zero! " + response;
-        }
+        String response = service.decreaseDishStock(id, amount);
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{id}/set-prices")
+    @PostMapping("/{id}/prices")
     public ResponseEntity<String> setDishPrices(@PathVariable long id, @RequestParam double laborCost) {
-        String response = service.calculatePrices(id, laborCost);
+        String response = service.calculateDishPrices(id, laborCost);
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{id}/reset-prices")
+    @PostMapping("/{id}/prices/reset")
     public ResponseEntity<DishOutputDto> resetPrices(@PathVariable long id) {
-        DishOutputDto dishOutputDto = service.setPricesToZero(id);
+        DishOutputDto dishOutputDto = service.setDishPricesToZero(id);
         return ResponseEntity.ok(dishOutputDto);
     }
 }

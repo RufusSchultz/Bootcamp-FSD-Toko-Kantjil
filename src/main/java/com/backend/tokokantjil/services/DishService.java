@@ -15,6 +15,7 @@ import java.util.List;
 
 @Service
 public class DishService {
+    private final double laborPriceMultiplier = 1.5;
     private final DishRepository dishRepository;
     private final ProductRepository productRepository;
 
@@ -57,8 +58,8 @@ public class DishService {
         return DishMapper.fromDishToDishOutputDto(newDish);
     }
 
-    public DishOutputDto addProductToCollectionOfDish(Long dishId, Long productId, double amountMultiplier) {
-        Dish dish = this.dishRepository.findById(dishId).orElseThrow(() -> new RecordNotFoundException("No dish with id " + dishId + " found."));
+    public DishOutputDto addProductToCollectionOfDish(Long id, Long productId, double amountMultiplier) {
+        Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
         Product product = this.productRepository.findById(productId).orElseThrow(() -> new RecordNotFoundException("No product with id " + productId + " found."));
 
         dish.setProductionPrice(dish.getProductionPrice() + product.getBuyPrice() * amountMultiplier);
@@ -67,28 +68,56 @@ public class DishService {
         dish.setAppraised(false);
         this.dishRepository.save(dish);
         return (DishMapper.fromDishToDishOutputDto(dish));
-
     }
 
-    public DishOutputDto increaseDishStock(Long id, int amount) {
+    public String removeProductFromCollectionOfDish(Long id, Long productId) {
+        Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
+        Product baseProduct = this.productRepository.findById(productId).orElseThrow(() -> new RecordNotFoundException("No product with id " + productId + " found."));
+
+        String response = "No product with id " + productId + " found. Dish is unchanged.";
+
+        for (Product product : dish.getProducts()) {
+            if (product.getId().equals(productId)) {
+                double amountMultiplier = baseProduct.getBuyPrice() / product.getBuyPrice();
+
+                dish.setProductionPrice(dish.getProductionPrice() - product.getBuyPrice() / amountMultiplier);
+                dish.setSellPrice(dish.getSellPrice() - product.getSellPrice() / amountMultiplier);
+                dish.getProducts().remove(product);
+
+                response = "Product with id " + productId + " removed from dish";
+            }
+        }
+        this.dishRepository.save(dish);
+        return response;
+    }
+
+    public String increaseDishStock(Long id, int amount) {
         Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
 
         dish.setStock(dish.getStock() + amount);
         this.dishRepository.save(dish);
 
-        return DishMapper.fromDishToDishOutputDto(dish);
+        String response = "Stock increased to " + dish.getStock() + ".";
+        if (dish.getStock() < 0) {
+            response = "Stock is still less than zero! " + response;
+        }
+        return response;
     }
 
-    public DishOutputDto decreaseDishStock(Long id, int amount) {
+    public String decreaseDishStock(Long id, int amount) {
         Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
 
         dish.setStock(dish.getStock() - amount);
         this.dishRepository.save(dish);
 
-        return DishMapper.fromDishToDishOutputDto(dish);
+        String response = "Stock decreased to " + dish.getStock() + ".";
+        if (dish.getStock() < 0) {
+            response = "Stock is now less than zero! " + response;
+        }
+        return response;
     }
 
-    public String calculatePrices(Long id, double laborCost) {
+    public String calculateDishPrices(Long id, double laborCost) {
         Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
 
         if (!dish.isAppraised()) {
@@ -101,7 +130,7 @@ public class DishService {
             }
 
             dish.setProductionPrice(laborCost + combinedCostPrice);
-            dish.setSellPrice(laborCost * 1.5 + combinedSellPrice);
+            dish.setSellPrice(laborCost * laborPriceMultiplier + combinedSellPrice);
             dish.setAppraised(true);
             this.dishRepository.save(dish);
 
@@ -111,7 +140,7 @@ public class DishService {
         }
     }
 
-    public DishOutputDto setPricesToZero(Long id) {
+    public DishOutputDto setDishPricesToZero(Long id) {
         Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
 
         dish.setAppraised(false);

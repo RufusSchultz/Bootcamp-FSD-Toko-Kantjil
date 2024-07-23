@@ -68,21 +68,13 @@ public class ProductController {
 
     @PostMapping("/{id}/increase-stock")
     public ResponseEntity<String> stockProduct(@PathVariable long id, @RequestParam int amount) {
-        ProductOutputDto productOutputDto = service.increaseProductStock(id, amount);
-        String response = "Stock increased to " + productOutputDto.getStock() + ".";
-        if (productOutputDto.getStock() < 0) {
-            response = "Stock is still less than zero! " + response;
-        }
+        String response = service.increaseProductStock(id, amount);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/{id}/decrease-stock")
     public ResponseEntity<String> consumeProduct(@PathVariable long id, @RequestParam int amount) {
-        ProductOutputDto productOutputDto = service.decreaseProductStock(id, amount);
-        String response = "Stock decreased to " + productOutputDto.getStock() + ".";
-        if (productOutputDto.getStock() < 0) {
-            response = "Stock is now less than zero! " + response;
-        }
+        String response = service.decreaseProductStock(id, amount);
         return ResponseEntity.ok(response);
     }
 }

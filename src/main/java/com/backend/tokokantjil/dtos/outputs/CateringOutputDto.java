@@ -7,7 +7,9 @@ public class CateringOutputDto {
     private Long id;
     private LocalDateTime dateAndTime;
     private int numberOfPeople;
-    private double price;
+    private double totalCostPrice;
+    private double totalSellPrice;
+    private double agreedPrice;
     private boolean isAppraised;
     private String notes;
     private List<ProductOutputDto> products;
@@ -38,12 +40,28 @@ public class CateringOutputDto {
         this.numberOfPeople = numberOfPeople;
     }
 
-    public double getPrice() {
-        return price;
+    public double getTotalCostPrice() {
+        return totalCostPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setTotalCostPrice(double totalCostPrice) {
+        this.totalCostPrice = totalCostPrice;
+    }
+
+    public double getTotalSellPrice() {
+        return totalSellPrice;
+    }
+
+    public void setTotalSellPrice(double totalSellPrice) {
+        this.totalSellPrice = totalSellPrice;
+    }
+
+    public double getAgreedPrice() {
+        return agreedPrice;
+    }
+
+    public void setAgreedPrice(double agreedPrice) {
+        this.agreedPrice = agreedPrice;
     }
 
     public boolean isAppraised() {

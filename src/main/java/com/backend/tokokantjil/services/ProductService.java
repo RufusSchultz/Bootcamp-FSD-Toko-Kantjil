@@ -53,21 +53,29 @@ public class ProductService {
         return ProductMapper.fromProductToProductOutputDto(newProduct);
     }
 
-    public ProductOutputDto increaseProductStock(Long id, int amount) {
+    public String increaseProductStock(Long id, int amount) {
         Product product = this.productRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No product with id " + id + " found."));
 
         product.setStock(product.getStock() + amount);
         this.productRepository.save(product);
 
-        return ProductMapper.fromProductToProductOutputDto(product);
+        String response = "Stock increased to " + product.getStock() + ".";
+        if (product.getStock() < 0) {
+            response = "Stock is still less than zero! " + response;
+        }
+        return response;
     }
 
-    public ProductOutputDto decreaseProductStock(Long id, int amount) {
+    public String decreaseProductStock(Long id, int amount) {
         Product product = this.productRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No product with id " + id + " found."));
 
         product.setStock(product.getStock() - amount);
         this.productRepository.save(product);
 
-        return ProductMapper.fromProductToProductOutputDto(product);
+        String response = "Stock decreased to " + product.getStock() + ".";
+        if (product.getStock() < 0) {
+            response = "Stock is now less than zero! " + response;
+        }
+        return response;
     }
 }

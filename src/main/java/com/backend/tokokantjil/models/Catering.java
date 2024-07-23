@@ -2,7 +2,6 @@ package com.backend.tokokantjil.models;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +18,12 @@ public class Catering {
     private LocalDateTime dateAndTime;
     @Column(nullable = false)
     private int numberOfPeople;
+    @Column
+    private double totalCostPrice;
+    @Column
+    private double totalSellPrice;
     @Column(nullable = false)
-    private double price;
+    private double agreedPrice;
     @Column(nullable = false)
     private boolean isAppraised;
     @Column
@@ -57,12 +60,28 @@ public class Catering {
         this.numberOfPeople = numberOfPeople;
     }
 
-    public double getPrice() {
-        return price;
+    public double getTotalCostPrice() {
+        return totalCostPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setTotalCostPrice(double costPrice) {
+        this.totalCostPrice = costPrice;
+    }
+
+    public double getTotalSellPrice() {
+        return totalSellPrice;
+    }
+
+    public void setTotalSellPrice(double sellPrice) {
+        this.totalSellPrice = sellPrice;
+    }
+
+    public double getAgreedPrice() {
+        return agreedPrice;
+    }
+
+    public void setAgreedPrice(double price) {
+        this.agreedPrice = price;
     }
 
     public boolean isAppraised() {

@@ -40,6 +40,9 @@ public class CustomerMapper {
             }
             customerOutputDto.setOrderOutputDtoSet(orderOutputDtoSet);
         }
+        if (customer.getAddress() != null) {
+            customerOutputDto.setAddress(AddressMapper.fromAddressToAddressOutputDto(customer.getAddress()));
+        }
 
         return customerOutputDto;
     }

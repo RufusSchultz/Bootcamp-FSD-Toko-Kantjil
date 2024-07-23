@@ -15,9 +15,11 @@ public class CateringMapper {
 
         catering.setDateAndTime(cateringInputDto.dateAndTime);
         catering.setNumberOfPeople(cateringInputDto.numberOfPeople);
-        catering.setPrice(cateringInputDto.price);
-        catering.setNotes(cateringInputDto.notes);
+        catering.setTotalCostPrice(cateringInputDto.totalCostPrice);
+        catering.setTotalSellPrice(cateringInputDto.totalSellPrice);
+        catering.setAgreedPrice(cateringInputDto.agreedPrice);
         catering.setAppraised(false);
+        catering.setNotes(cateringInputDto.notes);
 
         return catering;
     }
@@ -28,7 +30,9 @@ public class CateringMapper {
         cateringOutputDto.setId(catering.getId());
         cateringOutputDto.setDateAndTime(catering.getDateAndTime());
         cateringOutputDto.setNumberOfPeople(catering.getNumberOfPeople());
-        cateringOutputDto.setPrice(catering.getPrice());
+        cateringOutputDto.setTotalCostPrice(catering.getTotalCostPrice());
+        cateringOutputDto.setTotalSellPrice(catering.getTotalSellPrice());
+        cateringOutputDto.setAgreedPrice(catering.getAgreedPrice());
         cateringOutputDto.setAppraised(catering.isAppraised());
         cateringOutputDto.setNotes(catering.getNotes());
 
@@ -58,7 +62,9 @@ public class CateringMapper {
 
         catering.setDateAndTime(cateringUpdate.getDateAndTime());
         catering.setNumberOfPeople(cateringUpdate.getNumberOfPeople());
-        catering.setPrice(cateringUpdate.getPrice());
+        catering.setTotalCostPrice(catering.getTotalCostPrice());
+        catering.setTotalSellPrice(catering.getTotalSellPrice());
+        catering.setAgreedPrice(cateringUpdate.getAgreedPrice());
         catering.setAppraised(cateringUpdate.isAppraised());
         catering.setNotes(cateringUpdate.getNotes());
         catering.setProducts(cateringUpdate.getProducts());
