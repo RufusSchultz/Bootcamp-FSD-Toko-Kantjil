@@ -65,4 +65,10 @@ public class CustomerController {
                 return validationChecker(br);
             }
     }
+
+    @PostMapping("/{id}/address")
+    public ResponseEntity<String> setCustomerAddress(@PathVariable Long id, @RequestParam Long addressId) {
+        CustomerOutputDto customerOutputDto = service.setCustomerAddress(id, addressId);
+        return ResponseEntity.ok("Address " + addressId + " set for customer " + customerOutputDto.getId());
+    }
 }

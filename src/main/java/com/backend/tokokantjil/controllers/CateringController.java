@@ -2,7 +2,6 @@ package com.backend.tokokantjil.controllers;
 
 import com.backend.tokokantjil.dtos.inputs.CateringInputDto;
 import com.backend.tokokantjil.dtos.outputs.CateringOutputDto;
-import com.backend.tokokantjil.dtos.outputs.DishOutputDto;
 import com.backend.tokokantjil.services.CateringService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -68,9 +67,9 @@ public class CateringController {
     }
 
     @PostMapping("/{id}/address")
-    public ResponseEntity<String> setAddress(@PathVariable Long id, @RequestParam Long addressId) {
+    public ResponseEntity<String> setCateringAddress(@PathVariable Long id, @RequestParam Long addressId) {
         CateringOutputDto cateringOutputDto = service.setCateringAddress(id, addressId);
-        return ResponseEntity.ok("Address " + addressId + " set for catering " + id);
+        return ResponseEntity.ok("Address " + addressId + " set for catering " + cateringOutputDto.getId());
     }
 
     @PostMapping("/{id}/products")

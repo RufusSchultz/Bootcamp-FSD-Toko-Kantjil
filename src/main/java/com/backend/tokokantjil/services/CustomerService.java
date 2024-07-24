@@ -1,10 +1,12 @@
 package com.backend.tokokantjil.services;
 
 import com.backend.tokokantjil.dtos.inputs.CustomerInputDto;
+import com.backend.tokokantjil.dtos.mappers.CustomerMapper;
 import com.backend.tokokantjil.dtos.outputs.CustomerOutputDto;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
-import com.backend.tokokantjil.dtos.mappers.CustomerMapper;
+import com.backend.tokokantjil.models.Address;
 import com.backend.tokokantjil.models.Customer;
+import com.backend.tokokantjil.repositories.AddressRepository;
 import com.backend.tokokantjil.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +16,11 @@ import java.util.List;
 @Service
 public class CustomerService {
     private final CustomerRepository customerRepository;
+    private final AddressRepository addressRepository;
 
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository, AddressRepository addressRepository) {
         this.customerRepository = customerRepository;
+        this.addressRepository = addressRepository;
     }
 
     public List<CustomerOutputDto> getAllCustomers() {
@@ -51,5 +55,15 @@ public class CustomerService {
         Customer newCustomer = this.customerRepository.save(CustomerMapper.fromCustomerToUpdatedCustomer(oldCustomer, customerUpdate));
 
         return CustomerMapper.fromCustomerToCustomerOutputDto(newCustomer);
+    }
+
+    public CustomerOutputDto setCustomerAddress(Long id, Long addressId) {
+        Customer customer = this.customerRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No customer with id " + id + " found."));
+        Address address = this.addressRepository.findById(addressId).orElseThrow(() -> new RecordNotFoundException("No address with id " + id + " found."));
+
+        customer.setAddress(address);
+        this.customerRepository.save(customer);
+
+        return CustomerMapper.fromCustomerToCustomerOutputDto(customer);
     }
 }
