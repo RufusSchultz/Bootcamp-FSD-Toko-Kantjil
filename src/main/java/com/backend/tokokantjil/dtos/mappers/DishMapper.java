@@ -41,11 +41,11 @@ public class DishMapper {
         dishOutputDto.setNotes(dish.getNotes());
 
         if (dish.getProducts() != null) {
-            List<ProductOutputDto> productOutputDtoSet = new ArrayList<>();
+            List<ProductOutputDto> productOutputDtoList = new ArrayList<>();
             for (Product product : dish.getProducts()) {
-                productOutputDtoSet.add(ProductMapper.fromProductToProductOutputDto(product));
+                productOutputDtoList.add(ProductMapper.fromProductToProductOutputDto(product));
             }
-            dishOutputDto.setProducts(productOutputDtoSet);
+            dishOutputDto.setProducts(productOutputDtoList);
         }
 //        if (dish.getProducts() != null) {
 //            List<ProductOutputDto> productOutputDtoList = new ArrayList<>();

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class DishService {
@@ -73,6 +74,7 @@ public class DishService {
     public String removeProductFromCollectionOfDish(Long id, Long productId) {
         Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
         Product baseProduct = this.productRepository.findById(productId).orElseThrow(() -> new RecordNotFoundException("No product with id " + productId + " found."));
+        Set<Product> productSet = dish.getProducts();
 
         String response = "No product with id " + productId + " found. Dish is unchanged.";
 
@@ -82,11 +84,13 @@ public class DishService {
 
                 dish.setProductionPrice(dish.getProductionPrice() - product.getBuyPrice() / amountMultiplier);
                 dish.setSellPrice(dish.getSellPrice() - product.getSellPrice() / amountMultiplier);
-                dish.getProducts().remove(product);
+                productSet.remove(product);
+                dish.setAppraised(false);
 
                 response = "Product with id " + productId + " removed from dish";
             }
         }
+        dish.setProducts(productSet);
         this.dishRepository.save(dish);
         return response;
     }

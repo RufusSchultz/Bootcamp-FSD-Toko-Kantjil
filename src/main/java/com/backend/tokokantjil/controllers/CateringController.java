@@ -87,8 +87,8 @@ public class CateringController {
 
     @PostMapping("/{id}/dishes")
     public ResponseEntity<String> addDishToCatering(@PathVariable Long id, @RequestParam Long dishId) {
-        CateringOutputDto cateringOutputDto = service.addDishToListOfCatering(id, dishId);
-        return ResponseEntity.ok("Added dish to catering " + cateringOutputDto.getId());
+        String response  = service.addDishToListOfCatering(id, dishId);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}/dishes")

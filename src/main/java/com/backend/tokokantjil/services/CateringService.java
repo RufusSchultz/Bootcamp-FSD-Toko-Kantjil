@@ -90,39 +90,52 @@ public class CateringService {
     public String removeProductFromListOfCatering(Long id, Long productId) {
         Catering catering = this.cateringRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No catering with id " + id + " found."));
         String response = "No product with id " + productId + " found. Catering is unchanged.";
+        List<Product> productList = catering.getProducts();
 
         for (Product product : catering.getProducts()) {
             if (product.getId().equals(productId)) {
-                catering.getProducts().remove(product);
+                productList.remove(product);
                 response = "Product with id " + productId + " removed from catering.";
+                break;
             }
         }
+        catering.setProducts(productList);
         this.cateringRepository.save(catering);
 
         return response;
     }
 
-    public CateringOutputDto addDishToListOfCatering(Long id, Long dishId) {
+    public String addDishToListOfCatering(Long id, Long dishId) {
         Catering catering = this.cateringRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No catering with id " + id + " found."));
         Dish dish = this.dishRepository.findById(dishId).orElseThrow(() -> new RecordNotFoundException("No dish with id " + dishId + " found."));
+        String response = "";
 
-        catering.setAppraised(false);
-        catering.getDishes().add(dish);
-        this.cateringRepository.save(catering);
+        if (dish.isAppraised()) {
+            catering.setAppraised(false);
+            catering.getDishes().add(dish);
+            this.cateringRepository.save(catering);
+            response = "Added dish " + dish.getId() + " to catering.";
+        } else {
+            response = "Unable to add dish to catering. Set prices dish " + dish.getId() + " first.";
+        }
 
-        return CateringMapper.fromCateringToCateringOutputDto(catering);
+        return response;
     }
 
     public String removeDishFromListOfCatering(Long id, Long dishId) {
         Catering catering = this.cateringRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No catering with id " + id + " found."));
         String response = "No dish with id " + dishId + " found. Catering is unchanged.";
+        List<Dish> dishList = catering.getDishes();
 
         for (Dish dish : catering.getDishes()) {
             if (dish.getId().equals(dishId)) {
-                catering.getDishes().remove(dish);
+                dishList.remove(dish);
+                catering.setAppraised(false);
                 response = "Dish with id " + dishId + " removed from catering.";
+                break;
             }
         }
+        catering.setDishes(dishList);
         this.cateringRepository.save(catering);
 
         return response;

@@ -5,6 +5,8 @@ import com.backend.tokokantjil.dtos.outputs.CateringOutputDto;
 import com.backend.tokokantjil.dtos.outputs.DishOutputDto;
 import com.backend.tokokantjil.dtos.outputs.ProductOutputDto;
 import com.backend.tokokantjil.models.Catering;
+import com.backend.tokokantjil.models.Dish;
+import com.backend.tokokantjil.models.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,15 +40,15 @@ public class CateringMapper {
 
         if (catering.getProducts() != null) {
             List<ProductOutputDto> productOutputDtoList = new ArrayList<>();
-            for (int i = catering.getProducts().size(); i < catering.getProducts().size(); i++) {
-                productOutputDtoList.add(ProductMapper.fromProductToProductOutputDto(catering.getProducts().get(i)));
+            for (Product product : catering.getProducts()) {
+                productOutputDtoList.add(ProductMapper.fromProductToProductOutputDto(product));
             }
             cateringOutputDto.setProducts(productOutputDtoList);
         }
         if (catering.getDishes() != null) {
             List<DishOutputDto> dishOutputDtoList = new ArrayList<>();
-            for (int i = catering.getDishes().size(); i < catering.getDishes().size(); i++) {
-                dishOutputDtoList.add(DishMapper.fromDishToDishOutputDto(catering.getDishes().get(i)));
+            for (Dish dish : catering.getDishes()) {
+                dishOutputDtoList.add(DishMapper.fromDishToDishOutputDto(dish));
             }
             cateringOutputDto.setDishes(dishOutputDtoList);
         }
