@@ -58,11 +58,29 @@ public class InvoiceController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateInvoice(@Valid @PathVariable Long id, @RequestBody InvoiceInputDto invoiceInputDto, BindingResult br) {
-            if (validationChecker(br) == null) {
-                InvoiceOutputDto invoiceOutputDto = service.updateInvoice(id, invoiceInputDto);
-                return ResponseEntity.ok(invoiceOutputDto);
-            } else {
-                return validationChecker(br);
-            }
+        if (validationChecker(br) == null) {
+            InvoiceOutputDto invoiceOutputDto = service.updateInvoice(id, invoiceInputDto);
+            return ResponseEntity.ok(invoiceOutputDto);
+        } else {
+            return validationChecker(br);
+        }
+    }
+
+    @PostMapping("/{id}/order")
+    public ResponseEntity<String> assignOrder(@PathVariable Long id, @RequestParam Long orderId, boolean useAgreedPriceIfAny) {
+        String response = service.assignOrderToInvoice(id, orderId, useAgreedPriceIfAny);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/payment")
+    public ResponseEntity<String> setPayment(@PathVariable Long id, boolean hasBeenPaid) {
+        String response = service.setInvoicePaymentStatus(id, hasBeenPaid);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/customer/{id}")
+    public ResponseEntity<List<InvoiceOutputDto>> getInvoiceHistory(@PathVariable Long id) {
+        List<InvoiceOutputDto> invoiceOutputDtoList = service.getAllInvoicesByCustomerId(id);
+        return ResponseEntity.ok(invoiceOutputDtoList);
     }
 }

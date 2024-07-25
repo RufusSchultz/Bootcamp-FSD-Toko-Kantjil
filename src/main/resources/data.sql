@@ -60,3 +60,6 @@ values ('Bert', 'Steentjes', 'bertbeton@betonnenbert.nl', 31690483725, ''),
 insert into orders(title, status, total_price, total_cost, is_catering_order, is_appraised)
 values ('Bert Steentjes Birthday party', 0, 0, 0, true, false);
 
+insert into invoices(final_price, is_paid, notes)
+values (100, false, '');
+

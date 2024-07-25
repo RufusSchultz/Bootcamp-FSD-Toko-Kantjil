@@ -2,14 +2,16 @@ package com.backend.tokokantjil.models;
 
 import jakarta.persistence.*;
 
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Table(name = "invoices")
 public class Invoice {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
     @Column
-    private double totalPrice;
+    private double finalPrice;
     @Column
     private boolean isPaid;
     @Column
@@ -22,12 +24,12 @@ public class Invoice {
         return id;
     }
 
-    public double getTotalPrice() {
-        return totalPrice;
+    public double getFinalPrice() {
+        return finalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setFinalPrice(double totalPrice) {
+        this.finalPrice = totalPrice;
     }
 
     public boolean isPaid() {

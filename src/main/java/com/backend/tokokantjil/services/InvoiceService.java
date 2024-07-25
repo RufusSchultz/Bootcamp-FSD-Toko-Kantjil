@@ -4,8 +4,10 @@ import com.backend.tokokantjil.dtos.inputs.InvoiceInputDto;
 import com.backend.tokokantjil.dtos.mappers.InvoiceMapper;
 import com.backend.tokokantjil.dtos.outputs.InvoiceOutputDto;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
-import com.backend.tokokantjil.models.Invoice;
+import com.backend.tokokantjil.models.*;
+import com.backend.tokokantjil.repositories.CustomerRepository;
 import com.backend.tokokantjil.repositories.InvoiceRepository;
+import com.backend.tokokantjil.repositories.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,14 +16,16 @@ import java.util.List;
 @Service
 public class InvoiceService {
     private final InvoiceRepository invoiceRepository;
+    private final OrderRepository orderRepository;
 
-    public InvoiceService(InvoiceRepository invoiceRepository) {
+    public InvoiceService(InvoiceRepository invoiceRepository, OrderRepository orderRepository, CustomerRepository customerRepository) {
         this.invoiceRepository = invoiceRepository;
+        this.orderRepository = orderRepository;
     }
 
     public List<InvoiceOutputDto> getAllInvoices() {
         List<InvoiceOutputDto> list = new ArrayList<>();
-        for (Invoice i: this.invoiceRepository.findAll()) {
+        for (Invoice i : this.invoiceRepository.findAll()) {
             list.add(InvoiceMapper.fromInvoiceToInvoiceOutputDto(i));
         }
         return list;
@@ -38,7 +42,7 @@ public class InvoiceService {
     }
 
     public void deleteInvoice(Long id) {
-        if(this.invoiceRepository.findById(id).isPresent()) {
+        if (this.invoiceRepository.findById(id).isPresent()) {
             this.invoiceRepository.deleteById(id);
         } else {
             throw new RecordNotFoundException("No invoice with id " + id + " found.");
@@ -52,4 +56,76 @@ public class InvoiceService {
 
         return InvoiceMapper.fromInvoiceToInvoiceOutputDto(newInvoice);
     }
+
+    public String assignOrderToInvoice(Long id, Long orderId, boolean useAgreedPriceIfAny) {
+        Invoice invoice = this.invoiceRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No invoice with id " + id + " found."));
+        Order order = this.orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No order with id " + orderId + " found."));
+        String response = "";
+
+        if (order.isAppraised()) {
+            if (useAgreedPriceIfAny && order.isCateringOrder()) {
+                if(order.getCatering() != null) {
+                    invoice.setFinalPrice(order.getCatering().getAgreedPrice());
+                    invoice.setOrder(order);
+                    this.invoiceRepository.save(invoice);
+
+                    response = "Order " + order.getTitle() + " assigned to invoice. Final price set to " + invoice.getFinalPrice() + ".";
+                } else {
+                    response = "Order has no catering assigned, but is expecting one. Invoice is unchanged.";
+                }
+            } else {
+                invoice.setFinalPrice(order.getTotalPrice());
+                invoice.setOrder(order);
+                this.invoiceRepository.save(invoice);
+
+                response = "Order " + order.getTitle() + " assigned to invoice. Final price set to " + invoice.getFinalPrice() + ".";
+            }
+        } else {
+            response = "Order has to be appraised first. Invoice is unchanged.";
+        }
+        return response;
+    }
+
+    public String setInvoicePaymentStatus(Long id, boolean hasBeenPaid){
+        Invoice invoice = this.invoiceRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No invoice with id " + id + " found."));
+        String response = "";
+
+        if (hasBeenPaid) {
+            if (!invoice.isPaid()) {
+                if(invoice.getOrder() != null) {
+                    invoice.setPaid(true);
+                    this.invoiceRepository.save(invoice);
+
+                    response = "Invoice is set to paid.";
+                } else {
+                    response = "Invoice has no order assigned. Invoice is unchanged.";
+                }
+            } else {
+                response = "Invoice is already set to paid. Invoice is unchanged.";
+            }
+        } else {
+            if (invoice.isPaid()){
+                invoice.setPaid(false);
+                this.invoiceRepository.save(invoice);
+
+                response = "Invoice is set to unpaid.";
+            } else {
+                response = "Invoice is already set to unpaid. Invoice is unchanged.";
+            }
+        }
+        return response;
+    }
+
+    public List<InvoiceOutputDto> getAllInvoicesByCustomerId(Long id) {
+        List<InvoiceOutputDto> invoiceList = new ArrayList<>();
+
+        for (Invoice invoice : this.invoiceRepository.findAll()) {
+            if(invoice.getOrder() != null && invoice.getOrder().getCustomer() != null && invoice.getOrder().getCustomer().getId().equals(id)) {
+                invoiceList.add(InvoiceMapper.fromInvoiceToInvoiceOutputDto(invoice));
+            }
+        }
+
+        return invoiceList;
+    }
+
 }

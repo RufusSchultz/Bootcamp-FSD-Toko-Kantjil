@@ -1,14 +1,12 @@
 package com.backend.tokokantjil.dtos.outputs;
 
 
-import com.backend.tokokantjil.models.Customer;
-
 public class InvoiceOutputDto {
     private Long id;
-    private double totalPrice;
+    private double finalPrice;
     private boolean isPaid;
     private String notes;
-    private OrderOutputDto orderOutputDto;
+    private OrderOutputDto order;
 
     public Long getId() {
         return id;
@@ -18,12 +16,12 @@ public class InvoiceOutputDto {
         this.id = id;
     }
 
-    public double getTotalPrice() {
-        return totalPrice;
+    public double getFinalPrice() {
+        return finalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setFinalPrice(double finalPrice) {
+        this.finalPrice = finalPrice;
     }
 
     public boolean isPaid() {
@@ -42,11 +40,11 @@ public class InvoiceOutputDto {
         this.notes = notes;
     }
 
-    public OrderOutputDto getOrderOutputDto() {
-        return orderOutputDto;
+    public OrderOutputDto getOrder() {
+        return order;
     }
 
-    public void setOrderOutputDto(OrderOutputDto orderOutputDto) {
-        this.orderOutputDto = orderOutputDto;
+    public void setOrder(OrderOutputDto order) {
+        this.order = order;
     }
 }
