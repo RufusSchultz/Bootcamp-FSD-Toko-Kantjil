@@ -74,8 +74,8 @@ public class CateringController {
 
     @PostMapping("/{id}/products")
     public ResponseEntity<String> addProductToCatering(@PathVariable Long id, @RequestParam Long productId) {
-        CateringOutputDto cateringOutputDto = service.addProductToListOfCatering(id, productId);
-        return ResponseEntity.ok("Added product to catering " + cateringOutputDto.getId());
+        String response = service.addProductToListOfCatering(id, productId);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}/products")
@@ -97,19 +97,19 @@ public class CateringController {
     }
 
     @PostMapping("/{id}/prices/agreed-price")
-    public ResponseEntity<String> setAgreedPrice(@PathVariable Long id, @RequestParam double agreedPrice) {
+    public ResponseEntity<String> setAgreedCateringPrice(@PathVariable Long id, @RequestParam double agreedPrice) {
         String response = service.setAgreedPriceOfCatering(id, agreedPrice);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/{id}/prices")
-    public ResponseEntity<String> calculatePrices(@PathVariable Long id, @RequestParam double laborAndMaterialCost) {
+    public ResponseEntity<String> calculateCateringPrices(@PathVariable Long id, @RequestParam double laborAndMaterialCost) {
         String response = service.calculateCateringPrices(id, laborAndMaterialCost);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/{id}/prices/reset")
-    public ResponseEntity<CateringOutputDto> resetPrices(@PathVariable Long id) {
+    public ResponseEntity<CateringOutputDto> resetCateringPrices(@PathVariable Long id) {
         CateringOutputDto cateringOutputDto = service.setCateringPricesToZero(id);
         return ResponseEntity.ok(cateringOutputDto);
     }

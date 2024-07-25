@@ -36,7 +36,7 @@ public class Catering {
     private List<Dish> dishes = new ArrayList<>();
     @ManyToOne
     private Address address;
-    @OneToOne
+    @OneToOne(mappedBy = "catering")
     private Order order;
 
 

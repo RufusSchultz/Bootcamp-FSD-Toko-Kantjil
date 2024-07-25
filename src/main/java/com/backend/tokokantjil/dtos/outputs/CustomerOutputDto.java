@@ -12,7 +12,6 @@ public class CustomerOutputDto {
     private String email;
     private Long phoneNumber;
     private String notes;
-    private Set<OrderOutputDto> orderOutputDtoSet;
     private AddressOutputDto address;
 
     public Long getId() {
@@ -61,14 +60,6 @@ public class CustomerOutputDto {
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    public Set<OrderOutputDto> getOrderOutputDtoSet() {
-        return orderOutputDtoSet;
-    }
-
-    public void setOrderOutputDtoSet(Set<OrderOutputDto> orderOutputDtoSet) {
-        this.orderOutputDtoSet = orderOutputDtoSet;
     }
 
     public AddressOutputDto getAddress() {

@@ -76,15 +76,21 @@ public class CateringService {
         return CateringMapper.fromCateringToCateringOutputDto(catering);
     }
 
-    public CateringOutputDto addProductToListOfCatering(Long id, Long productId) {
+    public String addProductToListOfCatering(Long id, Long productId) {
         Catering catering = this.cateringRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No catering with id " + id + " found."));
         Product product = this.productRepository.findById(productId).orElseThrow(() -> new RecordNotFoundException("No product with id " + productId + " found."));
+        String response = "";
 
-        catering.setAppraised(false);
-        catering.getProducts().add(product);
-        this.cateringRepository.save(catering);
+        if (product.isForRetail()){
+            catering.setAppraised(false);
+            catering.getProducts().add(product);
+            this.cateringRepository.save(catering);
 
-        return CateringMapper.fromCateringToCateringOutputDto(catering);
+            response = "Added product " + productId + " to catering.";
+        } else {
+            response = "Unable to add product " + productId + ". Product is not for retail.";
+        }
+        return response;
     }
 
     public String removeProductFromListOfCatering(Long id, Long productId) {
@@ -95,6 +101,7 @@ public class CateringService {
         for (Product product : catering.getProducts()) {
             if (product.getId().equals(productId)) {
                 productList.remove(product);
+                catering.setAppraised(false);
                 response = "Product with id " + productId + " removed from catering.";
                 break;
             }
@@ -118,7 +125,6 @@ public class CateringService {
         } else {
             response = "Unable to add dish to catering. Set prices dish " + dish.getId() + " first.";
         }
-
         return response;
     }
 

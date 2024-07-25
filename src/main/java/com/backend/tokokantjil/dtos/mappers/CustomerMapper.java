@@ -32,14 +32,14 @@ public class CustomerMapper {
         customerOutputDto.setPhoneNumber(customer.getPhoneNumber());
         customerOutputDto.setNotes(customer.getNotes());
 
-        if (customer.getOrders() != null) {
-            Set<OrderOutputDto> orderOutputDtoSet = new HashSet<>();
-            for (Order order :
-                    customer.getOrders()) {
-                orderOutputDtoSet.add(OrderMapper.fromOrderToOrderOutputDto(order));
-            }
-            customerOutputDto.setOrderOutputDtoSet(orderOutputDtoSet);
-        }
+//        if (customer.getOrders() != null) {
+//            Set<OrderOutputDto> orderOutputDtoSet = new HashSet<>();
+//            for (Order order :
+//                    customer.getOrders()) {
+//                orderOutputDtoSet.add(OrderMapper.fromOrderToOrderOutputDto(order));
+//            }
+//            customerOutputDto.setOrderOutputDtoSet(orderOutputDtoSet);
+//        }
         if (customer.getAddress() != null) {
             customerOutputDto.setAddress(AddressMapper.fromAddressToAddressOutputDto(customer.getAddress()));
         }

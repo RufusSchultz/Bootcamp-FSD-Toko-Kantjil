@@ -6,13 +6,11 @@ import java.util.Set;
 
 public class UserOutputDto {
     private String username;
-    private String password;
     private Set<Role> roles;
     private String firstName;
     private String lastName;
     private String email;
     private Long phoneNumber;
-    private double salary;
     private String notes;
     private Set<OrderOutputDto> orderOutputDtoSet;
 
@@ -22,14 +20,6 @@ public class UserOutputDto {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Set<Role> getRoles() {
@@ -70,14 +60,6 @@ public class UserOutputDto {
 
     public void setPhoneNumber(Long phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
     }
 
     public String getNotes() {

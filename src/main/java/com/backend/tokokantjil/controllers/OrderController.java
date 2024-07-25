@@ -58,11 +58,59 @@ public class OrderController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateOrder(@Valid @PathVariable Long id, @RequestBody OrderInputDto orderInputDto, BindingResult br) {
-            if (validationChecker(br) == null) {
-                OrderOutputDto orderOutputDto = service.updateOrder(id, orderInputDto);
-                return ResponseEntity.ok(orderOutputDto);
-            } else {
-                return validationChecker(br);
-            }
+        if (validationChecker(br) == null) {
+            OrderOutputDto orderOutputDto = service.updateOrder(id, orderInputDto);
+            return ResponseEntity.ok(orderOutputDto);
+        } else {
+            return validationChecker(br);
+        }
+    }
+
+    @PostMapping("/{id}/customer")
+    public ResponseEntity<OrderOutputDto> setCustomer(@PathVariable Long id, @RequestParam Long customerId) {
+        OrderOutputDto orderOutputDto = service.assignCustomerToOrder(id, customerId);
+        return ResponseEntity.ok(orderOutputDto);
+    }
+
+    @PostMapping("/{id}/catering")
+    public ResponseEntity<String> setCatering(@PathVariable Long id, @RequestParam Long cateringId) {
+        String response = service.assignCateringToOrder(id, cateringId);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/products")
+    public ResponseEntity<String> addRetailProduct(@PathVariable Long id, @RequestParam Long productId) {
+        String response = service.addProductToOrder(id, productId);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}/products")
+    public ResponseEntity<String> removeRetailProduct(@PathVariable Long id, @RequestParam Long productId) {
+        String response = service.removeProductFromOrder(id, productId);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/dishes")
+    public ResponseEntity<String> addDishToOrder(@PathVariable Long id, @RequestParam Long dishId) {
+        String response = service.addDishToListOfOrder(id, dishId);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}/dishes")
+    public ResponseEntity<String> removeDishFromOrder(@PathVariable Long id, @RequestParam Long dishId) {
+        String response = service.removeDishFromListOfOrder(id, dishId);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/prices")
+    public ResponseEntity<String> calculateOrderPrices(@PathVariable Long id) {
+        String response = service.calculateOrderTotalPrices(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/prices/reset")
+    public ResponseEntity<OrderOutputDto> deleteOrderPrices(@PathVariable Long id) {
+        OrderOutputDto orderOutputDto = service.setOrderPricesToZero(id);
+        return ResponseEntity.ok(orderOutputDto);
     }
 }
