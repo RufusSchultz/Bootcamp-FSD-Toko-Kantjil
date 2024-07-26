@@ -12,7 +12,6 @@ public class UserOutputDto {
     private String email;
     private Long phoneNumber;
     private String notes;
-    private Set<OrderOutputDto> orderOutputDtoSet;
 
     public String getUsername() {
         return username;
@@ -70,11 +69,4 @@ public class UserOutputDto {
         this.notes = notes;
     }
 
-    public Set<OrderOutputDto> getOrderOutputDtoSet() {
-        return orderOutputDtoSet;
-    }
-
-    public void setOrderOutputDtoSet(Set<OrderOutputDto> orderOutputDtoSet) {
-        this.orderOutputDtoSet = orderOutputDtoSet;
-    }
 }

@@ -4,7 +4,10 @@ import com.backend.tokokantjil.dtos.inputs.UserInputDto;
 import com.backend.tokokantjil.dtos.outputs.UserOutputDto;
 import com.backend.tokokantjil.services.UserService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -30,8 +33,14 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserOutputDto> getUserById(@PathVariable String id) {
-        return ResponseEntity.ok(service.getUserById(id));
+    public ResponseEntity<?> getUserById(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String id) {
+        UserOutputDto userOutputDto = service.getUserById(id, userDetails);
+
+        if (userOutputDto.getUsername() != null){
+            return ResponseEntity.ok(userOutputDto);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
     @PostMapping

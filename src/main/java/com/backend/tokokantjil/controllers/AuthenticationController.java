@@ -1,6 +1,6 @@
 package com.backend.tokokantjil.controllers;
 
-import com.backend.tokokantjil.dtos.inputs.AuthInputDto;
+import com.backend.tokokantjil.dtos.inputs.AuthenticationInputDto;
 import com.backend.tokokantjil.utilities.JwtService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,20 +15,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AuthController {
+public class AuthenticationController {
 
     private final AuthenticationManager authManager;
     private final JwtService jwtService;
 
-    public AuthController(AuthenticationManager man, JwtService service) {
+    public AuthenticationController(AuthenticationManager man, JwtService service) {
         this.authManager = man;
         this.jwtService = service;
     }
 
-    @PostMapping("/auth")
-    public ResponseEntity<Object> signIn(@RequestBody AuthInputDto authInputDto) {
+    @PostMapping("/authenticate")
+    public ResponseEntity<Object> signIn(@RequestBody AuthenticationInputDto authenticationInputDto) {
             UsernamePasswordAuthenticationToken up =
-                    new UsernamePasswordAuthenticationToken(authInputDto.username, authInputDto.password);
+                    new UsernamePasswordAuthenticationToken(authenticationInputDto.username, authenticationInputDto.password);
 
             try {
                 Authentication auth = authManager.authenticate(up);

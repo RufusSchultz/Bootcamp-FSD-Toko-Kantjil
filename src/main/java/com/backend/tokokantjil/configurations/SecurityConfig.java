@@ -6,6 +6,7 @@ import com.backend.tokokantjil.utilities.JwtService;
 import com.backend.tokokantjil.security.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -52,13 +53,17 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll()
+//                                .requestMatchers("/**").permitAll()
 //                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
 //                        .requestMatchers(HttpMethod.POST, "/auth").permitAll()
 //                        .requestMatchers("/secret").hasRole("ADMIN")
 //                        .requestMatchers("/hello").authenticated()
 //                        .requestMatchers("/profiles", "/profiles/*").authenticated()
-                        .anyRequest().denyAll()
+                                .requestMatchers("/users").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/users/**").hasAnyRole("ADMIN","STAFF")
+                                .requestMatchers("/users/**").hasRole("ADMIN")
+                                .requestMatchers("/authenticate").permitAll()
+                                .anyRequest().denyAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(csrf -> csrf.disable())

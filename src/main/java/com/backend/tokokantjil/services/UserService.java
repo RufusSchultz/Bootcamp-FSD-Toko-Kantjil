@@ -8,6 +8,11 @@ import com.backend.tokokantjil.models.Role;
 import com.backend.tokokantjil.models.User;
 import com.backend.tokokantjil.repositories.RoleRepository;
 import com.backend.tokokantjil.repositories.UserRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,15 +35,20 @@ public class UserService {
 
     public List<UserOutputDto> getAllUsers() {
         List<UserOutputDto> list = new ArrayList<>();
-        for (User i: this.userRepository.findAll()) {
+        for (User i : this.userRepository.findAll()) {
             list.add(UserMapper.fromUserToUserOutputDto(i));
         }
         return list;
     }
 
-    public UserOutputDto getUserById(String id) {
+    public UserOutputDto getUserById(String id, UserDetails userDetails) {
         User user = this.userRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No user with username " + id + " found."));
-        return UserMapper.fromUserToUserOutputDto(user);
+        UserOutputDto userOutputDto = new UserOutputDto();
+
+        if (userDetails.getUsername().equals(user.getUsername()) || userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            userOutputDto = UserMapper.fromUserToUserOutputDto(user);
+        }
+        return userOutputDto;
     }
 
     public UserOutputDto createUser(UserInputDto userInputDto) {
@@ -55,7 +65,7 @@ public class UserService {
     }
 
     public void deleteUser(String id) {
-        if(this.userRepository.findById(id).isPresent()) {
+        if (this.userRepository.findById(id).isPresent()) {
             this.userRepository.deleteById(id);
         } else {
             throw new RecordNotFoundException("No user with username " + id + " found.");

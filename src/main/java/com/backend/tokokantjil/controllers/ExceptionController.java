@@ -14,7 +14,7 @@ public class ExceptionController {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(value = NotEnoughInStockException.class)
+    @ExceptionHandler(value = NotEnoughInStockException.class) //is deze wel gebruikt?
     public ResponseEntity<String> exception (NotEnoughInStockException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
     }
