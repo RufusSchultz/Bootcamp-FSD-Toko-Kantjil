@@ -17,8 +17,8 @@ public class CateringMapper {
 
         catering.setDateAndTime(cateringInputDto.dateAndTime);
         catering.setNumberOfPeople(cateringInputDto.numberOfPeople);
-        catering.setTotalCostPrice(cateringInputDto.totalCostPrice);
-        catering.setTotalSellPrice(cateringInputDto.totalSellPrice);
+        catering.setTotalCostPrice(0);
+        catering.setTotalSellPrice(0);
         catering.setAgreedPrice(cateringInputDto.agreedPrice);
         catering.setAppraised(false);
         catering.setNotes(cateringInputDto.notes);

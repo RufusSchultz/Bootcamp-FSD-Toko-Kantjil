@@ -33,10 +33,18 @@ public class UserService {
         this.encoder = encoder;
     }
 
-    public List<UserOutputDto> getAllUsers() {
+    public List<UserOutputDto> getAllUsers(UserDetails userDetails) {
         List<UserOutputDto> list = new ArrayList<>();
-        for (User i : this.userRepository.findAll()) {
-            list.add(UserMapper.fromUserToUserOutputDto(i));
+        for (User user : this.userRepository.findAll()) {
+            if (userDetails.getUsername().equals(user.getUsername()) || userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+                list.add(UserMapper.fromUserToUserOutputDto(user));
+            } else {
+                UserOutputDto basicInfo = new UserOutputDto();
+                basicInfo.setUsername(user.getUsername());
+                basicInfo.setFirstName(user.getFirstName());
+                basicInfo.setLastName(user.getLastName());
+                list.add(basicInfo);
+            }
         }
         return list;
     }

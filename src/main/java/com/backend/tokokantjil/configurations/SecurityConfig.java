@@ -54,14 +54,53 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
 //                                .requestMatchers("/**").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/auth").permitAll()
-//                        .requestMatchers("/secret").hasRole("ADMIN")
-//                        .requestMatchers("/hello").authenticated()
-//                        .requestMatchers("/profiles", "/profiles/*").authenticated()
-                                .requestMatchers("/users").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.GET, "/users/**").hasAnyRole("ADMIN","STAFF")
-                                .requestMatchers("/users/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/dishes", "/products").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT,
+                                        "/addresses/**",
+                                        "/caterings/**",
+                                        "/customers/**",
+                                        "/dishes/**",
+                                        "/invoices/**",
+                                        "/orders/**",
+                                        "/products/**"
+                                ).hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE,
+                                        "/addresses/**",
+                                        "/caterings/**",
+                                        "/customers/**",
+                                        "/dishes/**",
+                                        "/invoices/**",
+                                        "/orders/**",
+                                        "/products/**"
+                                ).hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/users/**").hasAnyRole("ADMIN", "STAFF")
+                                .requestMatchers("/users", "/users/**", "/roles", "/roles/**").hasRole("ADMIN")
+                                .requestMatchers(
+                                        "/addresses",
+                                        "/addresses/**",
+                                        "/caterings",
+                                        "/caterings/**",
+                                        "/caterings/*/**",
+                                        "/caterings/*/prices/**",
+                                        "/customers",
+                                        "/customers/**",
+                                        "customers/*/**",
+                                        "/dishes",
+                                        "/dishes/**",
+                                        "/dishes/*/**",
+                                        "/dishes/*/prices/**",
+                                        "/invoices",
+                                        "/invoices/**",
+                                        "/invoices/*/**",
+                                        "/invoices/customer/**",
+                                        "/orders",
+                                        "/orders/**",
+                                        "/orders/*/**",
+                                        "/orders/*/prices/**",
+                                        "/products",
+                                        "/products/**",
+                                        "/products/*/**"
+                                ).hasAnyRole("ADMIN", "STAFF")
                                 .requestMatchers("/authenticate").permitAll()
                                 .anyRequest().denyAll()
                 )

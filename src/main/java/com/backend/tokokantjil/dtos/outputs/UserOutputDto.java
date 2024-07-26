@@ -11,6 +11,7 @@ public class UserOutputDto {
     private String lastName;
     private String email;
     private Long phoneNumber;
+    private double salary;
     private String notes;
 
     public String getUsername() {
@@ -59,6 +60,14 @@ public class UserOutputDto {
 
     public void setPhoneNumber(Long phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
 
     public String getNotes() {

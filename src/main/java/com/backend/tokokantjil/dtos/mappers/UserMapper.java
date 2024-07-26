@@ -34,6 +34,7 @@ public class UserMapper {
         userOutputDto.setLastName(user.getLastName());
         userOutputDto.setEmail(user.getEmail());
         userOutputDto.setPhoneNumber(user.getPhoneNumber());
+        userOutputDto.setSalary(user.getSalary());
         userOutputDto.setNotes(user.getNotes());
 
         return userOutputDto;
@@ -47,6 +48,7 @@ public class UserMapper {
         user.setLastName(userUpdate.getLastName());
         user.setEmail(userUpdate.getEmail());
         user.setPhoneNumber(userUpdate.getPhoneNumber());
+        user.setSalary(userUpdate.getSalary());
         user.setNotes(userUpdate.getNotes());
 
         return user;

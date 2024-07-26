@@ -28,8 +28,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserOutputDto>> getAllUsers() {
-        return ResponseEntity.ok(service.getAllUsers());
+    public ResponseEntity<List<UserOutputDto>> getAllUsers(@AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(service.getAllUsers(userDetails));
     }
 
     @GetMapping("/{id}")
@@ -66,7 +66,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}/update")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@Valid @PathVariable String id, @RequestBody UserInputDto userInputDto, BindingResult br) {
             if (validationChecker(br) == null) {
                 UserOutputDto userOutputDto = service.updateUser(id, userInputDto);
