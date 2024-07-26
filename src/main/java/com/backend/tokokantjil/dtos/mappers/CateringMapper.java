@@ -5,6 +5,8 @@ import com.backend.tokokantjil.dtos.outputs.CateringOutputDto;
 import com.backend.tokokantjil.dtos.outputs.DishOutputDto;
 import com.backend.tokokantjil.dtos.outputs.ProductOutputDto;
 import com.backend.tokokantjil.models.Catering;
+import com.backend.tokokantjil.models.Dish;
+import com.backend.tokokantjil.models.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,10 @@ public class CateringMapper {
 
         catering.setDateAndTime(cateringInputDto.dateAndTime);
         catering.setNumberOfPeople(cateringInputDto.numberOfPeople);
-        catering.setPrice(cateringInputDto.price);
+        catering.setTotalCostPrice(cateringInputDto.totalCostPrice);
+        catering.setTotalSellPrice(cateringInputDto.totalSellPrice);
+        catering.setAgreedPrice(cateringInputDto.agreedPrice);
+        catering.setAppraised(false);
         catering.setNotes(cateringInputDto.notes);
 
         return catering;
@@ -27,23 +32,28 @@ public class CateringMapper {
         cateringOutputDto.setId(catering.getId());
         cateringOutputDto.setDateAndTime(catering.getDateAndTime());
         cateringOutputDto.setNumberOfPeople(catering.getNumberOfPeople());
-        cateringOutputDto.setPrice(catering.getPrice());
+        cateringOutputDto.setTotalCostPrice(catering.getTotalCostPrice());
+        cateringOutputDto.setTotalSellPrice(catering.getTotalSellPrice());
+        cateringOutputDto.setAgreedPrice(catering.getAgreedPrice());
+        cateringOutputDto.setAppraised(catering.isAppraised());
         cateringOutputDto.setNotes(catering.getNotes());
 
         if (catering.getProducts() != null) {
             List<ProductOutputDto> productOutputDtoList = new ArrayList<>();
-            for (int i = catering.getProducts().size(); i < catering.getProducts().size(); i++) {
-                productOutputDtoList.add(ProductMapper.fromProductToProductOutputDto(catering.getProducts().get(i)));
+            for (Product product : catering.getProducts()) {
+                productOutputDtoList.add(ProductMapper.fromProductToProductOutputDto(product));
             }
-            cateringOutputDto.setProductOutputDtoList(productOutputDtoList);
+            cateringOutputDto.setProducts(productOutputDtoList);
         }
-
         if (catering.getDishes() != null) {
             List<DishOutputDto> dishOutputDtoList = new ArrayList<>();
-            for (int i = catering.getDishes().size(); i < catering.getDishes().size(); i++) {
-                dishOutputDtoList.add(DishMapper.fromDishToDishOutputDto(catering.getDishes().get(i)));
+            for (Dish dish : catering.getDishes()) {
+                dishOutputDtoList.add(DishMapper.fromDishToDishOutputDto(dish));
             }
-            cateringOutputDto.setDishOutputDtoList(dishOutputDtoList);
+            cateringOutputDto.setDishes(dishOutputDtoList);
+        }
+        if (catering.getAddress() != null) {
+            cateringOutputDto.setAddress(AddressMapper.fromAddressToAddressOutputDto(catering.getAddress()));
         }
 
 
@@ -54,7 +64,10 @@ public class CateringMapper {
 
         catering.setDateAndTime(cateringUpdate.getDateAndTime());
         catering.setNumberOfPeople(cateringUpdate.getNumberOfPeople());
-        catering.setPrice(cateringUpdate.getPrice());
+        catering.setTotalCostPrice(catering.getTotalCostPrice());
+        catering.setTotalSellPrice(catering.getTotalSellPrice());
+        catering.setAgreedPrice(cateringUpdate.getAgreedPrice());
+        catering.setAppraised(cateringUpdate.isAppraised());
         catering.setNotes(cateringUpdate.getNotes());
         catering.setProducts(cateringUpdate.getProducts());
 

@@ -7,10 +7,14 @@ public class CateringOutputDto {
     private Long id;
     private LocalDateTime dateAndTime;
     private int numberOfPeople;
-    private double price;
+    private double totalCostPrice;
+    private double totalSellPrice;
+    private double agreedPrice;
+    private boolean isAppraised;
     private String notes;
-    private List<ProductOutputDto> productOutputDtoList;
-    private List<DishOutputDto> dishOutputDtoList;
+    private List<ProductOutputDto> products;
+    private List<DishOutputDto> dishes;
+    private AddressOutputDto address;
 
     public Long getId() {
         return id;
@@ -36,12 +40,36 @@ public class CateringOutputDto {
         this.numberOfPeople = numberOfPeople;
     }
 
-    public double getPrice() {
-        return price;
+    public double getTotalCostPrice() {
+        return totalCostPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setTotalCostPrice(double totalCostPrice) {
+        this.totalCostPrice = totalCostPrice;
+    }
+
+    public double getTotalSellPrice() {
+        return totalSellPrice;
+    }
+
+    public void setTotalSellPrice(double totalSellPrice) {
+        this.totalSellPrice = totalSellPrice;
+    }
+
+    public double getAgreedPrice() {
+        return agreedPrice;
+    }
+
+    public void setAgreedPrice(double agreedPrice) {
+        this.agreedPrice = agreedPrice;
+    }
+
+    public boolean isAppraised() {
+        return isAppraised;
+    }
+
+    public void setAppraised(boolean appraised) {
+        isAppraised = appraised;
     }
 
     public String getNotes() {
@@ -52,19 +80,27 @@ public class CateringOutputDto {
         this.notes = notes;
     }
 
-    public List<ProductOutputDto> getProductOutputDtoList() {
-        return productOutputDtoList;
+    public List<ProductOutputDto> getProducts() {
+        return products;
     }
 
-    public void setProductOutputDtoList(List<ProductOutputDto> productOutputDtoList) {
-        this.productOutputDtoList = productOutputDtoList;
+    public void setProducts(List<ProductOutputDto> products) {
+        this.products = products;
     }
 
-    public List<DishOutputDto> getDishOutputDtoList() {
-        return dishOutputDtoList;
+    public List<DishOutputDto> getDishes() {
+        return dishes;
     }
 
-    public void setDishOutputDtoList(List<DishOutputDto> dishOutputDtoList) {
-        this.dishOutputDtoList = dishOutputDtoList;
+    public void setDishes(List<DishOutputDto> dishes) {
+        this.dishes = dishes;
+    }
+
+    public AddressOutputDto getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressOutputDto address) {
+        this.address = address;
     }
 }

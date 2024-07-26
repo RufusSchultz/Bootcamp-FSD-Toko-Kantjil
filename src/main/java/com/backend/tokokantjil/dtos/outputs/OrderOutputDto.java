@@ -1,7 +1,6 @@
 package com.backend.tokokantjil.dtos.outputs;
 
 import com.backend.tokokantjil.enumerations.Status;
-import com.backend.tokokantjil.models.Catering;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,11 +10,15 @@ public class OrderOutputDto {
     private String title;
     private LocalDateTime createdAt;
     private Status status;
-    private boolean isCatering;
-
-    private List<ProductOutputDto> productOutputDtoList;
-    private List<DishOutputDto> dishOutputDtoList;
-    private CateringOutputDto cateringOutputDto;
+    private double totalPrice;
+    private double totalCost;
+    private boolean isCateringOrder;
+    private boolean isAppraised;
+    private List<ProductOutputDto> products;
+    private List<DishOutputDto> dishes;
+    private CateringOutputDto catering;
+    private CustomerOutputDto customer;
+    private String createdBy;
 
     public Long getId() {
         return id;
@@ -49,35 +52,75 @@ public class OrderOutputDto {
         this.status = status;
     }
 
-    public boolean isCatering() {
-        return isCatering;
+    public double getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setCatering(boolean catering) {
-        isCatering = catering;
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
-    public List<ProductOutputDto> getProductOutputDtoList() {
-        return productOutputDtoList;
+    public double getTotalCost() {
+        return totalCost;
     }
 
-    public void setProductOutputDtoList(List<ProductOutputDto> productOutputDtoList) {
-        this.productOutputDtoList = productOutputDtoList;
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
     }
 
-    public List<DishOutputDto> getDishOutputDtoList() {
-        return dishOutputDtoList;
+    public boolean isCateringOrder() {
+        return isCateringOrder;
     }
 
-    public void setDishOutputDtoList(List<DishOutputDto> dishOutputDtoList) {
-        this.dishOutputDtoList = dishOutputDtoList;
+    public void setCateringOrder(boolean cateringOrder) {
+        isCateringOrder = cateringOrder;
     }
 
-    public CateringOutputDto getCateringOutputDto() {
-        return cateringOutputDto;
+    public boolean isAppraised() {
+        return isAppraised;
     }
 
-    public void setCateringOutputDto(CateringOutputDto cateringOutputDto) {
-        this.cateringOutputDto = cateringOutputDto;
+    public void setAppraised(boolean appraised) {
+        isAppraised = appraised;
+    }
+
+    public List<ProductOutputDto> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<ProductOutputDto> products) {
+        this.products = products;
+    }
+
+    public List<DishOutputDto> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(List<DishOutputDto> dishes) {
+        this.dishes = dishes;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public CateringOutputDto getCatering() {
+        return catering;
+    }
+
+    public void setCatering(CateringOutputDto catering) {
+        this.catering = catering;
+    }
+
+    public CustomerOutputDto getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerOutputDto customer) {
+        this.customer = customer;
     }
 }

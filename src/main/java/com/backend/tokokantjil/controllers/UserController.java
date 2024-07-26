@@ -59,16 +59,11 @@ public class UserController {
 
     @PutMapping("/{id}/update")
     public ResponseEntity<?> updateUser(@Valid @PathVariable String id, @RequestBody UserInputDto userInputDto, BindingResult br) {
-        try {
             if (validationChecker(br) == null) {
                 UserOutputDto userOutputDto = service.updateUser(id, userInputDto);
-                return ResponseEntity.ok("Updated user " + id + ".");
+                return ResponseEntity.ok(userOutputDto);
             } else {
                 return validationChecker(br);
             }
-
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to update user.");
-        }
     }
 }

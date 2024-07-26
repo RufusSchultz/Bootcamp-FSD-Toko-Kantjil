@@ -2,7 +2,6 @@ package com.backend.tokokantjil.models;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,21 +14,29 @@ public class Catering {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-    @Column
+    @Column(nullable = false)
     private LocalDateTime dateAndTime;
-    @Column
+    @Column(nullable = false)
     private int numberOfPeople;
     @Column
-    private double price;
+    private double totalCostPrice;
+    @Column
+    private double totalSellPrice;
+    @Column(nullable = false)
+    private double agreedPrice;
+    @Column(nullable = false)
+    private boolean isAppraised;
     @Column
     private String notes;
-    @ManyToMany(mappedBy = "caterings")
+    @ManyToMany
+    @JoinTable(name = "catering_products")
     private List<Product> products = new ArrayList<>();
-    @ManyToMany(mappedBy = "caterings")
+    @ManyToMany
+    @JoinTable(name = "Catering_dishes")
     private List<Dish> dishes = new ArrayList<>();
     @ManyToOne
     private Address address;
-    @OneToOne
+    @OneToOne(mappedBy = "catering")
     private Order order;
 
 
@@ -53,12 +60,36 @@ public class Catering {
         this.numberOfPeople = numberOfPeople;
     }
 
-    public double getPrice() {
-        return price;
+    public double getTotalCostPrice() {
+        return totalCostPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setTotalCostPrice(double costPrice) {
+        this.totalCostPrice = costPrice;
+    }
+
+    public double getTotalSellPrice() {
+        return totalSellPrice;
+    }
+
+    public void setTotalSellPrice(double sellPrice) {
+        this.totalSellPrice = sellPrice;
+    }
+
+    public double getAgreedPrice() {
+        return agreedPrice;
+    }
+
+    public void setAgreedPrice(double price) {
+        this.agreedPrice = price;
+    }
+
+    public boolean isAppraised() {
+        return isAppraised;
+    }
+
+    public void setAppraised(boolean appraised) {
+        isAppraised = appraised;
     }
 
     public String getNotes() {

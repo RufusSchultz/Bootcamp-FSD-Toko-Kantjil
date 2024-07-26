@@ -25,11 +25,11 @@ public class DishController {
 
     @GetMapping
     public ResponseEntity<List<DishOutputDto>> getAllDishes() {
-        return ResponseEntity.ok(service.getAllDishes());
+        return ResponseEntity.ok(service.getEveryDish());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DishOutputDto> getDishById(@PathVariable Long id) {
+    public ResponseEntity<DishOutputDto> getDish(@PathVariable Long id) {
         return ResponseEntity.ok(service.getDishById(id));
     }
 
@@ -37,7 +37,7 @@ public class DishController {
     public ResponseEntity<?> createDish(@Valid @RequestBody DishInputDto dishInputDto, BindingResult br) {
         try {
             if (validationChecker(br) == null) {
-                DishOutputDto dishOutputDto = service.createDish(dishInputDto);
+                DishOutputDto dishOutputDto = service.createNewDish(dishInputDto);
                 URI uri = URI.create(ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/" + dishOutputDto.getId()).toUriString());
@@ -52,23 +52,55 @@ public class DishController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteDish(@PathVariable Long id) {
-        service.deleteDish(id);
+        service.deleteDishById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateDish(@Valid @PathVariable Long id, @RequestBody DishInputDto dishInputDto, BindingResult br) {
-        try {
-            if (validationChecker(br) == null) {
-                DishOutputDto dishOutputDto = service.updateDish(id, dishInputDto);
-                return ResponseEntity.ok("Updated dish " + id + ".");
-            } else {
-                return validationChecker(br);
-            }
-
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to update dish.");
+        if (validationChecker(br) == null) {
+            DishOutputDto dishOutputDto = service.updateDishWithNewDishInputDto(id, dishInputDto);
+            return ResponseEntity.ok(dishOutputDto);
+        } else {
+            return validationChecker(br);
         }
+    }
 
+    @PostMapping("/{id}/products")
+    public ResponseEntity<?> addProductToDish(@PathVariable Long id, @RequestParam Long productId, double amountMultiplier) {
+
+        //amountMultiplier only modifies productionPrice and sellPrice of Dish right now, and does nothing with stock of Product. This is for future development.
+        DishOutputDto dishOutputDto = this.service.addProductToCollectionOfDish(id, productId, amountMultiplier);
+        return ResponseEntity.ok("Added product " + productId + " to dish " + dishOutputDto.getId() + " with a multiplier of " + amountMultiplier + ".");
+    }
+
+    @DeleteMapping("/{id}/products")
+    public ResponseEntity<String> removeProductFromDish(@PathVariable Long id, @RequestParam Long productId) {
+        String response = service.removeProductFromCollectionOfDish(id, productId);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/increase-stock")
+    public ResponseEntity<String> stockDish(@PathVariable long id, @RequestParam int amount) {
+        String response = service.increaseDishStock(id, amount);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/decrease-stock")
+    public ResponseEntity<String> consumeDish(@PathVariable long id, @RequestParam int amount) {
+        String response = service.decreaseDishStock(id, amount);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/prices")
+    public ResponseEntity<String> setDishPrices(@PathVariable long id, @RequestParam double laborCost) {
+        String response = service.calculateDishPrices(id, laborCost);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/prices/reset")
+    public ResponseEntity<DishOutputDto> resetPrices(@PathVariable long id) {
+        DishOutputDto dishOutputDto = service.setDishPricesToZero(id);
+        return ResponseEntity.ok(dishOutputDto);
     }
 }

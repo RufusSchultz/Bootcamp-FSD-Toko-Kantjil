@@ -30,18 +30,16 @@ public class Product {
     private double sellPrice;
     @Column(nullable = false)
     private boolean isForRetail;
+    @Column(nullable = false)
+    private double stock;
     @Column
     private String notes;
-    @ManyToMany
-    @JoinTable(name = "order_products")
-    private List<Order> orders = new ArrayList<>();
-    @ManyToMany
-    @JoinTable(name = "dish_products")
-    private List<Dish> dishes = new ArrayList<>();
-    @ManyToMany
-    @JoinTable(name = "catering_products")
-    private List<Catering> caterings = new ArrayList<>();
-
+    @ManyToMany(mappedBy = "products")
+    private List<Order> orders = new ArrayList<>(); //only isForRetail = true
+    @ManyToMany(mappedBy = "products")
+    private Set<Dish> dishes = new HashSet<>();
+    @ManyToMany(mappedBy = "products")
+    private List<Catering> caterings = new ArrayList<>(); //only isForRetail = true
     public Long getId() {
         return id;
     }
@@ -102,6 +100,14 @@ public class Product {
         isForRetail = forRetail;
     }
 
+    public double getStock() {
+        return stock;
+    }
+
+    public void setStock(double stock) {
+        this.stock = stock;
+    }
+
     public String getNotes() {
         return notes;
     }
@@ -118,11 +124,11 @@ public class Product {
         this.orders = orders;
     }
 
-    public List<Dish> getDishes() {
+    public Set<Dish> getDishes() {
         return dishes;
     }
 
-    public void setDishes(List<Dish> dishes) {
+    public void setDishes(Set<Dish> dishes) {
         this.dishes = dishes;
     }
 

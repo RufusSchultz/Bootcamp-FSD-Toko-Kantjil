@@ -1,5 +1,6 @@
 package com.backend.tokokantjil.dtos.outputs;
 
+import com.backend.tokokantjil.models.Address;
 import com.backend.tokokantjil.models.Order;
 
 import java.util.Set;
@@ -11,7 +12,7 @@ public class CustomerOutputDto {
     private String email;
     private Long phoneNumber;
     private String notes;
-    private Set<OrderOutputDto> orderOutputDtoSet;
+    private AddressOutputDto address;
 
     public Long getId() {
         return id;
@@ -61,11 +62,11 @@ public class CustomerOutputDto {
         this.notes = notes;
     }
 
-    public Set<OrderOutputDto> getOrderOutputDtoSet() {
-        return orderOutputDtoSet;
+    public AddressOutputDto getAddress() {
+        return address;
     }
 
-    public void setOrderOutputDtoSet(Set<OrderOutputDto> orderOutputDtoSet) {
-        this.orderOutputDtoSet = orderOutputDtoSet;
+    public void setAddress(AddressOutputDto address) {
+        this.address = address;
     }
 }

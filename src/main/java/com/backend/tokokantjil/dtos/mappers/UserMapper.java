@@ -30,13 +30,11 @@ public class UserMapper {
         UserOutputDto userOutputDto = new UserOutputDto();
 
         userOutputDto.setUsername(user.getUsername());
-//        userOutputDto.setPassword(user.getPassword());
         userOutputDto.setRoles(user.getRoles());
         userOutputDto.setFirstName(user.getFirstName());
         userOutputDto.setLastName(user.getLastName());
         userOutputDto.setEmail(user.getEmail());
         userOutputDto.setPhoneNumber(user.getPhoneNumber());
-        userOutputDto.setSalary(user.getSalary());
         userOutputDto.setNotes(user.getNotes());
 
         if (user.getOrders() != null) {
@@ -59,7 +57,6 @@ public class UserMapper {
         user.setLastName(userUpdate.getLastName());
         user.setEmail(userUpdate.getEmail());
         user.setPhoneNumber(userUpdate.getPhoneNumber());
-        user.setSalary(userUpdate.getSalary());
         user.setNotes(userUpdate.getNotes());
 
         return user;

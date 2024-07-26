@@ -2,7 +2,6 @@ package com.backend.tokokantjil.controllers;
 
 import com.backend.tokokantjil.dtos.inputs.ProductInputDto;
 import com.backend.tokokantjil.dtos.outputs.ProductOutputDto;
-import com.backend.tokokantjil.models.Product;
 import com.backend.tokokantjil.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -26,11 +25,11 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<ProductOutputDto>> getAllProducts() {
-        return ResponseEntity.ok(service.getAllProducts());
+        return ResponseEntity.ok(service.getEveryProduct());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductOutputDto> getProductById(@PathVariable Long id) {
+    public ResponseEntity<ProductOutputDto> getProduct(@PathVariable Long id) {
         return ResponseEntity.ok(service.getProductById(id));
     }
 
@@ -38,7 +37,7 @@ public class ProductController {
     public ResponseEntity<?> createProduct(@Valid @RequestBody ProductInputDto productInputDto, BindingResult br) {
         try {
             if (validationChecker(br) == null) {
-                ProductOutputDto productOutputDto = service.createProduct(productInputDto);
+                ProductOutputDto productOutputDto = service.createNewProduct(productInputDto);
                 URI uri = URI.create(ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/" + productOutputDto.getId()).toUriString());
@@ -53,23 +52,29 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
-        service.deleteProduct(id);
+        service.deleteProductById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateProduct(@Valid @PathVariable Long id, @RequestBody ProductInputDto productInputDto, BindingResult br) {
-        try {
-            if (validationChecker(br) == null) {
-                ProductOutputDto productOutputDto = service.updateProduct(id, productInputDto);
-                return ResponseEntity.ok("Updated product " + id + ".");
-            } else {
-                return validationChecker(br);
-            }
-
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to update product.");
+        if (validationChecker(br) == null) {
+            ProductOutputDto productOutputDto = service.updateProductWithNewProductInputDto(id, productInputDto);
+            return ResponseEntity.ok(productOutputDto);
+        } else {
+            return validationChecker(br);
         }
+    }
 
+    @PostMapping("/{id}/increase-stock")
+    public ResponseEntity<String> stockProduct(@PathVariable long id, @RequestParam int amount) {
+        String response = service.increaseProductStock(id, amount);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{id}/decrease-stock")
+    public ResponseEntity<String> consumeProduct(@PathVariable long id, @RequestParam int amount) {
+        String response = service.decreaseProductStock(id, amount);
+        return ResponseEntity.ok(response);
     }
 }

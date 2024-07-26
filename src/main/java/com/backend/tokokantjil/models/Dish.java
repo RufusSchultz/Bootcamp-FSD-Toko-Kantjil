@@ -3,7 +3,9 @@ package com.backend.tokokantjil.models;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -13,25 +15,28 @@ public class Dish {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-    @Column
+    @Column(nullable = false)
     private String name;
-    @Column
+    @Column(nullable = false)
     private int servings;
-    @Column
+    @Column(nullable = false)
     private double productionPrice;
-    @Column
+    @Column(nullable = false)
     private double sellPrice;
+    @Column(nullable = false)
+    private boolean isAppraised;
+    @Column(nullable = false)
+    private double stock;
     @Column
     private String notes;
-    @ManyToMany(mappedBy = "dishes")
-    private List<Product> products = new ArrayList<>();
-
     @ManyToMany
-    @JoinTable(name = "Order_dishes")
+    @JoinTable(name = "dish_products")
+    private Set<Product> products = new HashSet<>();
+
+    @ManyToMany(mappedBy = "dishes")
     private List<Order> orders = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(name = "Catering_dishes")
+    @ManyToMany(mappedBy = "dishes")
     private List<Catering> caterings = new ArrayList<>();
 
     public Long getId() {
@@ -70,6 +75,22 @@ public class Dish {
         this.sellPrice = sellPrice;
     }
 
+    public double getStock() {
+        return stock;
+    }
+
+    public void setStock(double stock) {
+        this.stock = stock;
+    }
+
+    public boolean isAppraised() {
+        return isAppraised;
+    }
+
+    public void setAppraised(boolean appraised) {
+        isAppraised = appraised;
+    }
+
     public String getNotes() {
         return notes;
     }
@@ -78,11 +99,11 @@ public class Dish {
         this.notes = notes;
     }
 
-    public List<Product> getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(Set<Product> products) {
         this.products = products;
     }
 
