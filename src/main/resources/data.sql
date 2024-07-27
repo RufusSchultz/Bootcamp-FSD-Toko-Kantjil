@@ -57,8 +57,8 @@ values ('Bert', 'Steentjes', 'bertbeton@betonnenbert.nl', 31690483725, ''),
        ('Koos', 'Druk', 'info@koosdruk.nl', 3164839455, ''),
        ('Mark', 'Webber', 'neeeenanderemark@formule1.vroem', 3167888854, 'Do NOT send Miep on any caterings he orders.');
 
-insert into orders(title, status, total_price, total_cost, is_catering_order, is_appraised)
-values ('Bert Steentjes Birthday party', 0, 0, 0, true, false);
+insert into orders(title, created_at, status, total_price, total_cost, is_catering_order, is_appraised)
+values ('Bert Steentjes Birthday party', '2024-07-27T13:56:47.584277', 0, 0, 0, true, false);
 
 insert into invoices(final_price, is_paid, notes)
 values (100, false, '');

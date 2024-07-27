@@ -65,13 +65,13 @@ public class SecurityConfig {
                                         "/products/**"
                                 ).hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE,
-                                        "/addresses/**",
-                                        "/caterings/**",
-                                        "/customers/**",
+                                        "/addresses/*",
+                                        "/caterings/*",
+                                        "/customers/*",
                                         "/dishes/**",
-                                        "/invoices/**",
-                                        "/orders/**",
-                                        "/products/**"
+                                        "/invoices/*",
+                                        "/orders/*",
+                                        "/products/*"
                                 ).hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/users/**").hasAnyRole("ADMIN", "STAFF")
                                 .requestMatchers("/users", "/users/**", "/roles", "/roles/**").hasRole("ADMIN")
@@ -80,26 +80,16 @@ public class SecurityConfig {
                                         "/addresses/**",
                                         "/caterings",
                                         "/caterings/**",
-                                        "/caterings/*/**",
-                                        "/caterings/*/prices/**",
                                         "/customers",
                                         "/customers/**",
-                                        "customers/*/**",
                                         "/dishes",
                                         "/dishes/**",
-                                        "/dishes/*/**",
-                                        "/dishes/*/prices/**",
                                         "/invoices",
                                         "/invoices/**",
-                                        "/invoices/*/**",
-                                        "/invoices/customer/**",
                                         "/orders",
                                         "/orders/**",
-                                        "/orders/*/**",
-                                        "/orders/*/prices/**",
                                         "/products",
-                                        "/products/**",
-                                        "/products/*/**"
+                                        "/products/**"
                                 ).hasAnyRole("ADMIN", "STAFF")
                                 .requestMatchers("/authenticate").permitAll()
                                 .anyRequest().denyAll()

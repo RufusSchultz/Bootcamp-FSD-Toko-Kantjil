@@ -5,6 +5,8 @@ import com.backend.tokokantjil.dtos.outputs.OrderOutputDto;
 import com.backend.tokokantjil.services.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -34,10 +36,10 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createOrder(@Valid @RequestBody OrderInputDto orderInputDto, BindingResult br) {
+    public ResponseEntity<?> createOrder(@Valid @AuthenticationPrincipal UserDetails userDetails, @RequestBody OrderInputDto orderInputDto, BindingResult br) {
         try {
             if (validationChecker(br) == null) {
-                OrderOutputDto orderOutputDto = service.createOrder(orderInputDto);
+                OrderOutputDto orderOutputDto = service.createOrder(userDetails, orderInputDto);
                 URI uri = URI.create(ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/" + orderOutputDto.getId()).toUriString());
