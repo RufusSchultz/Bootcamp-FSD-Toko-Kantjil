@@ -18,7 +18,7 @@ public class UserMapper {
         user.setFirstName(userInputDto.firstName);
         user.setLastName(userInputDto.lastName);
         user.setEmail(userInputDto.email);
-        user.setPhoneNumber(userInputDto.phoneNumber);
+        user.setPhoneNumber(Long.valueOf(userInputDto.phoneNumber));
         user.setNotes(userInputDto.notes);
         user.setSalary(userInputDto.salary);
 

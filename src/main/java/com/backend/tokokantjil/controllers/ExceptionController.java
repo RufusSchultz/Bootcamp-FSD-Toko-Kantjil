@@ -1,7 +1,7 @@
 package com.backend.tokokantjil.controllers;
 
-import com.backend.tokokantjil.exceptions.NotEnoughInStockException;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
+import com.backend.tokokantjil.exceptions.UsernameAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,8 +14,8 @@ public class ExceptionController {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(value = NotEnoughInStockException.class) //is deze wel gebruikt?
-    public ResponseEntity<String> exception (NotEnoughInStockException exception) {
+    @ExceptionHandler(value = UsernameAlreadyExistsException.class)
+    public ResponseEntity<String> exception (UsernameAlreadyExistsException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
     }
 }

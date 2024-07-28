@@ -1,14 +1,12 @@
 package com.backend.tokokantjil.dtos.inputs;
 
 import com.backend.tokokantjil.models.Role;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.Length;
 
 public class UserInputDto {
     @NotBlank
-    //zorgen dat dit uniek is!
+    @Size(min = 2, max = 20)
     public String username;
     @NotBlank
     public String password;
@@ -18,10 +16,12 @@ public class UserInputDto {
     public String firstName;
     @NotBlank
     public String lastName;
-    @Email
+    @NotBlank
+    @Email (regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}", flags = Pattern.Flag.CASE_INSENSITIVE)
     public String email;
-    //custom validation needed
-    public Long phoneNumber;
+    @NotBlank
+    @Pattern(regexp = "^\\d{10}$", message = "Number must be a 10 digit long number.")
+    public String phoneNumber;
     @PositiveOrZero
     public double salary;
     public String notes;

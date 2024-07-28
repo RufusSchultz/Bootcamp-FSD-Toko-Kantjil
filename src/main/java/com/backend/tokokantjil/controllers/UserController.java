@@ -45,7 +45,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody UserInputDto userInputDto, BindingResult br) {
-        try {
+//        try {
             if (validationChecker(br) == null) {
                 UserOutputDto userOutputDto = service.createUser(userInputDto);
                 URI uri = URI.create(ServletUriComponentsBuilder
@@ -55,9 +55,9 @@ public class UserController {
             } else {
                 return validationChecker(br);
             }
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to create user.");
-        }
+//        } catch (Exception ex) {
+//            return ResponseEntity.unprocessableEntity().body("Failed to create user.");
+//        }
     }
 
     @DeleteMapping("/{id}")

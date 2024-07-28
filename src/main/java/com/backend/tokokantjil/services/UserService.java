@@ -4,13 +4,11 @@ import com.backend.tokokantjil.dtos.inputs.UserInputDto;
 import com.backend.tokokantjil.dtos.outputs.UserOutputDto;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
 import com.backend.tokokantjil.dtos.mappers.UserMapper;
+import com.backend.tokokantjil.exceptions.UsernameAlreadyExistsException;
 import com.backend.tokokantjil.models.Role;
 import com.backend.tokokantjil.models.User;
 import com.backend.tokokantjil.repositories.RoleRepository;
 import com.backend.tokokantjil.repositories.UserRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -60,6 +58,9 @@ public class UserService {
     }
 
     public UserOutputDto createUser(UserInputDto userInputDto) {
+        if (this.userRepository.findByUsername(userInputDto.username) != null) {
+         throw new UsernameAlreadyExistsException("Username already exists.");
+        }
         User user = UserMapper.fromUserInputDtoToUser(userInputDto);
         user.setPassword(encoder.encode(userInputDto.password));
         Set<Role> userRoles = user.getRoles();
