@@ -45,8 +45,14 @@ public class OrderService {
     }
 
     public OrderOutputDto createOrder(UserDetails userDetails, OrderInputDto orderInputDto) {
-        Order order = this.orderRepository.save(OrderMapper.fromOrderInputDtoToOrder(orderInputDto));
+        Order order = OrderMapper.fromOrderInputDtoToOrder(orderInputDto);
+
         order.setUser(this.userRepository.findByUsername(userDetails.getUsername()));
+        this.orderRepository.save(order);
+        if(order.getTitle() == null || order.getTitle().isEmpty()) {
+            order.setTitle("Order " + order.getId());
+            this.orderRepository.save(order);
+        }
 
         return OrderMapper.fromOrderToOrderOutputDto(order);
     }
