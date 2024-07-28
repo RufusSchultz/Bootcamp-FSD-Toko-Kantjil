@@ -1,10 +1,7 @@
 package com.backend.tokokantjil.dtos.inputs;
 
 import com.backend.tokokantjil.enumerations.State;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 
 public class ProductInputDto {
     //custom validation needed
@@ -19,7 +16,7 @@ public class ProductInputDto {
     public double buyPrice;
     @PositiveOrZero
     public double sellPrice;
-    @NotNull
+    @AssertFalse
     public boolean isForRetail;
     @PositiveOrZero
     public double stock;
