@@ -3,15 +3,15 @@ values ('ROLE_ADMIN'),
        ('ROLE_STAFF');
 
 insert into users(username, password, first_name, last_name, email, phone_number, salary, notes)
-values ('Patron', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Al', 'Patron', 'a.patron@kantjil.nl', 31612345678, 4000, ''),
-       ('janjanssen', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Jan', 'Jansen', 'j.janssen@kantjil.nl', 31687654321, 3000, ''),
-       ('supermiep', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Miep', 'LaStrade', 'supermiep@mieperdemiep.miep', 31656783421, 2500, '');
+values ('Ben', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Ben', 'de Baas', 'a.patron@kantjil.nl', 31612345678, 4000, ''),
+       ('Jan', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Jan', 'Jansen', 'j.janssen@kantjil.nl', 31687654321, 3000, ''),
+       ('Miep', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Miep', 'LaStrade', 'supermiep@mieperdemiep.miep', 31656783421, 2500, '');
 
 insert into user_roles(users_username, roles_role_name)
-values ('Patron', 'ROLE_ADMIN'),
-       ('Patron', 'ROLE_STAFF'),
-       ('janjanssen', 'ROLE_STAFF'),
-       ('supermiep', 'ROLE_STAFF');
+values ('Ben', 'ROLE_ADMIN'),
+       ('Ben', 'ROLE_STAFF'),
+       ('Jan', 'ROLE_STAFF'),
+       ('Miep', 'ROLE_STAFF');
 
 insert into products(name, state, amount, amount_unit, buy_price, sell_price, is_for_retail, stock, notes)
 values ('jasmine rice', 1, 10, 'kilo', 28.5, 50, false, 5, ''),
@@ -57,8 +57,8 @@ values ('Bert', 'Steentjes', 'bertbeton@betonnenbert.nl', 31690483725, ''),
        ('Koos', 'Druk', 'info@koosdruk.nl', 3164839455, ''),
        ('Mark', 'Webber', 'neeeenanderemark@formule1.vroem', 3167888854, 'Do NOT send Miep on any caterings he orders.');
 
-insert into orders(title, status, total_price, total_cost, is_catering_order, is_appraised)
-values ('Bert Steentjes Birthday party', 0, 0, 0, true, false);
+insert into orders(title, created_at, status, total_price, total_cost, is_catering_order, is_appraised)
+values ('Bert Steentjes Birthday party', '2024-07-27T13:56:47.584277', 0, 0, 0, true, false);
 
 insert into invoices(final_price, is_paid, notes)
 values (100, false, '');

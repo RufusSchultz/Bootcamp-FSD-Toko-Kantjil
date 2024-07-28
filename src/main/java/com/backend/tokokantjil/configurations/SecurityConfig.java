@@ -6,6 +6,7 @@ import com.backend.tokokantjil.utilities.JwtService;
 import com.backend.tokokantjil.security.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -52,13 +53,46 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/auth").permitAll()
-//                        .requestMatchers("/secret").hasRole("ADMIN")
-//                        .requestMatchers("/hello").authenticated()
-//                        .requestMatchers("/profiles", "/profiles/*").authenticated()
-                        .anyRequest().denyAll()
+//                                .requestMatchers("/**").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/dishes", "/products").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT,
+                                        "/addresses/**",
+                                        "/caterings/**",
+                                        "/customers/**",
+                                        "/dishes/**",
+                                        "/invoices/**",
+                                        "/orders/**",
+                                        "/products/**"
+                                ).hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE,
+                                        "/addresses/*",
+                                        "/caterings/*",
+                                        "/customers/*",
+                                        "/dishes/**",
+                                        "/invoices/*",
+                                        "/orders/*",
+                                        "/products/*"
+                                ).hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/users/**").hasAnyRole("ADMIN", "STAFF")
+                                .requestMatchers("/users", "/users/**", "/roles", "/roles/**").hasRole("ADMIN")
+                                .requestMatchers(
+                                        "/addresses",
+                                        "/addresses/**",
+                                        "/caterings",
+                                        "/caterings/**",
+                                        "/customers",
+                                        "/customers/**",
+                                        "/dishes",
+                                        "/dishes/**",
+                                        "/invoices",
+                                        "/invoices/**",
+                                        "/orders",
+                                        "/orders/**",
+                                        "/products",
+                                        "/products/**"
+                                ).hasAnyRole("ADMIN", "STAFF")
+                                .requestMatchers("/authenticate").permitAll()
+                                .anyRequest().denyAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(csrf -> csrf.disable())

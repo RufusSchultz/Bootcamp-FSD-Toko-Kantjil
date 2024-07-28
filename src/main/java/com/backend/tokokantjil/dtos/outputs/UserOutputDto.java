@@ -10,9 +10,9 @@ public class UserOutputDto {
     private String firstName;
     private String lastName;
     private String email;
-    private Long phoneNumber;
+    private long phoneNumber;
+    private double salary;
     private String notes;
-    private Set<OrderOutputDto> orderOutputDtoSet;
 
     public String getUsername() {
         return username;
@@ -62,6 +62,23 @@ public class UserOutputDto {
         this.phoneNumber = phoneNumber;
     }
 
+
+//    public String getPhoneNumber() {
+//        return phoneNumber;
+//    }
+//
+//    public void setPhoneNumber(String phoneNumber) {
+//        this.phoneNumber = phoneNumber;
+//    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
     public String getNotes() {
         return notes;
     }
@@ -70,11 +87,4 @@ public class UserOutputDto {
         this.notes = notes;
     }
 
-    public Set<OrderOutputDto> getOrderOutputDtoSet() {
-        return orderOutputDtoSet;
-    }
-
-    public void setOrderOutputDtoSet(Set<OrderOutputDto> orderOutputDtoSet) {
-        this.orderOutputDtoSet = orderOutputDtoSet;
-    }
 }

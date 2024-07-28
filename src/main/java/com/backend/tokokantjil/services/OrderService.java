@@ -6,6 +6,8 @@ import com.backend.tokokantjil.dtos.outputs.OrderOutputDto;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
 import com.backend.tokokantjil.models.*;
 import com.backend.tokokantjil.repositories.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,13 +20,15 @@ public class OrderService {
     private final CateringRepository cateringRepository;
     private final ProductRepository productRepository;
     private final DishRepository dishRepository;
+    private final UserRepository userRepository;
 
-    public OrderService(OrderRepository orderRepository, CustomerRepository customerRepository, CateringRepository cateringRepository, ProductRepository productRepository, DishRepository dishRepository) {
+    public OrderService(OrderRepository orderRepository, CustomerRepository customerRepository, CateringRepository cateringRepository, ProductRepository productRepository, DishRepository dishRepository, UserRepository userRepository) {
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.cateringRepository = cateringRepository;
         this.productRepository = productRepository;
         this.dishRepository = dishRepository;
+        this.userRepository = userRepository;
     }
 
     public List<OrderOutputDto> getAllOrders() {
@@ -40,8 +44,10 @@ public class OrderService {
         return OrderMapper.fromOrderToOrderOutputDto(order);
     }
 
-    public OrderOutputDto createOrder(OrderInputDto orderInputDto) {
+    public OrderOutputDto createOrder(UserDetails userDetails, OrderInputDto orderInputDto) {
         Order order = this.orderRepository.save(OrderMapper.fromOrderInputDtoToOrder(orderInputDto));
+        order.setUser(this.userRepository.findByUsername(userDetails.getUsername()));
+
         return OrderMapper.fromOrderToOrderOutputDto(order);
     }
 

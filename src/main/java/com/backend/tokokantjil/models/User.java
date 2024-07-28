@@ -23,7 +23,7 @@ public class User {
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
-    private Long phoneNumber;
+    private long phoneNumber;
     @Column(nullable = false)
     private double salary;
     @Column
@@ -86,6 +86,15 @@ public class User {
     public void setPhoneNumber(Long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+
+//    public String getPhoneNumber() {
+//        return phoneNumber;
+//    }
+//
+//    public void setPhoneNumber(String phoneNumber) {
+//        this.phoneNumber = phoneNumber;
+//    }
 
     public double getSalary() {
         return salary;

@@ -12,10 +12,6 @@ public class CateringInputDto {
     @Positive
     public int numberOfPeople;
     @Positive
-    public double totalCostPrice;
-    @Positive
-    public double totalSellPrice;
-    @Positive
     public double agreedPrice;
     public String notes;
 }

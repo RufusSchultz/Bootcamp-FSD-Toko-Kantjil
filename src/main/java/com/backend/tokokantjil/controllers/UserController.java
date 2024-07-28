@@ -4,7 +4,10 @@ import com.backend.tokokantjil.dtos.inputs.UserInputDto;
 import com.backend.tokokantjil.dtos.outputs.UserOutputDto;
 import com.backend.tokokantjil.services.UserService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -25,18 +28,24 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserOutputDto>> getAllUsers() {
-        return ResponseEntity.ok(service.getAllUsers());
+    public ResponseEntity<List<UserOutputDto>> getAllUsers(@AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(service.getAllUsers(userDetails));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserOutputDto> getUserById(@PathVariable String id) {
-        return ResponseEntity.ok(service.getUserById(id));
+    public ResponseEntity<?> getUserById(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String id) {
+        UserOutputDto userOutputDto = service.getUserById(id, userDetails);
+
+        if (userOutputDto.getUsername() != null){
+            return ResponseEntity.ok(userOutputDto);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody UserInputDto userInputDto, BindingResult br) {
-        try {
+//        try {
             if (validationChecker(br) == null) {
                 UserOutputDto userOutputDto = service.createUser(userInputDto);
                 URI uri = URI.create(ServletUriComponentsBuilder
@@ -46,9 +55,9 @@ public class UserController {
             } else {
                 return validationChecker(br);
             }
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to create user.");
-        }
+//        } catch (Exception ex) {
+//            return ResponseEntity.unprocessableEntity().body("Failed to create user.");
+//        }
     }
 
     @DeleteMapping("/{id}")
@@ -57,7 +66,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}/update")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@Valid @PathVariable String id, @RequestBody UserInputDto userInputDto, BindingResult br) {
             if (validationChecker(br) == null) {
                 UserOutputDto userOutputDto = service.updateUser(id, userInputDto);

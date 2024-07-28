@@ -15,11 +15,10 @@ public class UserMapper {
         User user = new User();
 
         user.setUsername(userInputDto.username);
-//        user.setPassword(userInputDto.password);
         user.setFirstName(userInputDto.firstName);
         user.setLastName(userInputDto.lastName);
         user.setEmail(userInputDto.email);
-        user.setPhoneNumber(userInputDto.phoneNumber);
+        user.setPhoneNumber(Long.valueOf(userInputDto.phoneNumber));
         user.setNotes(userInputDto.notes);
         user.setSalary(userInputDto.salary);
 
@@ -35,16 +34,8 @@ public class UserMapper {
         userOutputDto.setLastName(user.getLastName());
         userOutputDto.setEmail(user.getEmail());
         userOutputDto.setPhoneNumber(user.getPhoneNumber());
+        userOutputDto.setSalary(user.getSalary());
         userOutputDto.setNotes(user.getNotes());
-
-        if (user.getOrders() != null) {
-            Set<OrderOutputDto> orderOutputDtoSet = new HashSet<>();
-            for (Order order :
-                    user.getOrders()) {
-                orderOutputDtoSet.add(OrderMapper.fromOrderToOrderOutputDto(order));
-            }
-            userOutputDto.setOrderOutputDtoSet(orderOutputDtoSet);
-        }
 
         return userOutputDto;
     }
@@ -52,11 +43,12 @@ public class UserMapper {
     public static User fromUserToUpdatedUser(User user, User userUpdate) {
 
         user.setUsername(userUpdate.getUsername());
-//        user.setPassword(userUpdate.getPassword());
+        user.setPassword(userUpdate.getPassword());
         user.setFirstName(userUpdate.getFirstName());
         user.setLastName(userUpdate.getLastName());
         user.setEmail(userUpdate.getEmail());
         user.setPhoneNumber(userUpdate.getPhoneNumber());
+        user.setSalary(userUpdate.getSalary());
         user.setNotes(userUpdate.getNotes());
 
         return user;
