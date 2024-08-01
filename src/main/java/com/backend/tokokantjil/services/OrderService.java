@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.backend.tokokantjil.helpers.OrderStatusInputChecker.orderStatusInputChecker;
+
 @Service
 public class OrderService {
     private final OrderRepository orderRepository;
@@ -50,7 +52,7 @@ public class OrderService {
 
         order.setUser(this.userRepository.findByUsername(userDetails.getUsername()));
         this.orderRepository.save(order);
-        if(order.getTitle() == null || order.getTitle().isEmpty()) {
+        if (order.getTitle() == null || order.getTitle().isEmpty()) {
             order.setTitle("Order " + order.getId());
             this.orderRepository.save(order);
         }
@@ -101,25 +103,25 @@ public class OrderService {
         return response;
     }
 
-    public String setOrderStatus(Long id, int status) {
+    public String setOrderStatus(Long id, String status) {
+        status = status.toLowerCase();
+        orderStatusInputChecker(status);
         Order order = this.orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No order with id " + id + " found."));
         String response = "Status of order " + order.getId() + " set to ";
 
-        if (status >= 0 && status <= 2) {
-            if (status == 0) {
-                order.setStatus(Status.accepted);
-                response = response + "accepted.";
-            } else if (status == 1) {
-                order.setStatus(Status.processing);
-                response = response + "processing.";
-            } else if (status == 2) {
-                order.setStatus(Status.done);
-                response = response + "done.";
-            }
-            this.orderRepository.save(order);
-        } else {
-            throw new EnumerationValueIsUnprocessableException("Status value doesn't match any in enumeration. ( 0 = accepted, 1 = processing, 2 = done )");
+
+        if (status.equals("accepted")) {
+            order.setStatus(Status.accepted);
+            response = response + "accepted.";
+        } else if (status.equals("processing")) {
+            order.setStatus(Status.processing);
+            response = response + "processing.";
+        } else if (status.equals("done")) {
+            order.setStatus(Status.done);
+            response = response + "done.";
         }
+        this.orderRepository.save(order);
+
         return response;
     }
 
@@ -130,7 +132,7 @@ public class OrderService {
 
         if (order.isCateringOrder()) {
             response = "Unable to add any product to order. Order is set as catering. Order is unchanged.";
-        } else{
+        } else {
             if (product.isForRetail()) {
                 order.setAppraised(false);
                 order.getProducts().add(product);
@@ -151,7 +153,7 @@ public class OrderService {
         List<Product> productList = order.getProducts();
 
         for (Product product : order.getProducts()) {
-            if (product.getId().equals(productId)){
+            if (product.getId().equals(productId)) {
                 productList.remove(product);
                 order.setAppraised(false);
                 response = "Product with id " + productId + " removed from order.";
@@ -171,7 +173,7 @@ public class OrderService {
 
         if (order.isCateringOrder()) {
             response = "Unable to add any dish to order. Order is set as catering. Order is unchanged.";
-        } else{
+        } else {
             if (dish.isAppraised()) {
                 order.setAppraised(false);
                 order.getDishes().add(dish);
@@ -198,7 +200,7 @@ public class OrderService {
                 break;
             }
         }
-       order.setDishes(dishList);
+        order.setDishes(dishList);
         this.orderRepository.save(order);
 
         return response;
@@ -245,7 +247,7 @@ public class OrderService {
                         break;
                     }
                 }
-                if (!killSwitch){
+                if (!killSwitch) {
                     order.setTotalPrice(totalSellPrice);
                     order.setTotalCost(totalCostPrice);
                     order.setAppraised(true);
