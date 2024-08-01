@@ -80,6 +80,12 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/{id}/status")
+    public ResponseEntity<String> setStatus(@PathVariable Long id, @RequestParam int status) {
+        String response = service.setOrderStatus(id, status);
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/{id}/products")
     public ResponseEntity<String> addRetailProduct(@PathVariable Long id, @RequestParam Long productId) {
         String response = service.addProductToOrder(id, productId);

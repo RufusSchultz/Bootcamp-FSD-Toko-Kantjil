@@ -32,7 +32,7 @@ public class OrderMapper {
         orderOutputDto.setId(order.getId());
         orderOutputDto.setTitle(order.getTitle());
         orderOutputDto.setCreatedAt(order.getCreatedAt());
-        orderOutputDto.setStatus(order.getStatus());
+        orderOutputDto.setStatus(order.getStatus().toString());
         orderOutputDto.setTotalPrice(order.getTotalPrice());
         orderOutputDto.setTotalCost(order.getTotalCost());
         orderOutputDto.setCateringOrder(order.isCateringOrder());
