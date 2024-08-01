@@ -9,7 +9,7 @@ public class OrderOutputDto {
     private Long id;
     private String title;
     private LocalDateTime createdAt;
-    private Status status;
+    private String status;
     private double totalPrice;
     private double totalCost;
     private boolean isCateringOrder;
@@ -44,11 +44,20 @@ public class OrderOutputDto {
         this.createdAt = createdAt;
     }
 
-    public Status getStatus() {
+//    public Status getStatus() {
+//        return status;
+//    }
+//
+//    public void setStatus(Status status) {
+//        this.status = status;
+//    }
+
+
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

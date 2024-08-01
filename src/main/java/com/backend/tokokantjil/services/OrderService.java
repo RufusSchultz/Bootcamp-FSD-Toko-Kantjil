@@ -3,10 +3,11 @@ package com.backend.tokokantjil.services;
 import com.backend.tokokantjil.dtos.inputs.OrderInputDto;
 import com.backend.tokokantjil.dtos.mappers.OrderMapper;
 import com.backend.tokokantjil.dtos.outputs.OrderOutputDto;
+import com.backend.tokokantjil.enumerations.Status;
+import com.backend.tokokantjil.exceptions.EnumerationValueIsUnprocessableException;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
 import com.backend.tokokantjil.models.*;
 import com.backend.tokokantjil.repositories.*;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -45,8 +46,14 @@ public class OrderService {
     }
 
     public OrderOutputDto createOrder(UserDetails userDetails, OrderInputDto orderInputDto) {
-        Order order = this.orderRepository.save(OrderMapper.fromOrderInputDtoToOrder(orderInputDto));
+        Order order = OrderMapper.fromOrderInputDtoToOrder(orderInputDto);
+
         order.setUser(this.userRepository.findByUsername(userDetails.getUsername()));
+        this.orderRepository.save(order);
+        if(order.getTitle() == null || order.getTitle().isEmpty()) {
+            order.setTitle("Order " + order.getId());
+            this.orderRepository.save(order);
+        }
 
         return OrderMapper.fromOrderToOrderOutputDto(order);
     }
@@ -90,6 +97,28 @@ public class OrderService {
             response = "Catering " + order.getCatering().getId() + " assigned to order.";
         } else {
             response = "Order " + order.getId() + " is not set as a catering. Order is unchanged.";
+        }
+        return response;
+    }
+
+    public String setOrderStatus(Long id, int status) {
+        Order order = this.orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No order with id " + id + " found."));
+        String response = "Status of order " + order.getId() + " set to ";
+
+        if (status >= 0 && status <= 2) {
+            if (status == 0) {
+                order.setStatus(Status.accepted);
+                response = response + "accepted.";
+            } else if (status == 1) {
+                order.setStatus(Status.processing);
+                response = response + "processing.";
+            } else if (status == 2) {
+                order.setStatus(Status.done);
+                response = response + "done.";
+            }
+            this.orderRepository.save(order);
+        } else {
+            throw new EnumerationValueIsUnprocessableException("Status value doesn't match any in enumeration. ( 0 = accepted, 1 = processing, 2 = done )");
         }
         return response;
     }
@@ -198,8 +227,6 @@ public class OrderService {
                 } else {
                     response = "Assign a catering to order first or set order as not a catering. Order is unchanged.";
                 }
-
-
             } else {
                 boolean killSwitch = false;
                 double totalSellPrice = 0;
@@ -217,7 +244,6 @@ public class OrderService {
                         killSwitch = true;
                         break;
                     }
-
                 }
                 if (!killSwitch){
                     order.setTotalPrice(totalSellPrice);

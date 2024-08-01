@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.backend.tokokantjil.helpers.PriceInCentsRounder.priceInCentsRounder;
+
 @Service
 public class InvoiceService {
     private final InvoiceRepository invoiceRepository;
@@ -65,7 +67,7 @@ public class InvoiceService {
         if (order.isAppraised()) {
             if (useAgreedPriceIfAny && order.isCateringOrder()) {
                 if(order.getCatering() != null) {
-                    invoice.setFinalPrice(order.getCatering().getAgreedPrice());
+                    invoice.setFinalPrice(priceInCentsRounder(order.getCatering().getAgreedPrice()));
                     invoice.setOrder(order);
                     this.invoiceRepository.save(invoice);
 
@@ -74,7 +76,7 @@ public class InvoiceService {
                     response = "Order has no catering assigned, but is expecting one. Invoice is unchanged.";
                 }
             } else {
-                invoice.setFinalPrice(order.getTotalPrice());
+                invoice.setFinalPrice(priceInCentsRounder(order.getTotalPrice()));
                 invoice.setOrder(order);
                 this.invoiceRepository.save(invoice);
 

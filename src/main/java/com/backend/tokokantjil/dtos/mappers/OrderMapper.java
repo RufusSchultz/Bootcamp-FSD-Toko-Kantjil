@@ -16,12 +16,9 @@ import java.util.List;
 public class OrderMapper {
 
     public static Order fromOrderInputDtoToOrder(OrderInputDto orderInputDto) {
-//        LocalDateTime thisVeryMoment = new
-
         Order order = new Order();
 
         order.setTitle(orderInputDto.title);
-//        order.setCreatedAt();
         order.setStatus(Status.accepted);
         order.setCateringOrder(orderInputDto.isCateringOrder);
         order.setAppraised(false);
@@ -35,7 +32,7 @@ public class OrderMapper {
         orderOutputDto.setId(order.getId());
         orderOutputDto.setTitle(order.getTitle());
         orderOutputDto.setCreatedAt(order.getCreatedAt());
-        orderOutputDto.setStatus(order.getStatus());
+        orderOutputDto.setStatus(order.getStatus().toString());
         orderOutputDto.setTotalPrice(order.getTotalPrice());
         orderOutputDto.setTotalCost(order.getTotalCost());
         orderOutputDto.setCateringOrder(order.isCateringOrder());
@@ -69,7 +66,9 @@ public class OrderMapper {
 
     public static Order fromOrderToUpdatedOrder(Order order, Order orderUpdate) {
 
-        order.setTitle(orderUpdate.getTitle());
+        if (orderUpdate.getTitle() != null && !orderUpdate.getTitle().isEmpty()) {
+            order.setTitle(orderUpdate.getTitle());
+        }
         order.setCateringOrder(orderUpdate.isCateringOrder());
 
         return order;

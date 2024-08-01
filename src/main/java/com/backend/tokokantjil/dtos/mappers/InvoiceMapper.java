@@ -9,7 +9,7 @@ public class InvoiceMapper {
         Invoice invoice = new Invoice();
 
         invoice.setFinalPrice(0);
-        invoice.setPaid(false);
+        invoice.setPaid(invoiceInputDto.isPaid);
         invoice.setNotes(invoiceInputDto.notes);
 
         return invoice;
