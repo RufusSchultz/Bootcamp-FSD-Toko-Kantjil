@@ -8,6 +8,5 @@ import jakarta.validation.constraints.PositiveOrZero;
 public class InvoiceInputDto {
 
     public String notes;
-    @AssertFalse
     public boolean isPaid;
 }

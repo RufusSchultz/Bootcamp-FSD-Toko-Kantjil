@@ -4,8 +4,8 @@ import com.backend.tokokantjil.enumerations.State;
 import jakarta.validation.constraints.*;
 
 public class ProductInputDto {
-    //custom validation needed
-    public State state;
+    @NotBlank
+    public String state;
     @NotBlank
     public String name;
     @Positive
@@ -16,7 +16,6 @@ public class ProductInputDto {
     public double buyPrice;
     @PositiveOrZero
     public double sellPrice;
-    @AssertFalse
     public boolean isForRetail;
     @PositiveOrZero
     public double stock;
