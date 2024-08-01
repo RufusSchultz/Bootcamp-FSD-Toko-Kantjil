@@ -2,6 +2,7 @@ package com.backend.tokokantjil.controllers;
 
 import com.backend.tokokantjil.dtos.inputs.ProductInputDto;
 import com.backend.tokokantjil.dtos.outputs.ProductOutputDto;
+import com.backend.tokokantjil.exceptions.EnumerationValueIsUnprocessableException;
 import com.backend.tokokantjil.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,6 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<?> createProduct(@Valid @RequestBody ProductInputDto productInputDto, BindingResult br) {
-        try {
             if (validationChecker(br) == null) {
                 ProductOutputDto productOutputDto = service.createNewProduct(productInputDto);
                 URI uri = URI.create(ServletUriComponentsBuilder
@@ -45,9 +45,6 @@ public class ProductController {
             } else {
                 return validationChecker(br);
             }
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to create product.");
-        }
     }
 
     @DeleteMapping("/{id}")

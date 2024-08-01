@@ -5,7 +5,7 @@ import com.backend.tokokantjil.enumerations.State;
 public class ProductOutputDto {
     private Long id;
     private String name;
-    private State state;
+    private String state;
     private int amount;
     private String amountUnit;
     private double buyPrice;
@@ -30,11 +30,11 @@ public class ProductOutputDto {
         this.name = name;
     }
 
-    public State getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(State state) {
+    public void setState(String state) {
         this.state = state;
     }
 

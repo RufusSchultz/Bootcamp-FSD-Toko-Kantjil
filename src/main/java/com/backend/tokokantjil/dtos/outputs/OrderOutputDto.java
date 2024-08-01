@@ -44,15 +44,6 @@ public class OrderOutputDto {
         this.createdAt = createdAt;
     }
 
-//    public Status getStatus() {
-//        return status;
-//    }
-//
-//    public void setStatus(Status status) {
-//        this.status = status;
-//    }
-
-
     public String getStatus() {
         return status;
     }

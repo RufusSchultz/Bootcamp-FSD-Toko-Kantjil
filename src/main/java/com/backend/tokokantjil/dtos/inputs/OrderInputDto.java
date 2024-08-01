@@ -5,6 +5,5 @@ import jakarta.validation.constraints.AssertFalse;
 public class OrderInputDto {
 
     public String title;
-    @AssertFalse
     public boolean isCateringOrder;
 }
