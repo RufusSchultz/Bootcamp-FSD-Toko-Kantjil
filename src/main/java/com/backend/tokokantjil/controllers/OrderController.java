@@ -81,7 +81,7 @@ public class OrderController {
     }
 
     @PostMapping("/{id}/status")
-    public ResponseEntity<String> setStatus(@PathVariable Long id, @RequestParam int status) {
+    public ResponseEntity<String> setStatus(@PathVariable Long id, @RequestParam String status) {
         String response = service.setOrderStatus(id, status);
         return ResponseEntity.ok(response);
     }

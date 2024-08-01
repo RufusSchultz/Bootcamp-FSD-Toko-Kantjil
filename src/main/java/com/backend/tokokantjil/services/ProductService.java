@@ -3,7 +3,6 @@ package com.backend.tokokantjil.services;
 import com.backend.tokokantjil.dtos.inputs.ProductInputDto;
 import com.backend.tokokantjil.dtos.outputs.ProductOutputDto;
 import com.backend.tokokantjil.enumerations.State;
-import com.backend.tokokantjil.exceptions.EnumerationValueIsUnprocessableException;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
 import com.backend.tokokantjil.dtos.mappers.ProductMapper;
 import com.backend.tokokantjil.models.Product;
@@ -12,8 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
-import static com.backend.tokokantjil.helpers.ProductStateInputChecker.productStateInputChecker;
+import static com.backend.tokokantjil.helpers.EnumInputChecker.enumInputChecker;
 
 @Service
 public class ProductService {
@@ -38,7 +38,8 @@ public class ProductService {
 
     public ProductOutputDto createNewProduct(ProductInputDto productInputDto) {
         productInputDto.state = productInputDto.state.toLowerCase();
-        productStateInputChecker(productInputDto.state);
+        String[] stateList = Stream.of(State.values()).map(State::name).toArray(String[]::new);
+        enumInputChecker(stateList, productInputDto.state);
 
         Product product = this.productRepository.save(ProductMapper.fromProductInputDtoToProduct(productInputDto));
         return ProductMapper.fromProductToProductOutputDto(product);
@@ -54,7 +55,9 @@ public class ProductService {
 
     public ProductOutputDto updateProductWithNewProductInputDto(Long id, ProductInputDto productInputDto) {
         productInputDto.state = productInputDto.state.toLowerCase();
-        productStateInputChecker(productInputDto.state);
+        String[] stateList = Stream.of(State.values()).map(State::name).toArray(String[]::new);
+        enumInputChecker(stateList, productInputDto.state);
+
         Product oldProduct = this.productRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No product with id " + id + " found."));
         Product productUpdate = ProductMapper.fromProductInputDtoToProduct(productInputDto);
         Product newProduct = this.productRepository.save(ProductMapper.fromProductToUpdatedProduct(oldProduct, productUpdate));
