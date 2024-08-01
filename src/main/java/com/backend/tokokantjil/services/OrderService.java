@@ -4,7 +4,6 @@ import com.backend.tokokantjil.dtos.inputs.OrderInputDto;
 import com.backend.tokokantjil.dtos.mappers.OrderMapper;
 import com.backend.tokokantjil.dtos.outputs.OrderOutputDto;
 import com.backend.tokokantjil.enumerations.Status;
-import com.backend.tokokantjil.exceptions.EnumerationValueIsUnprocessableException;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
 import com.backend.tokokantjil.models.*;
 import com.backend.tokokantjil.repositories.*;
@@ -13,8 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
-import static com.backend.tokokantjil.helpers.OrderStatusInputChecker.orderStatusInputChecker;
+import static com.backend.tokokantjil.helpers.EnumInputChecker.enumInputChecker;
 
 @Service
 public class OrderService {
@@ -105,7 +105,9 @@ public class OrderService {
 
     public String setOrderStatus(Long id, String status) {
         status = status.toLowerCase();
-        orderStatusInputChecker(status);
+        String[] statusList = Stream.of(Status.values()).map(Status::name).toArray(String[]::new);
+        enumInputChecker(statusList, status);
+
         Order order = this.orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No order with id " + id + " found."));
         String response = "Status of order " + order.getId() + " set to ";
 
