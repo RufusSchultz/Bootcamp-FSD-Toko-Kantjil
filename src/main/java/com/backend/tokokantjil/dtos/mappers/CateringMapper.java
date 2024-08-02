@@ -8,6 +8,8 @@ import com.backend.tokokantjil.models.Catering;
 import com.backend.tokokantjil.models.Dish;
 import com.backend.tokokantjil.models.Product;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,7 @@ public class CateringMapper {
     public static Catering fromCateringInputDtoToCatering(CateringInputDto cateringInputDto) {
         Catering catering = new Catering();
 
-        catering.setDateAndTime(cateringInputDto.dateAndTime);
+        catering.setDateAndTime(LocalDateTime.parse(cateringInputDto.dateAndTime, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
         catering.setNumberOfPeople(cateringInputDto.numberOfPeople);
         catering.setTotalCostPrice(0);
         catering.setTotalSellPrice(0);
