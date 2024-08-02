@@ -1,10 +1,14 @@
 package com.backend.tokokantjil.dtos.outputs;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class CateringOutputDto {
     private Long id;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime dateAndTime;
     private int numberOfPeople;
     private double totalCostPrice;
