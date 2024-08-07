@@ -35,13 +35,32 @@ public class Product {
     @Column
     private String notes;
     @ManyToMany(mappedBy = "products")
-    private List<Order> orders = new ArrayList<>(); //only isForRetail = true
+    private List<Order> orders = new ArrayList<>();
     @ManyToMany(mappedBy = "products")
     private Set<Dish> dishes = new HashSet<>();
     @ManyToMany(mappedBy = "products")
-    private List<Catering> caterings = new ArrayList<>(); //only isForRetail = true
+    private List<Catering> caterings = new ArrayList<>();
+
+    public Product(){}
+
+    public Product(String name, State state, int amount, String amountUnit, double buyPrice, double sellPrice, boolean isForRetail, double stock, String notes) {
+        this.name = name;
+        this.state = state;
+        this.amount = amount;
+        this.amountUnit = amountUnit;
+        this.buyPrice = buyPrice;
+        this.sellPrice = sellPrice;
+        this.isForRetail = isForRetail;
+        this.stock = stock;
+        this.notes = notes;
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
