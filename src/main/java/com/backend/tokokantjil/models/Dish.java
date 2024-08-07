@@ -39,8 +39,28 @@ public class Dish {
     @ManyToMany(mappedBy = "dishes")
     private List<Catering> caterings = new ArrayList<>();
 
+    public Dish() {
+    }
+
+    public Dish(String name, int servings, double productionPrice, double sellPrice, boolean isAppraised, double stock, String notes, Set<Product> products, List<Order> orders, List<Catering> caterings) {
+        this.name = name;
+        this.servings = servings;
+        this.productionPrice = productionPrice;
+        this.sellPrice = sellPrice;
+        this.isAppraised = isAppraised;
+        this.stock = stock;
+        this.notes = notes;
+        this.products = products;
+        this.orders = orders;
+        this.caterings = caterings;
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

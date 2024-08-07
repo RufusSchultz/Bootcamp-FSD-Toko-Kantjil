@@ -56,6 +56,7 @@ class ProductServiceTest {
     void tearDown() {
         product = null;
         anotherProduct = null;
+        productInputDto = null;
     }
     @Test
     @DisplayName("Should return every product")
@@ -111,8 +112,7 @@ class ProductServiceTest {
     @DisplayName("Should delete correct product")
     void deleteProductById() {
         product.setId(1L);
-        Optional<Product> optionalProduct = Optional.of(product);
-        Mockito.when(productRepository.findById(1L)).thenReturn(optionalProduct);
+        Mockito.when(productRepository.findById(1L)).thenReturn(Optional.of(product));
 
         service.deleteProductById(1L);
 
@@ -122,25 +122,25 @@ class ProductServiceTest {
     @Test
     @DisplayName("Should update correct product")
     void updateProductWithNewProductInputDto() {
-        product.setId(1L);
-        Mockito.when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
+        anotherProduct.setId(1L);
+        Mockito.when(productRepository.findById(anyLong())).thenReturn(Optional.of(anotherProduct));
         Mockito.when(productRepository.save(any(Product.class))).thenReturn(anotherProduct);
 
         ProductOutputDto productOutputDto = service.updateProductWithNewProductInputDto(1L, productInputDto);
 
-        assertEquals("rice", productOutputDto.getName());
+        assertEquals("sambal", productOutputDto.getName());
         assertEquals("packaged", productOutputDto.getState());
-        assertEquals(10, productOutputDto.getAmount());
-        assertEquals("kilo", productOutputDto.getAmountUnit());
-        assertEquals(50, productOutputDto.getBuyPrice());
-        assertEquals(100, productOutputDto.getSellPrice());
-        assertFalse(productOutputDto.isForRetail());
-        assertEquals(1, productOutputDto.getStock());
+        assertEquals(300, productOutputDto.getAmount());
+        assertEquals("gram", productOutputDto.getAmountUnit());
+        assertEquals(1.20, productOutputDto.getBuyPrice());
+        assertEquals(2.20, productOutputDto.getSellPrice());
+        assertTrue(productOutputDto.isForRetail());
+        assertEquals(10, productOutputDto.getStock());
         assertEquals("", productOutputDto.getNotes());
     }
 
     @Test
-    @DisplayName("Should increase stock of product")
+    @DisplayName("Should correctly increase stock of product")
     void increaseProductStock() {
         product.setId(1L);
         Mockito.when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
@@ -152,7 +152,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("Should decrease stock of product")
+    @DisplayName("Should correctly decrease stock of product")
     void decreaseProductStock() {
         product.setId(1L);
         Mockito.when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));

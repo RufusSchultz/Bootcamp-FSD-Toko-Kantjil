@@ -13,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -53,7 +52,7 @@ class ProductControllerTest {
     @Test
     @DisplayName("Should correctly return all products")
     void getAllProducts() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/products"))
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/products"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name", is("sambal")))
@@ -63,7 +62,7 @@ class ProductControllerTest {
     @Test
     @DisplayName("Should return correct product")
     void getProduct() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/products/1"))
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/products/{id}", 1))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", is("sambal")));
@@ -86,7 +85,7 @@ class ProductControllerTest {
                 }
                 """;
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/products")
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/products")
                         .contentType(APPLICATION_JSON)
                         .content(requestJson))
                 .andDo(MockMvcResultHandlers.print())
@@ -95,9 +94,9 @@ class ProductControllerTest {
     }
 
     @Test
-    @DisplayName("Should delete correct order")
+    @DisplayName("Should delete correct product")
     void deleteProduct() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/products/1"))
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/products/{id}", 1))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
@@ -119,7 +118,7 @@ class ProductControllerTest {
                 }
                 """;
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/products/1")
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/products/{id}", 1)
                         .contentType(APPLICATION_JSON)
                         .content(requestJson))
                 .andDo(MockMvcResultHandlers.print())
@@ -131,7 +130,7 @@ class ProductControllerTest {
     @DisplayName("Should correctly increase stock of product")
     void stockProduct() throws Exception {
         MvcResult result = this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/products/1/increase-stock?amount=1"))
+                .perform(MockMvcRequestBuilders.post("/products/{id}/increase-stock?amount={amount}", 1, 1))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
@@ -145,7 +144,7 @@ class ProductControllerTest {
     @DisplayName("Should correctly decrease stock of product")
     void consumeProduct() throws Exception {
         MvcResult result = this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/products/1/decrease-stock?amount=1"))
+                .perform(MockMvcRequestBuilders.post("/products/{id}/decrease-stock?amount={amount}", 1, 1))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
