@@ -34,8 +34,27 @@ public class Address {
     @OneToMany(mappedBy = "address")
     Set<Customer> customers = new HashSet<>();
 
+    public Address() {
+    }
+
+    public Address(String name, String street, int houseNumber, String houseNumberSuffix, String postalCode, String city, String notes, Set<Catering> caterings, Set<Customer> customers) {
+        this.name = name;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.houseNumberSuffix = houseNumberSuffix;
+        this.postalCode = postalCode;
+        this.city = city;
+        this.notes = notes;
+        this.caterings = caterings;
+        this.customers = customers;
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

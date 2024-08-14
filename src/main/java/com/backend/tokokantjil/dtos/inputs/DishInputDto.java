@@ -17,4 +17,16 @@ public class DishInputDto {
     public double stock;
 
     public String notes;
+
+    public DishInputDto() {
+    }
+
+    public DishInputDto(String name, int servings, double productionPrice, double sellPrice, double stock, String notes) {
+        this.name = name;
+        this.servings = servings;
+        this.productionPrice = productionPrice;
+        this.sellPrice = sellPrice;
+        this.stock = stock;
+        this.notes = notes;
+    }
 }

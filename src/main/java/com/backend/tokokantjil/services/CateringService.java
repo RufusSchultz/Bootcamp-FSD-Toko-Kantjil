@@ -19,7 +19,6 @@ import java.util.List;
 
 @Service
 public class CateringService {
-    private final double laborAndMaterialPriceMultiplier = 1.5;
     private final CateringRepository cateringRepository;
     private final AddressRepository addressRepository;
     private final DishRepository dishRepository;
@@ -163,6 +162,7 @@ public class CateringService {
 
     public String calculateCateringPrices(Long id, double laborAndMaterialCost) {
         Catering catering = this.cateringRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No catering with id " + id + " found."));
+        double laborAndMaterialPriceMultiplier = 1.5;
         String response = "";
 
         if (!catering.isAppraised()) {
@@ -199,6 +199,7 @@ public class CateringService {
         catering.setAppraised(false);
         catering.setTotalCostPrice(0);
         catering.setTotalSellPrice(0);
+        this.cateringRepository.save(catering);
 
         return CateringMapper.fromCateringToCateringOutputDto(catering);
     }

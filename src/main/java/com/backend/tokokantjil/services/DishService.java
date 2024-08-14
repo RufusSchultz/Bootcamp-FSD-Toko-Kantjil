@@ -16,7 +16,6 @@ import java.util.Set;
 
 @Service
 public class DishService {
-    private final double laborPriceMultiplier = 1.5;
     private final DishRepository dishRepository;
     private final ProductRepository productRepository;
 
@@ -123,6 +122,7 @@ public class DishService {
 
     public String calculateDishPrices(Long id, double laborCost) {
         Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
+        double laborPriceMultiplier = 1.5;
 
         if (!dish.isAppraised()) {
             double combinedCostPrice = 0;

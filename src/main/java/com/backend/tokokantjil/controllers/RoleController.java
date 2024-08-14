@@ -30,27 +30,27 @@ public class RoleController {
         return ResponseEntity.ok(service.getAllRoles());
     }
 
-    @PostMapping
-    public ResponseEntity<?> createRole(@Valid @RequestBody RoleInputDto roleInputDto, BindingResult br) {
-        try {
-            if (validationChecker(br) == null) {
-                RoleOutputDto roleOutputDto = service.createRole(roleInputDto);
-                URI uri = URI.create(ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/" + roleOutputDto.getRoleName()).toUriString());
-                return ResponseEntity.created(uri).body(roleOutputDto);
-            } else {
-                return validationChecker(br);
-            }
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to create role.");
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteRole(@PathVariable String id) {
-        service.deleteRole(id);
-        return ResponseEntity.noContent().build();
-    }
+//    @PostMapping
+//    public ResponseEntity<?> createRole(@Valid @RequestBody RoleInputDto roleInputDto, BindingResult br) {
+//        try {
+//            if (validationChecker(br) == null) {
+//                RoleOutputDto roleOutputDto = service.createRole(roleInputDto);
+//                URI uri = URI.create(ServletUriComponentsBuilder
+//                        .fromCurrentRequest()
+//                        .path("/" + roleOutputDto.getRoleName()).toUriString());
+//                return ResponseEntity.created(uri).body(roleOutputDto);
+//            } else {
+//                return validationChecker(br);
+//            }
+//        } catch (Exception ex) {
+//            return ResponseEntity.unprocessableEntity().body("Failed to create role.");
+//        }
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<String> deleteRole(@PathVariable String id) {
+//        service.deleteRole(id);
+//        return ResponseEntity.noContent().build();
+//    }
 
 }

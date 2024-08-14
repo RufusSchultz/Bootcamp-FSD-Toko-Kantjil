@@ -32,16 +32,36 @@ public class Catering {
     @JoinTable(name = "catering_products")
     private List<Product> products = new ArrayList<>();
     @ManyToMany
-    @JoinTable(name = "Catering_dishes")
+    @JoinTable(name = "catering_dishes")
     private List<Dish> dishes = new ArrayList<>();
     @ManyToOne
     private Address address;
     @OneToOne(mappedBy = "catering")
     private Order order;
 
+    public Catering() {
+    }
+
+    public Catering(LocalDateTime dateAndTime, int numberOfPeople, double totalCostPrice, double totalSellPrice, double agreedPrice, boolean isAppraised, String notes, List<Product> products, List<Dish> dishes, Address address, Order order) {
+        this.dateAndTime = dateAndTime;
+        this.numberOfPeople = numberOfPeople;
+        this.totalCostPrice = totalCostPrice;
+        this.totalSellPrice = totalSellPrice;
+        this.agreedPrice = agreedPrice;
+        this.isAppraised = isAppraised;
+        this.notes = notes;
+        this.products = products;
+        this.dishes = dishes;
+        this.address = address;
+        this.order = order;
+    }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LocalDateTime getDateAndTime() {
@@ -131,4 +151,5 @@ public class Catering {
     public void setOrder(Order order) {
         this.order = order;
     }
+
 }
