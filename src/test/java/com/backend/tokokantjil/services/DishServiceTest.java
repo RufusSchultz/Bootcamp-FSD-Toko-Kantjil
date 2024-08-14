@@ -114,6 +114,7 @@ class DishServiceTest {
     }
 
     @Test
+    @DisplayName("Should correctly update dish")
     void updateDishWithNewDishInputDto() {
         anotherDish.setId(1L);
         Mockito.when(dishRepository.findById(anyLong())).thenReturn(Optional.of(anotherDish));

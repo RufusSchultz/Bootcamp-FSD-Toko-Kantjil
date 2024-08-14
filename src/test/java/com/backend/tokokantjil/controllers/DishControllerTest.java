@@ -57,6 +57,7 @@ class DishControllerTest {
     @AfterEach
     public void tearDown() {
         dishRepository.deleteAll();
+        productRepository.deleteAll();
         dish = null;
         anotherDish = null;
         product = null;
@@ -211,6 +212,5 @@ class DishControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.productionPrice", is(0.0)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.sellPrice", is(0.0)));
-
     }
 }

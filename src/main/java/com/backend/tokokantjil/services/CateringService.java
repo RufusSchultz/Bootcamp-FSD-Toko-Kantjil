@@ -199,6 +199,7 @@ public class CateringService {
         catering.setAppraised(false);
         catering.setTotalCostPrice(0);
         catering.setTotalSellPrice(0);
+        this.cateringRepository.save(catering);
 
         return CateringMapper.fromCateringToCateringOutputDto(catering);
     }
