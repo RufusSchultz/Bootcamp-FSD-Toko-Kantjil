@@ -44,6 +44,7 @@ public class UserService {
                 basicInfo.setUsername(user.getUsername());
                 basicInfo.setFirstName(user.getFirstName());
                 basicInfo.setLastName(user.getLastName());
+                basicInfo.setUserPhoto(user.getUserPhoto());
                 list.add(basicInfo);
             }
         }

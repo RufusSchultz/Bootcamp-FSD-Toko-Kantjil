@@ -53,15 +53,5 @@ public class UserPhotoService {
                 this.userPhotoRepository.deleteById(userPhoto.getId());
             }
         }
-
-//        for (Long id : usedPhotosList) {
-//            for (UserPhoto userPhoto : allPhotosList) {
-//                if (id == userPhoto.getId()) {
-//                    this.userPhotoRepository.save(userPhoto);
-//                    break;
-//                }
-//            }
-//        }
-
     }
 }
