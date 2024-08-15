@@ -1,6 +1,8 @@
 package com.backend.tokokantjil.dtos.outputs;
 
 import com.backend.tokokantjil.models.Role;
+import com.backend.tokokantjil.models.UserPhoto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Set;
 
@@ -13,6 +15,8 @@ public class UserOutputDto {
     private long phoneNumber;
     private double salary;
     private String notes;
+    @JsonIgnoreProperties(value = {"contents","contentType"} )
+    private UserPhoto userPhoto;
 
     public String getUsername() {
         return username;
@@ -62,15 +66,6 @@ public class UserOutputDto {
         this.phoneNumber = phoneNumber;
     }
 
-
-//    public String getPhoneNumber() {
-//        return phoneNumber;
-//    }
-//
-//    public void setPhoneNumber(String phoneNumber) {
-//        this.phoneNumber = phoneNumber;
-//    }
-
     public double getSalary() {
         return salary;
     }
@@ -87,4 +82,11 @@ public class UserOutputDto {
         this.notes = notes;
     }
 
+    public UserPhoto getUserPhoto() {
+        return userPhoto;
+    }
+
+    public void setUserPhoto(UserPhoto userPhoto) {
+        this.userPhoto = userPhoto;
+    }
 }

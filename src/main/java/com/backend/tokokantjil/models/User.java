@@ -1,5 +1,6 @@
 package com.backend.tokokantjil.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -30,6 +31,8 @@ public class User {
     private String notes;
     @OneToMany(mappedBy = "user")
     Set<Order> orders = new HashSet<>();
+    @OneToOne
+    UserPhoto userPhoto;
 
     public String getUsername() {
         return username;
@@ -87,15 +90,6 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-
-//    public String getPhoneNumber() {
-//        return phoneNumber;
-//    }
-//
-//    public void setPhoneNumber(String phoneNumber) {
-//        this.phoneNumber = phoneNumber;
-//    }
-
     public double getSalary() {
         return salary;
     }
@@ -118,5 +112,13 @@ public class User {
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
+    }
+
+    public UserPhoto getUserPhoto() {
+        return userPhoto;
+    }
+
+    public void setUserPhoto(UserPhoto userPhoto) {
+        this.userPhoto = userPhoto;
     }
 }
