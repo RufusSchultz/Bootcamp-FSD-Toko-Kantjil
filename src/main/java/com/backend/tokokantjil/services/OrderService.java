@@ -92,12 +92,16 @@ public class OrderService {
         String response = "";
 
         if (order.isCateringOrder()) {
-            order.setCatering(catering);
-            order.setAppraised(false);
-            this.orderRepository.save(order);
+            if (order.getCatering().getAddress() != null){
+                order.setCatering(catering);
+                order.setAppraised(false);
+                this.orderRepository.save(order);
 
-            response = "Catering " + order.getCatering().getId() + " assigned to order.";
-        } else {
+                response = "Catering " + order.getCatering().getId() + " assigned to order.";
+            } else {
+                response = "Unable to add catering " + cateringId + " to order. Catering has no address set!";
+            }
+         } else {
             response = "Order " + order.getId() + " is not set as a catering. Order is unchanged.";
         }
         return response;
