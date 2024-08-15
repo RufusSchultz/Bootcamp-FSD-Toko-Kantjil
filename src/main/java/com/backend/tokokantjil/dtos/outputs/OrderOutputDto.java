@@ -1,6 +1,7 @@
 package com.backend.tokokantjil.dtos.outputs;
 
 import com.backend.tokokantjil.enumerations.Status;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 public class OrderOutputDto {
     private Long id;
     private String title;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime createdAt;
     private String status;
     private double totalPrice;
