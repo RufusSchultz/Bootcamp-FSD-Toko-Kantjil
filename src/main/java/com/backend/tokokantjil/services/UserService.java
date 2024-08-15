@@ -1,12 +1,15 @@
 package com.backend.tokokantjil.services;
 
 import com.backend.tokokantjil.dtos.inputs.UserInputDto;
+import com.backend.tokokantjil.dtos.mappers.UserPhotoMapper;
 import com.backend.tokokantjil.dtos.outputs.UserOutputDto;
+import com.backend.tokokantjil.dtos.outputs.UserPhotoOutputDto;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
 import com.backend.tokokantjil.dtos.mappers.UserMapper;
 import com.backend.tokokantjil.exceptions.UsernameAlreadyExistsException;
 import com.backend.tokokantjil.models.Role;
 import com.backend.tokokantjil.models.User;
+import com.backend.tokokantjil.models.UserPhoto;
 import com.backend.tokokantjil.repositories.RoleRepository;
 import com.backend.tokokantjil.repositories.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -95,5 +98,26 @@ public class UserService {
         User newUser = this.userRepository.save(UserMapper.fromUserToUpdatedUser(oldUser, userUpdate));
 
         return UserMapper.fromUserToUserOutputDto(newUser);
+    }
+
+    public UserOutputDto addPhotoToUser(String id, UserPhotoOutputDto userPhotoOutputDto) {
+        User user = this.userRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No user with username " + id + " found."));
+        UserPhoto userPhoto = UserPhotoMapper.formUserPhotoOutputDtoToUserPhoto(userPhotoOutputDto);
+
+        user.setUserPhoto(userPhoto);
+        userRepository.save(user);
+
+        return UserMapper.fromUserToUserOutputDto(user);
+    }
+
+    public UserPhotoOutputDto getPhotoFromUser(String id) {
+        User user = this.userRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No user with username " + id + " found."));
+        if (user.getUserPhoto() != null) {
+            UserPhoto userPhoto = user.getUserPhoto();
+
+            return UserPhotoMapper.fromUserPhotoToUserPhotoOutputDto(userPhoto);
+        } else {
+            throw new RecordNotFoundException("No photo found for user " + id);
+        }
     }
 }
