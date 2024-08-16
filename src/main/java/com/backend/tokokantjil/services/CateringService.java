@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.backend.tokokantjil.constants.Constants.laborAndMaterialPriceMultiplier;
+
 @Service
 public class CateringService {
     private final CateringRepository cateringRepository;
@@ -162,7 +164,6 @@ public class CateringService {
 
     public String calculateCateringPrices(Long id, double laborAndMaterialCost) {
         Catering catering = this.cateringRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No catering with id " + id + " found."));
-        double laborAndMaterialPriceMultiplier = 1.5;
         String response = "";
 
         if (!catering.isAppraised()) {
