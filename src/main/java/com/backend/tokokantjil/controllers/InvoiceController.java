@@ -79,8 +79,8 @@ public class InvoiceController {
     }
 
     @GetMapping("/customer/{id}")
-    public ResponseEntity<List<InvoiceOutputDto>> getInvoiceHistory(@PathVariable Long id) {
-        List<InvoiceOutputDto> invoiceOutputDtoList = service.getAllInvoicesByCustomerId(id);
+    public ResponseEntity<List<InvoiceOutputDto>> getInvoiceHistory(@PathVariable Long customerId) {
+        List<InvoiceOutputDto> invoiceOutputDtoList = service.getAllInvoicesByCustomerId(customerId);
         return ResponseEntity.ok(invoiceOutputDtoList);
     }
 }

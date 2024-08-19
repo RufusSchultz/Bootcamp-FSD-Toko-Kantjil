@@ -19,10 +19,12 @@ import static com.backend.tokokantjil.helpers.PriceInCentsRounder.priceInCentsRo
 public class InvoiceService {
     private final InvoiceRepository invoiceRepository;
     private final OrderRepository orderRepository;
+    private final CustomerRepository customerRepository;
 
-    public InvoiceService(InvoiceRepository invoiceRepository, OrderRepository orderRepository, CustomerRepository customerRepository) {
+    public InvoiceService(InvoiceRepository invoiceRepository, OrderRepository orderRepository, CustomerRepository customerRepository, CustomerRepository customerRepository1) {
         this.invoiceRepository = invoiceRepository;
         this.orderRepository = orderRepository;
+        this.customerRepository = customerRepository1;
     }
 
     public List<InvoiceOutputDto> getAllInvoices() {
@@ -118,16 +120,17 @@ public class InvoiceService {
         return response;
     }
 
-    public List<InvoiceOutputDto> getAllInvoicesByCustomerId(Long id) {
-        List<InvoiceOutputDto> invoiceList = new ArrayList<>();
+    public List<InvoiceOutputDto> getAllInvoicesByCustomerId(Long customerId) {
+        customerRepository.findById(customerId).orElseThrow(() -> new RecordNotFoundException("No customer with id " + customerId + " found."));
+        List<InvoiceOutputDto> invoiceOutputDtoList = new ArrayList<>();
 
         for (Invoice invoice : this.invoiceRepository.findAll()) {
-            if(invoice.getOrder() != null && invoice.getOrder().getCustomer() != null && invoice.getOrder().getCustomer().getId().equals(id)) {
-                invoiceList.add(InvoiceMapper.fromInvoiceToInvoiceOutputDto(invoice));
+            if(invoice.getOrder() != null && invoice.getOrder().getCustomer() != null && invoice.getOrder().getCustomer().getId().equals(customerId)) {
+                invoiceOutputDtoList.add(InvoiceMapper.fromInvoiceToInvoiceOutputDto(invoice));
             }
         }
 
-        return invoiceList;
+        return invoiceOutputDtoList;
     }
 
 }
