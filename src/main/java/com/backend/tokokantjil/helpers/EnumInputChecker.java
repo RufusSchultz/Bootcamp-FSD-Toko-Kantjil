@@ -1,6 +1,6 @@
 package com.backend.tokokantjil.helpers;
 
-import com.backend.tokokantjil.exceptions.EnumerationValueIsUnprocessableException;
+import com.backend.tokokantjil.exceptions.UserInputIsUnprocessableException;
 
 import java.util.Arrays;
 
@@ -15,7 +15,7 @@ public class EnumInputChecker {
             }
         }
         if(!isInputCorrectEnumValue){
-            throw new EnumerationValueIsUnprocessableException("Unprocessable value " + enumInput + ". Value has to be one of " + Arrays.toString(enumList));
+            throw new UserInputIsUnprocessableException("Unprocessable value " + enumInput + ". Value has to be one of " + Arrays.toString(enumList));
         }
     }
 }
