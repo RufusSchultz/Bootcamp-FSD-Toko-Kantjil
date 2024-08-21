@@ -193,15 +193,11 @@ class DishControllerTest {
     @Test
     @DisplayName("Should set correct prices for dish")
     void setDishPrices() throws Exception {
-        MvcResult result = this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/dishes/{id}/prices?laborCost={laborCost}", 1, 10))
+        mockMvc.perform(MockMvcRequestBuilders.post("/dishes/{id}/prices?laborCost={laborCost}", 1, 10))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        String response = result.getResponse().getContentAsString();
-
-        assertEquals("Dish prices calculated. Cost price: 11.2 and sell price: 17.2", response);
+                .andExpect(MockMvcResultMatchers.jsonPath("$.productionPrice", is(11.2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.sellPrice", is(17.2)));
     }
 
     @Test

@@ -93,14 +93,9 @@ public class DishController {
     }
 
     @PostMapping("/{id}/prices")
-    public ResponseEntity<String> setDishPrices(@PathVariable long id, @RequestParam double laborCost) {
-        String response = service.calculateDishPrices(id, laborCost);
-
-        if (response.equals("reset prices first")) {
-            return ResponseEntity.unprocessableEntity().body("Dish prices are already calculated. Reset prices first if you want to recalculate them.");
-        } else {
-            return ResponseEntity.ok(response);
-        }
+    public ResponseEntity<DishOutputDto> setDishPrices(@PathVariable long id, @RequestParam double laborCost) {
+        DishOutputDto dishOutputDto = service.calculateDishPrices(id, laborCost);
+        return ResponseEntity.ok(dishOutputDto);
     }
 
     @PostMapping("/{id}/prices/reset")

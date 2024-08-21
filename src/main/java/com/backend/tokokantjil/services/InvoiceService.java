@@ -4,6 +4,7 @@ import com.backend.tokokantjil.dtos.inputs.InvoiceInputDto;
 import com.backend.tokokantjil.dtos.mappers.InvoiceMapper;
 import com.backend.tokokantjil.dtos.outputs.InvoiceOutputDto;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
+import com.backend.tokokantjil.exceptions.UserInputIsUnprocessableException;
 import com.backend.tokokantjil.models.*;
 import com.backend.tokokantjil.repositories.CustomerRepository;
 import com.backend.tokokantjil.repositories.InvoiceRepository;
@@ -75,7 +76,7 @@ public class InvoiceService {
 
                     response = "Order " + order.getTitle() + " assigned to invoice. Final price set to " + invoice.getFinalPrice() + ".";
                 } else {
-                    response = "no catering while expected";
+                    throw new UserInputIsUnprocessableException("Order has no catering assigned, but is expecting one.");
                 }
             } else {
                 invoice.setFinalPrice(priceInCentsRounder(order.getTotalPrice()));
@@ -85,7 +86,7 @@ public class InvoiceService {
                 response = "Order " + order.getTitle() + " assigned to invoice. Final price set to " + invoice.getFinalPrice() + ".";
             }
         } else {
-            response = "un-appraised order";
+            throw new UserInputIsUnprocessableException("Order has to be appraised first.");
         }
         return response;
     }
@@ -102,10 +103,10 @@ public class InvoiceService {
 
                     response = "Invoice is set to paid.";
                 } else {
-                    response = "no order";
+                    throw new UserInputIsUnprocessableException("Invoice has no order assigned.");
                 }
             } else {
-                response = "already paid";
+                throw new UserInputIsUnprocessableException("Invoice is already set to paid.");
             }
         } else {
             if (invoice.isPaid()){
@@ -114,7 +115,7 @@ public class InvoiceService {
 
                 response = "Invoice is set to unpaid.";
             } else {
-                response = "already unpaid";
+                throw new UserInputIsUnprocessableException("Invoice is already set to unpaid.");
             }
         }
         return response;

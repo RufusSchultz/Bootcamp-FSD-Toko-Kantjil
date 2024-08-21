@@ -2,9 +2,11 @@ package com.backend.tokokantjil.services;
 
 import com.backend.tokokantjil.dtos.inputs.OrderInputDto;
 import com.backend.tokokantjil.dtos.mappers.OrderMapper;
+import com.backend.tokokantjil.dtos.outputs.CateringOutputDto;
 import com.backend.tokokantjil.dtos.outputs.OrderOutputDto;
 import com.backend.tokokantjil.enumerations.Status;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
+import com.backend.tokokantjil.exceptions.UserInputIsUnprocessableException;
 import com.backend.tokokantjil.models.*;
 import com.backend.tokokantjil.repositories.*;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -86,10 +88,9 @@ public class OrderService {
         return OrderMapper.fromOrderToOrderOutputDto(order);
     }
 
-    public String assignCateringToOrder(Long id, Long cateringId) {
+    public OrderOutputDto assignCateringToOrder(Long id, Long cateringId) {
         Order order = this.orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No order with id " + id + " found."));
         Catering catering = this.cateringRepository.findById(cateringId).orElseThrow(() -> new RecordNotFoundException("No catering with id " + cateringId + " found."));
-        String response = "";
 
         if (order.isCateringOrder()) {
             if (catering.getAddress() != null) {
@@ -97,14 +98,13 @@ public class OrderService {
                 order.setAppraised(false);
                 this.orderRepository.save(order);
 
-                response = "Catering " + order.getCatering().getId() + " assigned to order.";
+                return OrderMapper.fromOrderToOrderOutputDto(order);
             } else {
-                response = "no address";
+                throw new UserInputIsUnprocessableException("Unable to add catering " + cateringId + " to order. Catering has no address set!");
             }
         } else {
-            response = "not set as catering";
+            throw new UserInputIsUnprocessableException("Order " + id + " is not set as a catering.");
         }
-        return response;
     }
 
     public String setOrderStatus(Long id, String status) {
@@ -131,26 +131,23 @@ public class OrderService {
         return response;
     }
 
-    public String addProductToOrder(Long id, Long productId) {
+    public OrderOutputDto addProductToOrder(Long id, Long productId) {
         Order order = this.orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No order with id " + id + " found."));
         Product product = this.productRepository.findById(productId).orElseThrow(() -> new RecordNotFoundException("No product with id " + productId + " found."));
-        String response = "";
 
         if (order.isCateringOrder()) {
-            response = "is set as catering";
+            throw new UserInputIsUnprocessableException("Unable to add any product to order. Order is set as catering.");
         } else {
             if (product.isForRetail()) {
                 order.setAppraised(false);
                 order.getProducts().add(product);
                 this.orderRepository.save(order);
 
-                response = "Added product " + productId + " to order.";
+                return OrderMapper.fromOrderToOrderOutputDto(order);
             } else {
-                response = "product is bulk";
+                throw new UserInputIsUnprocessableException("Unable to add product " + productId + ". Product is not for retail.");
             }
         }
-
-        return response;
     }
 
     public String removeProductFromOrder(Long id, Long productId) {
@@ -168,7 +165,7 @@ public class OrderService {
         }
 
         if (response.isEmpty()) {
-            throw new RecordNotFoundException("No product with id " + productId + " found in order " + id + ". Order is unchanged.");
+            throw new RecordNotFoundException("No product with id " + productId + " found in order " + id + ".");
         } else {
             order.setProducts(productList);
             this.orderRepository.save(order);
@@ -177,25 +174,22 @@ public class OrderService {
         }
     }
 
-    public String addDishToListOfOrder(Long id, Long dishId) {
+    public OrderOutputDto addDishToListOfOrder(Long id, Long dishId) {
         Order order = this.orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No order with id " + id + " found."));
         Dish dish = this.dishRepository.findById(dishId).orElseThrow(() -> new RecordNotFoundException("No dish with id " + dishId + " found."));
-        String response = "";
 
         if (order.isCateringOrder()) {
-            response = "is catering";
+            throw new UserInputIsUnprocessableException("Unable to add any dish to order. Order is set as catering.");
         } else {
             if (dish.isAppraised()) {
                 order.setAppraised(false);
                 order.getDishes().add(dish);
                 this.orderRepository.save(order);
-                response = "Added dish " + dish.getId() + " to order.";
+                return OrderMapper.fromOrderToOrderOutputDto(order);
             } else {
-                response = "un-appraised dish";
+                throw new UserInputIsUnprocessableException("Unable to add dish to order. Set prices dish " + dishId + " first.");
             }
         }
-
-        return response;
     }
 
     public String removeDishFromListOfOrder(Long id, Long dishId) {
@@ -213,7 +207,7 @@ public class OrderService {
         }
 
         if (response.isEmpty()) {
-            throw new RecordNotFoundException("No dish with id " + dishId + " found in order " + id + ". Order is unchanged.");
+            throw new RecordNotFoundException("No dish with id " + dishId + " found in order " + id + ".");
         } else {
             order.setDishes(dishList);
             this.orderRepository.save(order);
@@ -227,8 +221,7 @@ public class OrderService {
         String response = "";
 
         if (order.isAppraised()) {
-            response = "already calculated";
-
+            throw new UserInputIsUnprocessableException("Order prices are already calculated. Reset prices first if you want to recalculate them.");
         } else {
             if (order.isCateringOrder()) {
                 if (order.getCatering() != null) {
@@ -240,10 +233,10 @@ public class OrderService {
 
                         response = "Order prices set to catering prices. Total sell price: " + order.getTotalPrice() + " and total cost price: " + order.getTotalCost();
                     } else {
-                        response = "catering is un-appraised";
+                        throw new UserInputIsUnprocessableException("Prices of catering must be calculated first.");
                     }
                 } else {
-                    response = "catering error";
+                    throw new UserInputIsUnprocessableException("Assign a catering to order first or set order as not a catering.");
                 }
             } else {
                 boolean killSwitch = false;
@@ -271,7 +264,7 @@ public class OrderService {
 
                     response = "Order prices calculated. Total sell price: " + order.getTotalPrice() + " and total cost price: " + order.getTotalCost();
                 } else {
-                    response = "un-appraised dish";
+                    throw new UserInputIsUnprocessableException("Prices of every dish must be calculated first.");
                 }
             }
         }

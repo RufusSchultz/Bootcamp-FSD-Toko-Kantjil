@@ -2,6 +2,7 @@ package com.backend.tokokantjil.controllers;
 
 import com.backend.tokokantjil.exceptions.EnumerationValueIsUnprocessableException;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
+import com.backend.tokokantjil.exceptions.UserInputIsUnprocessableException;
 import com.backend.tokokantjil.exceptions.UsernameAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,11 @@ public class ExceptionController {
 
     @ExceptionHandler(value = EnumerationValueIsUnprocessableException.class)
     public ResponseEntity<String> exception (EnumerationValueIsUnprocessableException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(value = UserInputIsUnprocessableException.class)
+    public ResponseEntity<String> exception (UserInputIsUnprocessableException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 }
