@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static com.backend.tokokantjil.constants.Constants.laborPriceMultiplier;
+
 @Service
 public class DishService {
     private final DishRepository dishRepository;
@@ -74,8 +76,7 @@ public class DishService {
         Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
         Product baseProduct = this.productRepository.findById(productId).orElseThrow(() -> new RecordNotFoundException("No product with id " + productId + " found."));
         Set<Product> productSet = dish.getProducts();
-
-        String response = "No product with id " + productId + " found. Dish is unchanged.";
+        String response = "";
 
         for (Product product : dish.getProducts()) {
             if (product.getId().equals(productId)) {
@@ -87,11 +88,17 @@ public class DishService {
                 dish.setAppraised(false);
 
                 response = "Product with id " + productId + " removed from dish";
+                break;
             }
         }
-        dish.setProducts(productSet);
-        this.dishRepository.save(dish);
-        return response;
+
+        if (response.isEmpty()) {
+            throw new RecordNotFoundException("No product with id " + productId + " found in dish " + id + ". Dish is unchanged.");
+        } else {
+            dish.setProducts(productSet);
+            this.dishRepository.save(dish);
+            return response;
+        }
     }
 
     public String increaseDishStock(Long id, int amount) {
@@ -122,7 +129,6 @@ public class DishService {
 
     public String calculateDishPrices(Long id, double laborCost) {
         Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
-        double laborPriceMultiplier = 1.5;
 
         if (!dish.isAppraised()) {
             double combinedCostPrice = 0;
@@ -140,7 +146,7 @@ public class DishService {
 
             return "Dish prices calculated. Cost price: " + dish.getProductionPrice() + " and sell price: " + dish.getSellPrice();
         } else {
-            return "Dish prices are already calculated. Reset prices first if you want to recalculate them.";
+            return "reset prices first";
         }
     }
 

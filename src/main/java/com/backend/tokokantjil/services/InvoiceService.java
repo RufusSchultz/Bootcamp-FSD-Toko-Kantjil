@@ -19,10 +19,12 @@ import static com.backend.tokokantjil.helpers.PriceInCentsRounder.priceInCentsRo
 public class InvoiceService {
     private final InvoiceRepository invoiceRepository;
     private final OrderRepository orderRepository;
+    private final CustomerRepository customerRepository;
 
-    public InvoiceService(InvoiceRepository invoiceRepository, OrderRepository orderRepository, CustomerRepository customerRepository) {
+    public InvoiceService(InvoiceRepository invoiceRepository, OrderRepository orderRepository, CustomerRepository customerRepository, CustomerRepository customerRepository1) {
         this.invoiceRepository = invoiceRepository;
         this.orderRepository = orderRepository;
+        this.customerRepository = customerRepository1;
     }
 
     public List<InvoiceOutputDto> getAllInvoices() {
@@ -73,7 +75,7 @@ public class InvoiceService {
 
                     response = "Order " + order.getTitle() + " assigned to invoice. Final price set to " + invoice.getFinalPrice() + ".";
                 } else {
-                    response = "Order has no catering assigned, but is expecting one. Invoice is unchanged.";
+                    response = "no catering while expected";
                 }
             } else {
                 invoice.setFinalPrice(priceInCentsRounder(order.getTotalPrice()));
@@ -83,7 +85,7 @@ public class InvoiceService {
                 response = "Order " + order.getTitle() + " assigned to invoice. Final price set to " + invoice.getFinalPrice() + ".";
             }
         } else {
-            response = "Order has to be appraised first. Invoice is unchanged.";
+            response = "un-appraised order";
         }
         return response;
     }
@@ -100,10 +102,10 @@ public class InvoiceService {
 
                     response = "Invoice is set to paid.";
                 } else {
-                    response = "Invoice has no order assigned. Invoice is unchanged.";
+                    response = "no order";
                 }
             } else {
-                response = "Invoice is already set to paid. Invoice is unchanged.";
+                response = "already paid";
             }
         } else {
             if (invoice.isPaid()){
@@ -112,22 +114,23 @@ public class InvoiceService {
 
                 response = "Invoice is set to unpaid.";
             } else {
-                response = "Invoice is already set to unpaid. Invoice is unchanged.";
+                response = "already unpaid";
             }
         }
         return response;
     }
 
-    public List<InvoiceOutputDto> getAllInvoicesByCustomerId(Long id) {
-        List<InvoiceOutputDto> invoiceList = new ArrayList<>();
+    public List<InvoiceOutputDto> getAllInvoicesByCustomerId(Long customerId) {
+        customerRepository.findById(customerId).orElseThrow(() -> new RecordNotFoundException("No customer with id " + customerId + " found."));
+        List<InvoiceOutputDto> invoiceOutputDtoList = new ArrayList<>();
 
         for (Invoice invoice : this.invoiceRepository.findAll()) {
-            if(invoice.getOrder() != null && invoice.getOrder().getCustomer() != null && invoice.getOrder().getCustomer().getId().equals(id)) {
-                invoiceList.add(InvoiceMapper.fromInvoiceToInvoiceOutputDto(invoice));
+            if(invoice.getOrder() != null && invoice.getOrder().getCustomer() != null && invoice.getOrder().getCustomer().getId().equals(customerId)) {
+                invoiceOutputDtoList.add(InvoiceMapper.fromInvoiceToInvoiceOutputDto(invoice));
             }
         }
 
-        return invoiceList;
+        return invoiceOutputDtoList;
     }
 
 }

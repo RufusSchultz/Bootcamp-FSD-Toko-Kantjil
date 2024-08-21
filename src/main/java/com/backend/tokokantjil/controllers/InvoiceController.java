@@ -69,18 +69,34 @@ public class InvoiceController {
     @PostMapping("/{id}/order")
     public ResponseEntity<String> assignOrder(@PathVariable Long id, @RequestParam Long orderId, boolean useAgreedPriceIfAny) {
         String response = service.assignOrderToInvoice(id, orderId, useAgreedPriceIfAny);
-        return ResponseEntity.ok(response);
+
+        if (response.equals("no catering while expected")) {
+            return ResponseEntity.unprocessableEntity().body("Order has no catering assigned, but is expecting one. Invoice is unchanged.");
+        } else if (response.equals("un-appraised order")) {
+            return ResponseEntity.unprocessableEntity().body("Order has to be appraised first. Invoice is unchanged.");
+        } else {
+            return ResponseEntity.ok(response);
+        }
     }
 
     @PostMapping("/{id}/payment")
     public ResponseEntity<String> setPayment(@PathVariable Long id, boolean hasBeenPaid) {
         String response = service.setInvoicePaymentStatus(id, hasBeenPaid);
-        return ResponseEntity.ok(response);
+
+        if (response.equals("no order")) {
+            return ResponseEntity.unprocessableEntity().body("Invoice has no order assigned. Invoice is unchanged.");
+        } else if (response.equals("already paid")){
+            return ResponseEntity.unprocessableEntity().body("Invoice is already set to paid. Invoice is unchanged.");
+        } else if (response.equals("already unpaid")) {
+            return ResponseEntity.unprocessableEntity().body("Invoice is already set to unpaid. Invoice is unchanged.");
+        } else {
+            return ResponseEntity.ok(response);
+        }
     }
 
-    @GetMapping("/customer/{id}")
-    public ResponseEntity<List<InvoiceOutputDto>> getInvoiceHistory(@PathVariable Long id) {
-        List<InvoiceOutputDto> invoiceOutputDtoList = service.getAllInvoicesByCustomerId(id);
+    @GetMapping("/customer/{customerId}")
+    public ResponseEntity<List<InvoiceOutputDto>> getInvoiceHistory(@PathVariable Long customerId) {
+        List<InvoiceOutputDto> invoiceOutputDtoList = service.getAllInvoicesByCustomerId(customerId);
         return ResponseEntity.ok(invoiceOutputDtoList);
     }
 }
