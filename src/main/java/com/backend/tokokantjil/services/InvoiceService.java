@@ -75,7 +75,7 @@ public class InvoiceService {
 
                     response = "Order " + order.getTitle() + " assigned to invoice. Final price set to " + invoice.getFinalPrice() + ".";
                 } else {
-                    response = "Order has no catering assigned, but is expecting one. Invoice is unchanged.";
+                    response = "no catering while expected";
                 }
             } else {
                 invoice.setFinalPrice(priceInCentsRounder(order.getTotalPrice()));
@@ -85,7 +85,7 @@ public class InvoiceService {
                 response = "Order " + order.getTitle() + " assigned to invoice. Final price set to " + invoice.getFinalPrice() + ".";
             }
         } else {
-            response = "Order has to be appraised first. Invoice is unchanged.";
+            response = "un-appraised order";
         }
         return response;
     }
@@ -102,10 +102,10 @@ public class InvoiceService {
 
                     response = "Invoice is set to paid.";
                 } else {
-                    response = "Invoice has no order assigned. Invoice is unchanged.";
+                    response = "no order";
                 }
             } else {
-                response = "Invoice is already set to paid. Invoice is unchanged.";
+                response = "already paid";
             }
         } else {
             if (invoice.isPaid()){
@@ -114,7 +114,7 @@ public class InvoiceService {
 
                 response = "Invoice is set to unpaid.";
             } else {
-                response = "Invoice is already set to unpaid. Invoice is unchanged.";
+                response = "already unpaid";
             }
         }
         return response;

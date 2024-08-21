@@ -67,9 +67,9 @@ public class DishController {
     }
 
     @PostMapping("/{id}/products")
-    public ResponseEntity<?> addProductToDish(@PathVariable Long id, @RequestParam Long productId, double amountMultiplier) {
+    public ResponseEntity<String> addProductToDish(@PathVariable Long id, @RequestParam Long productId, double amountMultiplier) {
 
-        //amountMultiplier only modifies productionPrice and sellPrice of Dish right now, and does nothing with stock of Product. This is for future development.
+        //Future development: make amountMultiplier modify stock of Product.
         DishOutputDto dishOutputDto = this.service.addProductToCollectionOfDish(id, productId, amountMultiplier);
         return ResponseEntity.ok("Added product " + productId + " to dish " + dishOutputDto.getId() + " with a multiplier of " + amountMultiplier + ".");
     }
@@ -95,7 +95,12 @@ public class DishController {
     @PostMapping("/{id}/prices")
     public ResponseEntity<String> setDishPrices(@PathVariable long id, @RequestParam double laborCost) {
         String response = service.calculateDishPrices(id, laborCost);
-        return ResponseEntity.ok(response);
+
+        if (response.equals("reset prices first")) {
+            return ResponseEntity.unprocessableEntity().body("Dish prices are already calculated. Reset prices first if you want to recalculate them.");
+        } else {
+            return ResponseEntity.ok(response);
+        }
     }
 
     @PostMapping("/{id}/prices/reset")

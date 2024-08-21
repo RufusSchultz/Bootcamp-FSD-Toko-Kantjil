@@ -58,12 +58,12 @@ public class CateringController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCatering(@Valid @PathVariable Long id, @RequestBody CateringInputDto cateringInputDto, BindingResult br) {
-            if (validationChecker(br) == null) {
-                CateringOutputDto cateringOutputDto = service.updateCateringWithNewCateringInputDto(id, cateringInputDto);
-                return ResponseEntity.ok(cateringOutputDto);
-            } else {
-                return validationChecker(br);
-            }
+        if (validationChecker(br) == null) {
+            CateringOutputDto cateringOutputDto = service.updateCateringWithNewCateringInputDto(id, cateringInputDto);
+            return ResponseEntity.ok(cateringOutputDto);
+        } else {
+            return validationChecker(br);
+        }
     }
 
     @PostMapping("/{id}/address")
@@ -75,7 +75,12 @@ public class CateringController {
     @PostMapping("/{id}/products")
     public ResponseEntity<String> addProductToCatering(@PathVariable Long id, @RequestParam Long productId) {
         String response = service.addProductToListOfCatering(id, productId);
-        return ResponseEntity.ok(response);
+
+        if (response.equals("product is bulk only")) {
+            return ResponseEntity.unprocessableEntity().body("Unable to add product " + productId + ". Product is not for retail.");
+        } else {
+            return ResponseEntity.ok(response);
+        }
     }
 
     @DeleteMapping("/{id}/products")
@@ -86,8 +91,13 @@ public class CateringController {
 
     @PostMapping("/{id}/dishes")
     public ResponseEntity<String> addDishToCatering(@PathVariable Long id, @RequestParam Long dishId) {
-        String response  = service.addDishToListOfCatering(id, dishId);
-        return ResponseEntity.ok(response);
+        String response = service.addDishToListOfCatering(id, dishId);
+
+        if (response.equals("no dish prices set")) {
+            return ResponseEntity.unprocessableEntity().body("Unable to add dish to catering. Set prices dish " + dishId + " first.");
+        } else {
+            return ResponseEntity.ok(response);
+        }
     }
 
     @DeleteMapping("/{id}/dishes")
@@ -105,7 +115,12 @@ public class CateringController {
     @PostMapping("/{id}/prices")
     public ResponseEntity<String> calculateCateringPrices(@PathVariable Long id, @RequestParam double laborAndMaterialCost) {
         String response = service.calculateCateringPrices(id, laborAndMaterialCost);
-        return ResponseEntity.ok(response);
+
+        if (response.equals("reset prices first")) {
+            return ResponseEntity.unprocessableEntity().body("Catering prices are already calculated. Reset prices first if you want to recalculate them.");
+        } else {
+            return ResponseEntity.ok(response);
+        }
     }
 
     @PostMapping("/{id}/prices/reset")

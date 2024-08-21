@@ -92,17 +92,17 @@ public class OrderService {
         String response = "";
 
         if (order.isCateringOrder()) {
-            if (order.getCatering().getAddress() != null){
+            if (order.getCatering().getAddress() != null) {
                 order.setCatering(catering);
                 order.setAppraised(false);
                 this.orderRepository.save(order);
 
                 response = "Catering " + order.getCatering().getId() + " assigned to order.";
             } else {
-                response = "Unable to add catering " + cateringId + " to order. Catering has no address set!";
+                response = "no address";
             }
-         } else {
-            response = "Order " + order.getId() + " is not set as a catering. Order is unchanged.";
+        } else {
+            response = "not set as catering";
         }
         return response;
     }
@@ -137,7 +137,7 @@ public class OrderService {
         String response = "";
 
         if (order.isCateringOrder()) {
-            response = "Unable to add any product to order. Order is set as catering. Order is unchanged.";
+            response = "is set as catering";
         } else {
             if (product.isForRetail()) {
                 order.setAppraised(false);
@@ -146,7 +146,7 @@ public class OrderService {
 
                 response = "Added product " + productId + " to order.";
             } else {
-                response = "Unable to add product " + productId + ". Product is not for retail.";
+                response = "product is bulk";
             }
         }
 
@@ -155,7 +155,7 @@ public class OrderService {
 
     public String removeProductFromOrder(Long id, Long productId) {
         Order order = this.orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No order with id " + id + " found."));
-        String response = "No product with id " + productId + " found. Order is unchanged.";
+        String response = "";
         List<Product> productList = order.getProducts();
 
         for (Product product : order.getProducts()) {
@@ -166,10 +166,15 @@ public class OrderService {
                 break;
             }
         }
-        order.setProducts(productList);
-        this.orderRepository.save(order);
 
-        return response;
+        if (response.isEmpty()) {
+            throw new RecordNotFoundException("No product with id " + productId + " found in order " + id + ". Order is unchanged.");
+        } else {
+            order.setProducts(productList);
+            this.orderRepository.save(order);
+
+            return response;
+        }
     }
 
     public String addDishToListOfOrder(Long id, Long dishId) {
@@ -178,7 +183,7 @@ public class OrderService {
         String response = "";
 
         if (order.isCateringOrder()) {
-            response = "Unable to add any dish to order. Order is set as catering. Order is unchanged.";
+            response = "is catering";
         } else {
             if (dish.isAppraised()) {
                 order.setAppraised(false);
@@ -186,7 +191,7 @@ public class OrderService {
                 this.orderRepository.save(order);
                 response = "Added dish " + dish.getId() + " to order.";
             } else {
-                response = "Unable to add dish to order. Set prices dish " + dish.getId() + " first.";
+                response = "un-appraised dish";
             }
         }
 
@@ -195,7 +200,7 @@ public class OrderService {
 
     public String removeDishFromListOfOrder(Long id, Long dishId) {
         Order order = this.orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No order with id " + id + " found."));
-        String response = "No dish with id " + dishId + " found. Order is unchanged.";
+        String response = "";
         List<Dish> dishList = order.getDishes();
 
         for (Dish dish : order.getDishes()) {
@@ -206,10 +211,15 @@ public class OrderService {
                 break;
             }
         }
-        order.setDishes(dishList);
-        this.orderRepository.save(order);
 
-        return response;
+        if (response.isEmpty()) {
+            throw new RecordNotFoundException("No dish with id " + dishId + " found in order " + id + ". Order is unchanged.");
+        } else {
+            order.setDishes(dishList);
+            this.orderRepository.save(order);
+
+            return response;
+        }
     }
 
     public String calculateOrderTotalPrices(Long id) {
@@ -217,7 +227,7 @@ public class OrderService {
         String response = "";
 
         if (order.isAppraised()) {
-            response = "Order prices are already calculated. Reset prices first if you want to recalculate them.";
+            response = "already calculated";
 
         } else {
             if (order.isCateringOrder()) {
@@ -230,10 +240,10 @@ public class OrderService {
 
                         response = "Order prices set to catering prices. Total sell price: " + order.getTotalPrice() + " and total cost price: " + order.getTotalCost();
                     } else {
-                        response = "Prices of catering must be calculated first. Order is unchanged.";
+                        response = "catering is un-appraised";
                     }
                 } else {
-                    response = "Assign a catering to order first or set order as not a catering. Order is unchanged.";
+                    response = "catering error";
                 }
             } else {
                 boolean killSwitch = false;
@@ -261,7 +271,7 @@ public class OrderService {
 
                     response = "Order prices calculated. Total sell price: " + order.getTotalPrice() + " and total cost price: " + order.getTotalCost();
                 } else {
-                    response = "Prices of every dish must be calculated first. Order is unchanged.";
+                    response = "un-appraised dish";
                 }
             }
         }

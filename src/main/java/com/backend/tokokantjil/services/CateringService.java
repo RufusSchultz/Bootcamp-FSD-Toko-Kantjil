@@ -35,7 +35,7 @@ public class CateringService {
 
     public List<CateringOutputDto> getEveryCatering() {
         List<CateringOutputDto> list = new ArrayList<>();
-        for (Catering i: this.cateringRepository.findAll()) {
+        for (Catering i : this.cateringRepository.findAll()) {
             list.add(CateringMapper.fromCateringToCateringOutputDto(i));
         }
         return list;
@@ -52,7 +52,7 @@ public class CateringService {
     }
 
     public void deleteCateringById(Long id) {
-        if(this.cateringRepository.findById(id).isPresent()) {
+        if (this.cateringRepository.findById(id).isPresent()) {
             this.cateringRepository.deleteById(id);
         } else {
             throw new RecordNotFoundException("No catering with id " + id + " found.");
@@ -82,21 +82,22 @@ public class CateringService {
         Product product = this.productRepository.findById(productId).orElseThrow(() -> new RecordNotFoundException("No product with id " + productId + " found."));
         String response = "";
 
-        if (product.isForRetail()){
+        if (product.isForRetail()) {
             catering.setAppraised(false);
             catering.getProducts().add(product);
             this.cateringRepository.save(catering);
 
             response = "Added product " + productId + " to catering.";
         } else {
-            response = "Unable to add product " + productId + ". Product is not for retail.";
+            response = "product is bulk only";
         }
+
         return response;
     }
 
     public String removeProductFromListOfCatering(Long id, Long productId) {
         Catering catering = this.cateringRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No catering with id " + id + " found."));
-        String response = "No product with id " + productId + " found. Catering is unchanged.";
+        String response = "";
         List<Product> productList = catering.getProducts();
 
         for (Product product : catering.getProducts()) {
@@ -107,10 +108,15 @@ public class CateringService {
                 break;
             }
         }
-        catering.setProducts(productList);
-        this.cateringRepository.save(catering);
 
-        return response;
+        if (response.isEmpty()) {
+            throw new RecordNotFoundException("No product with id " + productId + " found in catering " + id + ". Catering is unchanged.");
+        } else {
+            catering.setProducts(productList);
+            this.cateringRepository.save(catering);
+
+            return response;
+        }
     }
 
     public String addDishToListOfCatering(Long id, Long dishId) {
@@ -124,14 +130,14 @@ public class CateringService {
             this.cateringRepository.save(catering);
             response = "Added dish " + dish.getId() + " to catering.";
         } else {
-            response = "Unable to add dish to catering. Set prices dish " + dish.getId() + " first.";
+            response = "no dish prices set";
         }
         return response;
     }
 
     public String removeDishFromListOfCatering(Long id, Long dishId) {
         Catering catering = this.cateringRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No catering with id " + id + " found."));
-        String response = "No dish with id " + dishId + " found. Catering is unchanged.";
+        String response = "";
         List<Dish> dishList = catering.getDishes();
 
         for (Dish dish : catering.getDishes()) {
@@ -142,10 +148,15 @@ public class CateringService {
                 break;
             }
         }
-        catering.setDishes(dishList);
-        this.cateringRepository.save(catering);
 
-        return response;
+        if (response.isEmpty()) {
+            throw new RecordNotFoundException("No dish with id " + dishId + " found in catering " + id + ". Catering is unchanged.");
+        } else {
+            catering.setDishes(dishList);
+            this.cateringRepository.save(catering);
+
+            return response;
+        }
     }
 
     public String setAgreedPriceOfCatering(Long id, double agreedPrice) {
@@ -186,9 +197,9 @@ public class CateringService {
 
             response = "Catering prices calculated. Cost price: " + catering.getTotalCostPrice() + " and sell price: " + catering.getTotalSellPrice();
         } else {
-            response = "Catering prices are already calculated. Reset prices first if you want to recalculate them.";
+            response = "reset prices first";
         }
-        if (catering.getTotalSellPrice() > catering.getAgreedPrice()){
+        if (catering.getTotalSellPrice() > catering.getAgreedPrice()) {
             response = "Agreed price is lower than total sell price! " + response;
         }
         return response;
