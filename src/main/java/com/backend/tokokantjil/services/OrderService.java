@@ -92,7 +92,7 @@ public class OrderService {
         String response = "";
 
         if (order.isCateringOrder()) {
-            if (order.getCatering().getAddress() != null) {
+            if (catering.getAddress() != null) {
                 order.setCatering(catering);
                 order.setAppraised(false);
                 this.orderRepository.save(order);
