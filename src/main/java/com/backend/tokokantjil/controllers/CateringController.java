@@ -67,9 +67,9 @@ public class CateringController {
     }
 
     @PostMapping("/{id}/address")
-    public ResponseEntity<String> setCateringAddress(@PathVariable Long id, @RequestParam Long addressId) {
+    public ResponseEntity<CateringOutputDto> setAddress(@PathVariable Long id, @RequestParam Long addressId) {
         CateringOutputDto cateringOutputDto = service.setCateringAddress(id, addressId);
-        return ResponseEntity.ok("Address " + addressId + " set for catering " + cateringOutputDto.getId());
+        return ResponseEntity.ok(cateringOutputDto);
     }
 
     @PostMapping("/{id}/products")

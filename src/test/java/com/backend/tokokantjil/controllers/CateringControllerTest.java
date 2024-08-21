@@ -160,7 +160,10 @@ class CateringControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/caterings/{id}/address?addressId={addressId}", 1, 1))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$", is("Address 1 set for catering 1")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.address.name", is("Party House")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.address.street", is("Feeststraat")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.address.houseNumber", is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.address.city", is("Feeststad")));
     }
 
     @Test

@@ -67,11 +67,11 @@ public class DishController {
     }
 
     @PostMapping("/{id}/products")
-    public ResponseEntity<String> addProductToDish(@PathVariable Long id, @RequestParam Long productId, double amountMultiplier) {
+    public ResponseEntity<DishOutputDto> addProductToDish(@PathVariable Long id, @RequestParam Long productId, double amountMultiplier) {
 
         //Future development: make amountMultiplier modify stock of Product.
         DishOutputDto dishOutputDto = this.service.addProductToCollectionOfDish(id, productId, amountMultiplier);
-        return ResponseEntity.ok("Added product " + productId + " to dish " + dishOutputDto.getId() + " with a multiplier of " + amountMultiplier + ".");
+        return ResponseEntity.ok(dishOutputDto);
     }
 
     @DeleteMapping("/{id}/products")
