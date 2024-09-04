@@ -16,6 +16,7 @@ public class ValidationChecker {
                 sb.append("\n");
             }
             return ResponseEntity.unprocessableEntity().body(sb.toString());
+//            throw?
         } else {
             return null;
         }

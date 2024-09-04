@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ExceptionController {
     @ExceptionHandler(value = RecordNotFoundException.class)
-    public ResponseEntity<String> exception (RecordNotFoundException exception) {
+    public ResponseEntity<String> exception(RecordNotFoundException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(value = UsernameAlreadyExistsException.class)
-    public ResponseEntity<String> exception (UsernameAlreadyExistsException exception) {
+    public ResponseEntity<String> exception(UsernameAlreadyExistsException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(value = UserInputIsUnprocessableException.class)
-    public ResponseEntity<String> exception (UserInputIsUnprocessableException exception) {
+    public ResponseEntity<String> exception(UserInputIsUnprocessableException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 }

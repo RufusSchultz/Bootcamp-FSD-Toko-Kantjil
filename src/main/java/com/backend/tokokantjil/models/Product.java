@@ -41,7 +41,8 @@ public class Product {
     @ManyToMany(mappedBy = "products")
     private List<Catering> caterings = new ArrayList<>();
 
-    public Product(){}
+    public Product() {
+    }
 
     public Product(String name, State state, int amount, String amountUnit, double buyPrice, double sellPrice, boolean isForRetail, double stock, String notes) {
         this.name = name;

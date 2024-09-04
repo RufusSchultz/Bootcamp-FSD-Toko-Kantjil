@@ -2,7 +2,6 @@ package com.backend.tokokantjil.services;
 
 import com.backend.tokokantjil.dtos.inputs.OrderInputDto;
 import com.backend.tokokantjil.dtos.mappers.OrderMapper;
-import com.backend.tokokantjil.dtos.outputs.CateringOutputDto;
 import com.backend.tokokantjil.dtos.outputs.OrderOutputDto;
 import com.backend.tokokantjil.enumerations.Status;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
@@ -58,7 +57,6 @@ public class OrderService {
             order.setTitle("Order " + order.getId());
             this.orderRepository.save(order);
         }
-
         return OrderMapper.fromOrderToOrderOutputDto(order);
     }
 
@@ -111,24 +109,12 @@ public class OrderService {
         status = status.toLowerCase();
         String[] statusList = Stream.of(Status.values()).map(Status::name).toArray(String[]::new);
         enumInputChecker(statusList, status);
-
         Order order = this.orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No order with id " + id + " found."));
-        String response = "Status of order " + order.getId() + " set to ";
 
-
-        if (status.equals("accepted")) {
-            order.setStatus(Status.accepted);
-            response = response + "accepted.";
-        } else if (status.equals("processing")) {
-            order.setStatus(Status.processing);
-            response = response + "processing.";
-        } else if (status.equals("done")) {
-            order.setStatus(Status.done);
-            response = response + "done.";
-        }
+        order.setStatus(Enum.valueOf(Status.class, status));
         this.orderRepository.save(order);
 
-        return response;
+        return "Status of order " + order.getId() + " set to " + order.getStatus().toString() + ".";
     }
 
     public OrderOutputDto addProductToOrder(Long id, Long productId) {

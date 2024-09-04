@@ -35,15 +35,15 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<?> createProduct(@Valid @RequestBody ProductInputDto productInputDto, BindingResult br) {
-            if (validationChecker(br) == null) {
-                ProductOutputDto productOutputDto = service.createNewProduct(productInputDto);
-                URI uri = URI.create(ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/" + productOutputDto.getId()).toUriString());
-                return ResponseEntity.created(uri).body(productOutputDto);
-            } else {
-                return validationChecker(br);
-            }
+        if (validationChecker(br) == null) {
+            ProductOutputDto productOutputDto = service.createNewProduct(productInputDto);
+            URI uri = URI.create(ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/" + productOutputDto.getId()).toUriString());
+            return ResponseEntity.created(uri).body(productOutputDto);
+        } else {
+            return validationChecker(br);
+        }
     }
 
     @DeleteMapping("/{id}")

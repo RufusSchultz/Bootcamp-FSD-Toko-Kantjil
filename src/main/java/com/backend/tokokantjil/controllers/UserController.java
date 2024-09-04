@@ -24,7 +24,6 @@ import static com.backend.tokokantjil.helpers.ValidationChecker.validationChecke
 @RestController
 @RequestMapping("/users")
 public class UserController {
-
     private final UserService UserService;
     private final UserPhotoService userPhotoService;
 
@@ -42,7 +41,7 @@ public class UserController {
     public ResponseEntity<?> getUserById(@AuthenticationPrincipal UserDetails userDetails, @PathVariable String id) {
         UserOutputDto userOutputDto = UserService.getUserById(id, userDetails);
 
-        if (userOutputDto.getUsername() != null){
+        if (userOutputDto.getUsername() != null) {
             return ResponseEntity.ok(userOutputDto);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -51,15 +50,15 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody UserInputDto userInputDto, BindingResult br) {
-            if (validationChecker(br) == null) {
-                UserOutputDto userOutputDto = UserService.createUser(userInputDto);
-                URI uri = URI.create(ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/" + userOutputDto.getUsername()).toUriString());
-                return ResponseEntity.created(uri).body(userOutputDto);
-            } else {
-                return validationChecker(br);
-            }
+        if (validationChecker(br) == null) {
+            UserOutputDto userOutputDto = UserService.createUser(userInputDto);
+            URI uri = URI.create(ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/" + userOutputDto.getUsername()).toUriString());
+            return ResponseEntity.created(uri).body(userOutputDto);
+        } else {
+            return validationChecker(br);
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -70,12 +69,12 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@Valid @PathVariable String id, @RequestBody UserInputDto userInputDto, BindingResult br) {
-            if (validationChecker(br) == null) {
-                UserOutputDto userOutputDto = UserService.updateUser(id, userInputDto);
-                return ResponseEntity.ok(userOutputDto);
-            } else {
-                return validationChecker(br);
-            }
+        if (validationChecker(br) == null) {
+            UserOutputDto userOutputDto = UserService.updateUser(id, userInputDto);
+            return ResponseEntity.ok(userOutputDto);
+        } else {
+            return validationChecker(br);
+        }
     }
 
     @PostMapping("{id}/photo")

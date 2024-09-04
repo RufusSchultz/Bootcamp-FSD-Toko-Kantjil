@@ -1,9 +1,5 @@
 package com.backend.tokokantjil.dtos.outputs;
 
-
-import java.util.List;
-import java.util.Set;
-
 public class AddressOutputDto {
     private Long id;
     private String name;
@@ -13,8 +9,6 @@ public class AddressOutputDto {
     private String postalCode;
     private String city;
     private String notes;
-//    private Set<CateringOutputDto> caterings;
-//    private Set<CustomerOutputDto> customers;
 
     public Long getId() {
         return id;
@@ -80,19 +74,4 @@ public class AddressOutputDto {
         this.notes = notes;
     }
 
-//    public Set<CateringOutputDto> getCaterings() {
-//        return caterings;
-//    }
-
-//    public void setCaterings(Set<CateringOutputDto> caterings) {
-//        this.caterings = caterings;
-//    }
-//
-//    public Set<CustomerOutputDto> getCustomers() {
-//        return customers;
-//    }
-//
-//    public void setCustomers(Set<CustomerOutputDto> customers) {
-//        this.customers = customers;
-//    }
 }

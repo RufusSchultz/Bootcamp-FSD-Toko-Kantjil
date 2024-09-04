@@ -1,7 +1,5 @@
 package com.backend.tokokantjil.dtos.outputs;
 
-import com.backend.tokokantjil.enumerations.State;
-
 public class ProductOutputDto {
     private Long id;
     private String name;

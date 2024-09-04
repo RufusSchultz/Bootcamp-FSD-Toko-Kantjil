@@ -1,10 +1,5 @@
 package com.backend.tokokantjil.dtos.outputs;
 
-import com.backend.tokokantjil.models.Address;
-import com.backend.tokokantjil.models.Order;
-
-import java.util.Set;
-
 public class CustomerOutputDto {
     private Long id;
     private String firstName;

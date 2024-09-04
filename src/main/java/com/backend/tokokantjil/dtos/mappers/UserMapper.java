@@ -5,7 +5,6 @@ import com.backend.tokokantjil.dtos.outputs.UserOutputDto;
 import com.backend.tokokantjil.models.User;
 
 public class UserMapper {
-
     public static User fromUserInputDtoToUser(UserInputDto userInputDto) {
         User user = new User();
 

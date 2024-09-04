@@ -22,7 +22,7 @@ public class InvoiceMapper {
         invoiceOutputDto.setFinalPrice(invoice.getFinalPrice());
         invoiceOutputDto.setPaid(invoice.isPaid());
         invoiceOutputDto.setNotes(invoice.getNotes());
-        if(invoice.getOrder() != null){
+        if (invoice.getOrder() != null) {
             invoiceOutputDto.setOrder(OrderMapper.fromOrderToOrderOutputDto(invoice.getOrder()));
         }
 
@@ -30,7 +30,6 @@ public class InvoiceMapper {
     }
 
     public static Invoice fromInvoiceToUpdatedInvoice(Invoice invoice, Invoice invoiceUpdate) {
-
         invoice.setNotes(invoiceUpdate.getNotes());
 
         return invoice;

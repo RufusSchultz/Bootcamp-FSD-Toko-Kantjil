@@ -16,7 +16,7 @@ public class UserPhoto {
     @Lob
     private byte[] contents;
 
-    public UserPhoto (String title, String contentType, String url, byte[] contents) {
+    public UserPhoto(String title, String contentType, String url, byte[] contents) {
         this.url = url;
         this.title = title;
         this.contentType = contentType;

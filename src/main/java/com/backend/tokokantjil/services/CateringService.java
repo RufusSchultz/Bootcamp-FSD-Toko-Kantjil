@@ -166,7 +166,6 @@ public class CateringService {
         if (catering.getAgreedPrice() < catering.getTotalSellPrice()) {
             response = "Agreed price is lower than total sell price!" + response;
         }
-
         return response;
     }
 
@@ -212,5 +211,4 @@ public class CateringService {
 
         return CateringMapper.fromCateringToCateringOutputDto(catering);
     }
-
 }

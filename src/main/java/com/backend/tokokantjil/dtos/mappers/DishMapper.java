@@ -3,14 +3,11 @@ package com.backend.tokokantjil.dtos.mappers;
 import com.backend.tokokantjil.dtos.inputs.DishInputDto;
 import com.backend.tokokantjil.dtos.outputs.ProductOutputDto;
 import com.backend.tokokantjil.dtos.outputs.DishOutputDto;
-import com.backend.tokokantjil.dtos.outputs.ProductOutputDto;
 import com.backend.tokokantjil.models.Dish;
 import com.backend.tokokantjil.models.Product;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class DishMapper {
 
@@ -47,13 +44,6 @@ public class DishMapper {
             }
             dishOutputDto.setProducts(productOutputDtoList);
         }
-//        if (dish.getProducts() != null) {
-//            List<ProductOutputDto> productOutputDtoList = new ArrayList<>();
-//            for (int i = dish.getProducts().size(); i < dish.getProducts().size(); i++) {
-//                productOutputDtoList.add(ProductMapper.fromProductToProductOutputDto(dish.getProducts().get()));
-//            }
-//            dishOutputDto.setProducts(productOutputDtoList);
-//        }
 
         return dishOutputDto;
     }

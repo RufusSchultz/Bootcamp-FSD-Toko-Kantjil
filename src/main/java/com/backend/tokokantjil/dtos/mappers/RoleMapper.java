@@ -5,8 +5,7 @@ import com.backend.tokokantjil.dtos.outputs.RoleOutputDto;
 import com.backend.tokokantjil.models.Role;
 
 public class RoleMapper {
-
-    public static Role fromRoleInputDtoToRole (RoleInputDto roleInputDto) {
+    public static Role fromRoleInputDtoToRole(RoleInputDto roleInputDto) {
         Role role = new Role();
 
         role.setRoleName(roleInputDto.roleName);

@@ -69,7 +69,7 @@ public class InvoiceService {
 
         if (order.isAppraised()) {
             if (useAgreedPriceIfAny && order.isCateringOrder()) {
-                if(order.getCatering() != null) {
+                if (order.getCatering() != null) {
                     invoice.setFinalPrice(priceInCentsRounder(order.getCatering().getAgreedPrice()));
                     invoice.setOrder(order);
                     this.invoiceRepository.save(invoice);
@@ -91,13 +91,13 @@ public class InvoiceService {
         return response;
     }
 
-    public String setInvoicePaymentStatus(Long id, boolean hasBeenPaid){
+    public String setInvoicePaymentStatus(Long id, boolean hasBeenPaid) {
         Invoice invoice = this.invoiceRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No invoice with id " + id + " found."));
         String response = "";
 
         if (hasBeenPaid) {
             if (!invoice.isPaid()) {
-                if(invoice.getOrder() != null) {
+                if (invoice.getOrder() != null) {
                     invoice.setPaid(true);
                     this.invoiceRepository.save(invoice);
 
@@ -109,7 +109,7 @@ public class InvoiceService {
                 throw new UserInputIsUnprocessableException("Invoice is already set to paid.");
             }
         } else {
-            if (invoice.isPaid()){
+            if (invoice.isPaid()) {
                 invoice.setPaid(false);
                 this.invoiceRepository.save(invoice);
 
@@ -126,12 +126,11 @@ public class InvoiceService {
         List<InvoiceOutputDto> invoiceOutputDtoList = new ArrayList<>();
 
         for (Invoice invoice : this.invoiceRepository.findAll()) {
-            if(invoice.getOrder() != null && invoice.getOrder().getCustomer() != null && invoice.getOrder().getCustomer().getId().equals(customerId)) {
+            if (invoice.getOrder() != null && invoice.getOrder().getCustomer() != null && invoice.getOrder().getCustomer().getId().equals(customerId)) {
                 invoiceOutputDtoList.add(InvoiceMapper.fromInvoiceToInvoiceOutputDto(invoice));
             }
         }
 
         return invoiceOutputDtoList;
     }
-
 }

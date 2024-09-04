@@ -6,24 +6,21 @@ import com.backend.tokokantjil.enumerations.State;
 import com.backend.tokokantjil.models.Product;
 
 public class ProductMapper {
-
     public static Product fromProductInputDtoToProduct(ProductInputDto productInputDto) {
 
-           Product product = new Product();
+        Product product = new Product();
 
-            product.setName(productInputDto.name);
-            product.setState(Enum.valueOf(State.class, productInputDto.state));
-            product.setAmount(productInputDto.amount);
-            product.setAmountUnit(productInputDto.amountUnit);
-            product.setBuyPrice(productInputDto.buyPrice);
-            product.setSellPrice(productInputDto.sellPrice);
-            product.setForRetail(productInputDto.isForRetail);
-            product.setStock(productInputDto.stock);
-            product.setNotes(productInputDto.notes);
+        product.setName(productInputDto.name);
+        product.setState(Enum.valueOf(State.class, productInputDto.state));
+        product.setAmount(productInputDto.amount);
+        product.setAmountUnit(productInputDto.amountUnit);
+        product.setBuyPrice(productInputDto.buyPrice);
+        product.setSellPrice(productInputDto.sellPrice);
+        product.setForRetail(productInputDto.isForRetail);
+        product.setStock(productInputDto.stock);
+        product.setNotes(productInputDto.notes);
 
-            return product;
-
-
+        return product;
     }
 
     public static ProductOutputDto fromProductToProductOutputDto(Product product) {
@@ -31,7 +28,7 @@ public class ProductMapper {
 
         productOutputDto.setId(product.getId());
         productOutputDto.setName(product.getName());
-        productOutputDto.setState(product.getState().name());
+        productOutputDto.setState(product.getState().toString());
         productOutputDto.setAmount(product.getAmount());
         productOutputDto.setAmountUnit(product.getAmountUnit());
         productOutputDto.setBuyPrice(product.getBuyPrice());

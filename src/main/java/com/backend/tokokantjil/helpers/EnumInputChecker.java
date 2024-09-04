@@ -14,7 +14,7 @@ public class EnumInputChecker {
                 break;
             }
         }
-        if(!isInputCorrectEnumValue){
+        if (!isInputCorrectEnumValue) {
             throw new UserInputIsUnprocessableException("Unprocessable value " + enumInput + ". Value has to be one of " + Arrays.toString(enumList));
         }
     }

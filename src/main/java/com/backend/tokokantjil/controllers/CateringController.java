@@ -88,7 +88,6 @@ public class CateringController {
     public ResponseEntity<CateringOutputDto> addDishToCatering(@PathVariable Long id, @RequestParam Long dishId) {
         CateringOutputDto cateringOutputDto = service.addDishToListOfCatering(id, dishId);
         return ResponseEntity.ok(cateringOutputDto);
-
     }
 
     @DeleteMapping("/{id}/dishes")
@@ -107,7 +106,6 @@ public class CateringController {
     public ResponseEntity<String> calculateCateringPrices(@PathVariable Long id, @RequestParam double laborAndMaterialCost) {
         String response = service.calculateCateringPrices(id, laborAndMaterialCost);
         return ResponseEntity.ok(response);
-
     }
 
     @PostMapping("/{id}/prices/reset")

@@ -25,7 +25,7 @@ public class CustomerService {
 
     public List<CustomerOutputDto> getAllCustomers() {
         List<CustomerOutputDto> list = new ArrayList<>();
-        for (Customer i: this.customerRepository.findAll()) {
+        for (Customer i : this.customerRepository.findAll()) {
             list.add(CustomerMapper.fromCustomerToCustomerOutputDto(i));
         }
         return list;
@@ -42,7 +42,7 @@ public class CustomerService {
     }
 
     public void deleteCustomer(Long id) {
-        if(this.customerRepository.findById(id).isPresent()) {
+        if (this.customerRepository.findById(id).isPresent()) {
             this.customerRepository.deleteById(id);
         } else {
             throw new RecordNotFoundException("No customer with id " + id + " found.");

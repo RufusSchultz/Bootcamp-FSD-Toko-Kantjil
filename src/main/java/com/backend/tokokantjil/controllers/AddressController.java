@@ -58,11 +58,11 @@ public class AddressController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAddress(@Valid @PathVariable Long id, @RequestBody AddressInputDto addressInputDto, BindingResult br) {
-            if (validationChecker(br) == null) {
-                AddressOutputDto addressOutputDto = service.updateAddress(id, addressInputDto);
-                return ResponseEntity.ok(addressOutputDto);
-            } else {
-                return validationChecker(br);
-            }
+        if (validationChecker(br) == null) {
+            AddressOutputDto addressOutputDto = service.updateAddress(id, addressInputDto);
+            return ResponseEntity.ok(addressOutputDto);
+        } else {
+            return validationChecker(br);
+        }
     }
 }

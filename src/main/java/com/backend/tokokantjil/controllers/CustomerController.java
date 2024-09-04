@@ -58,12 +58,12 @@ public class CustomerController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCustomer(@Valid @PathVariable Long id, @RequestBody CustomerInputDto customerInputDto, BindingResult br) {
-            if (validationChecker(br) == null) {
-                CustomerOutputDto customerOutputDto = service.updateCustomer(id, customerInputDto);
-                return ResponseEntity.ok(customerOutputDto);
-            } else {
-                return validationChecker(br);
-            }
+        if (validationChecker(br) == null) {
+            CustomerOutputDto customerOutputDto = service.updateCustomer(id, customerInputDto);
+            return ResponseEntity.ok(customerOutputDto);
+        } else {
+            return validationChecker(br);
+        }
     }
 
     @PostMapping("/{id}/address")
