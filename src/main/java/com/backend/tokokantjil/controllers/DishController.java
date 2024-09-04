@@ -35,19 +35,12 @@ public class DishController {
 
     @PostMapping
     public ResponseEntity<?> createDish(@Valid @RequestBody DishInputDto dishInputDto, BindingResult br) {
-        try {
-            if (validationChecker(br) == null) {
-                DishOutputDto dishOutputDto = service.createNewDish(dishInputDto);
-                URI uri = URI.create(ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/" + dishOutputDto.getId()).toUriString());
-                return ResponseEntity.created(uri).body(dishOutputDto);
-            } else {
-                return validationChecker(br);
-            }
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to create dish.");
-        }
+        validationChecker(br);
+        DishOutputDto dishOutputDto = service.createNewDish(dishInputDto);
+        URI uri = URI.create(ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/" + dishOutputDto.getId()).toUriString());
+        return ResponseEntity.created(uri).body(dishOutputDto);
     }
 
     @DeleteMapping("/{id}")
@@ -58,12 +51,9 @@ public class DishController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateDish(@Valid @PathVariable Long id, @RequestBody DishInputDto dishInputDto, BindingResult br) {
-        if (validationChecker(br) == null) {
-            DishOutputDto dishOutputDto = service.updateDishWithNewDishInputDto(id, dishInputDto);
-            return ResponseEntity.ok(dishOutputDto);
-        } else {
-            return validationChecker(br);
-        }
+        validationChecker(br);
+        DishOutputDto dishOutputDto = service.updateDishWithNewDishInputDto(id, dishInputDto);
+        return ResponseEntity.ok(dishOutputDto);
     }
 
     @PostMapping("/{id}/products")

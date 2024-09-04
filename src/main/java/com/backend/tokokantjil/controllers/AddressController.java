@@ -35,19 +35,12 @@ public class AddressController {
 
     @PostMapping
     public ResponseEntity<?> createAddress(@Valid @RequestBody AddressInputDto addressInputDto, BindingResult br) {
-        try {
-            if (validationChecker(br) == null) {
-                AddressOutputDto addressOutputDto = service.createAddress(addressInputDto);
-                URI uri = URI.create(ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/" + addressOutputDto.getId()).toUriString());
-                return ResponseEntity.created(uri).body(addressOutputDto);
-            } else {
-                return validationChecker(br);
-            }
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to create address.");
-        }
+        validationChecker(br);
+        AddressOutputDto addressOutputDto = service.createAddress(addressInputDto);
+        URI uri = URI.create(ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/" + addressOutputDto.getId()).toUriString());
+        return ResponseEntity.created(uri).body(addressOutputDto);
     }
 
     @DeleteMapping("/{id}")
@@ -58,11 +51,9 @@ public class AddressController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAddress(@Valid @PathVariable Long id, @RequestBody AddressInputDto addressInputDto, BindingResult br) {
-        if (validationChecker(br) == null) {
-            AddressOutputDto addressOutputDto = service.updateAddress(id, addressInputDto);
-            return ResponseEntity.ok(addressOutputDto);
-        } else {
-            return validationChecker(br);
-        }
+        validationChecker(br);
+        AddressOutputDto addressOutputDto = service.updateAddress(id, addressInputDto);
+        return ResponseEntity.ok(addressOutputDto);
+
     }
 }

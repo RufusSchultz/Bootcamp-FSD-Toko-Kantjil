@@ -35,19 +35,12 @@ public class InvoiceController {
 
     @PostMapping
     public ResponseEntity<?> createInvoice(@Valid @RequestBody InvoiceInputDto invoiceInputDto, BindingResult br) {
-        try {
-            if (validationChecker(br) == null) {
-                InvoiceOutputDto invoiceOutputDto = service.createInvoice(invoiceInputDto);
-                URI uri = URI.create(ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/" + invoiceOutputDto.getId()).toUriString());
-                return ResponseEntity.created(uri).body(invoiceOutputDto);
-            } else {
-                return validationChecker(br);
-            }
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to create invoice.");
-        }
+        validationChecker(br);
+        InvoiceOutputDto invoiceOutputDto = service.createInvoice(invoiceInputDto);
+        URI uri = URI.create(ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/" + invoiceOutputDto.getId()).toUriString());
+        return ResponseEntity.created(uri).body(invoiceOutputDto);
     }
 
     @DeleteMapping("/{id}")
@@ -58,12 +51,9 @@ public class InvoiceController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateInvoice(@Valid @PathVariable Long id, @RequestBody InvoiceInputDto invoiceInputDto, BindingResult br) {
-        if (validationChecker(br) == null) {
-            InvoiceOutputDto invoiceOutputDto = service.updateInvoice(id, invoiceInputDto);
-            return ResponseEntity.ok(invoiceOutputDto);
-        } else {
-            return validationChecker(br);
-        }
+        validationChecker(br);
+        InvoiceOutputDto invoiceOutputDto = service.updateInvoice(id, invoiceInputDto);
+        return ResponseEntity.ok(invoiceOutputDto);
     }
 
     @PostMapping("/{id}/order")

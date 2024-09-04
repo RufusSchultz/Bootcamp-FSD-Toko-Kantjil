@@ -35,19 +35,12 @@ public class CateringController {
 
     @PostMapping
     public ResponseEntity<?> createCatering(@Valid @RequestBody CateringInputDto cateringInputDto, BindingResult br) {
-        try {
-            if (validationChecker(br) == null) {
-                CateringOutputDto cateringOutputDto = service.createNewCatering(cateringInputDto);
-                URI uri = URI.create(ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/" + cateringOutputDto.getId()).toUriString());
-                return ResponseEntity.created(uri).body(cateringOutputDto);
-            } else {
-                return validationChecker(br);
-            }
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to create catering.");
-        }
+        validationChecker(br);
+        CateringOutputDto cateringOutputDto = service.createNewCatering(cateringInputDto);
+        URI uri = URI.create(ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/" + cateringOutputDto.getId()).toUriString());
+        return ResponseEntity.created(uri).body(cateringOutputDto);
     }
 
     @DeleteMapping("/{id}")
@@ -58,12 +51,9 @@ public class CateringController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCatering(@Valid @PathVariable Long id, @RequestBody CateringInputDto cateringInputDto, BindingResult br) {
-        if (validationChecker(br) == null) {
-            CateringOutputDto cateringOutputDto = service.updateCateringWithNewCateringInputDto(id, cateringInputDto);
-            return ResponseEntity.ok(cateringOutputDto);
-        } else {
-            return validationChecker(br);
-        }
+        validationChecker(br);
+        CateringOutputDto cateringOutputDto = service.updateCateringWithNewCateringInputDto(id, cateringInputDto);
+        return ResponseEntity.ok(cateringOutputDto);
     }
 
     @PostMapping("/{id}/address")

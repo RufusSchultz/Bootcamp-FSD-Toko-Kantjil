@@ -37,19 +37,12 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<?> createOrder(@Valid @AuthenticationPrincipal UserDetails userDetails, @RequestBody OrderInputDto orderInputDto, BindingResult br) {
-        try {
-            if (validationChecker(br) == null) {
-                OrderOutputDto orderOutputDto = service.createOrder(userDetails, orderInputDto);
-                URI uri = URI.create(ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/" + orderOutputDto.getId()).toUriString());
-                return ResponseEntity.created(uri).body(orderOutputDto);
-            } else {
-                return validationChecker(br);
-            }
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to create order.");
-        }
+        validationChecker(br);
+        OrderOutputDto orderOutputDto = service.createOrder(userDetails, orderInputDto);
+        URI uri = URI.create(ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/" + orderOutputDto.getId()).toUriString());
+        return ResponseEntity.created(uri).body(orderOutputDto);
     }
 
     @DeleteMapping("/{id}")
@@ -60,12 +53,9 @@ public class OrderController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateOrder(@Valid @PathVariable Long id, @RequestBody OrderInputDto orderInputDto, BindingResult br) {
-        if (validationChecker(br) == null) {
-            OrderOutputDto orderOutputDto = service.updateOrder(id, orderInputDto);
-            return ResponseEntity.ok(orderOutputDto);
-        } else {
-            return validationChecker(br);
-        }
+        validationChecker(br);
+        OrderOutputDto orderOutputDto = service.updateOrder(id, orderInputDto);
+        return ResponseEntity.ok(orderOutputDto);
     }
 
     @PostMapping("/{id}/customer")

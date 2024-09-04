@@ -35,19 +35,12 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<?> createCustomer(@Valid @RequestBody CustomerInputDto customerInputDto, BindingResult br) {
-        try {
-            if (validationChecker(br) == null) {
-                CustomerOutputDto customerOutputDto = service.createCustomer(customerInputDto);
-                URI uri = URI.create(ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/" + customerOutputDto.getId()).toUriString());
-                return ResponseEntity.created(uri).body(customerOutputDto);
-            } else {
-                return validationChecker(br);
-            }
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to create customer.");
-        }
+        validationChecker(br);
+        CustomerOutputDto customerOutputDto = service.createCustomer(customerInputDto);
+        URI uri = URI.create(ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/" + customerOutputDto.getId()).toUriString());
+        return ResponseEntity.created(uri).body(customerOutputDto);
     }
 
     @DeleteMapping("/{id}")
@@ -58,12 +51,9 @@ public class CustomerController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCustomer(@Valid @PathVariable Long id, @RequestBody CustomerInputDto customerInputDto, BindingResult br) {
-        if (validationChecker(br) == null) {
-            CustomerOutputDto customerOutputDto = service.updateCustomer(id, customerInputDto);
-            return ResponseEntity.ok(customerOutputDto);
-        } else {
-            return validationChecker(br);
-        }
+        validationChecker(br);
+        CustomerOutputDto customerOutputDto = service.updateCustomer(id, customerInputDto);
+        return ResponseEntity.ok(customerOutputDto);
     }
 
     @PostMapping("/{id}/address")
