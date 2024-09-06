@@ -11,7 +11,7 @@ public class CustomerMapper {
         customer.setFirstName(customerInputDto.firstName);
         customer.setLastName(customerInputDto.lastName);
         customer.setEmail(customerInputDto.email);
-        customer.setPhoneNumber(customerInputDto.phoneNumber);
+        customer.setPhoneNumber(Long.valueOf(customerInputDto.phoneNumber));
         customer.setNotes(customerInputDto.notes);
 
         return customer;

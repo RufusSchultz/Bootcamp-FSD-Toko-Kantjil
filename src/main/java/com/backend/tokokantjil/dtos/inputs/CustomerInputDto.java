@@ -10,7 +10,8 @@ public class CustomerInputDto {
     @NotBlank
     @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}", flags = Pattern.Flag.CASE_INSENSITIVE)
     public String email;
-    @Positive
-    public Long phoneNumber;
+    @NotBlank
+    @Pattern(regexp = "^\\d{10}$", message = "Number must be a 10 digit long number.")
+    public String phoneNumber;
     public String notes;
 }
