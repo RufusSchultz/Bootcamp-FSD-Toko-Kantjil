@@ -12,6 +12,7 @@ import com.backend.tokokantjil.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -61,12 +62,10 @@ public class DishService {
         return DishMapper.fromDishToDishOutputDto(newDish);
     }
 
-    public DishOutputDto addProductToCollectionOfDish(Long id, Long productId, double amountMultiplier) {
+    public DishOutputDto addProductToCollectionOfDish(Long id, Long productId) {
         Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
         Product product = this.productRepository.findById(productId).orElseThrow(() -> new RecordNotFoundException("No product with id " + productId + " found."));
 
-        dish.setProductionPrice(dish.getProductionPrice() + product.getBuyPrice() * amountMultiplier);
-        dish.setSellPrice(dish.getSellPrice() + product.getSellPrice() * amountMultiplier);
         dish.getProducts().add(product);
         dish.setAppraised(false);
         this.dishRepository.save(dish);
@@ -75,16 +74,11 @@ public class DishService {
 
     public String removeProductFromCollectionOfDish(Long id, Long productId) {
         Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
-        Product baseProduct = this.productRepository.findById(productId).orElseThrow(() -> new RecordNotFoundException("No product with id " + productId + " found."));
         Set<Product> productSet = dish.getProducts();
         String response = "";
 
         for (Product product : dish.getProducts()) {
             if (product.getId().equals(productId)) {
-                double amountMultiplier = baseProduct.getBuyPrice() / product.getBuyPrice();
-
-                dish.setProductionPrice(dish.getProductionPrice() - product.getBuyPrice() / amountMultiplier);
-                dish.setSellPrice(dish.getSellPrice() - product.getSellPrice() / amountMultiplier);
                 productSet.remove(product);
                 dish.setAppraised(false);
 

@@ -3,7 +3,7 @@ values ('ROLE_ADMIN'),
        ('ROLE_STAFF');
 
 insert into users(username, password, first_name, last_name, email, phone_number, salary, notes)
-values ('Ben', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Ben', 'de Baas', 'a.patron@kantjil.nl', 31612345678, 4000, ''),
+values ('Ben', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Ben', 'de Baas', 'b.debaas@kantjil.nl', 31612345678, 4000, ''),
        ('Jan', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Jan', 'Jansen', 'j.janssen@kantjil.nl', 31687654321, 3000, ''),
        ('Miep', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Miep', 'LaStrade', 'supermiep@mieperdemiep.miep', 31656783421, 2500, '');
 
@@ -52,7 +52,8 @@ values ('Bert Steentjes residence', 'Nachtegaalstraat', 34, '', '1234AB', 'Hoger
        ('Clara Vache residence', 'Kopermolenweg', 40, 'III', '1234AB', 'Lager Eenderdorp', '');
 
 insert into customers(first_name, last_name, email, phone_number, notes)
-values ('Bert', 'Steentjes', 'bertbeton@betonnenbert.nl', 31690483725, ''),
+values ('Kassa', '01', 'info@kantjil.nl', 3100000000, 'Main point of sales in physical store.'),
+       ('Bert', 'Steentjes', 'bertbeton@betonnenbert.nl', 31690483725, ''),
        ('Clara', 'Vache', 'c.vache@koehandel.nl', 3160000003, ''),
        ('Koos', 'Druk', 'info@koosdruk.nl', 3164839455, ''),
        ('Mark', 'Webber', 'neeeenanderemark@formule1.vroem', 3167888854, 'Do NOT send Miep on any caterings he orders.');
