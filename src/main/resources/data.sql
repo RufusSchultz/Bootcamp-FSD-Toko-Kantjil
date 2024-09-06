@@ -30,12 +30,14 @@ values ('jasmine rice', 1, 300, 'gram', 0.85, 1.5, false, 5, ''),
        ('small shrimp', 0, 200, 'gram', 3.16, 5.95, false, 8, ''),
        ('carrot', 0, 1, 'piece', 0.1, 0.15, false, 8, ''),
        ('kroepoek', 1, 100, 'gram', 0.65, 1.29, true, 24, ''),
-       ('kroepoek', 1, 1500, 'gram', 9.75, 19.35, false, 5, '');
+       ('kroepoek', 1, 1500, 'gram', 9.75, 19.35, false, 5, ''),
+       ('sambal oelek', 1, 300, 'gram', 0.9, 2.4, true, 15, '');
 
 insert into dishes(name, servings, production_price, sell_price, is_appraised, stock, notes)
 values ('nasi goreng', 5, 10.09, 15.59, true, 5, ''),
        ('sate babi', 8, 14.65, 24.22, true,  5, ''),
-       ('spring rolls', 6, 13.76, 20.75, true, 5, '');
+       ('spring rolls', 6, 13.76, 20.75, true, 5, ''),
+       ('fried pork belly', 4, 10.46, 15.08, true, 5, '');
 
 insert into dish_products(dishes_id, products_id)
 values (1, 1),
@@ -54,7 +56,8 @@ values (1, 1),
        (3, 14),
        (3, 15),
        (3, 16),
-       (3, 17);
+       (3, 17),
+       (4, 9);
 
 insert into addresses(name, street, house_number, house_number_suffix, postal_code, city, notes)
 values ('Toko Kantjil', 'Winkelweg', 1, '', '1234AB', 'Tokodorp', ''),
@@ -68,7 +71,8 @@ values ('Kassa', '01', 'info@kantjil.nl', 3100000000, 'Main point of sales in ph
        ('Clara', 'Vache', 'c.vache@koehandel.nl', 3160000003, '', 4);
 
 insert into caterings(date_and_time, number_of_people, total_cost_price, total_sell_price, agreed_price, is_appraised, notes, address_id)
-values ('2024-10-28T15:00:00', 15, 1012.8, 1531.69, 2000, true, '', 3);
+values ('2024-10-28T15:00:00', 15, 1012.8, 1531.69, 2000, true, '', 3),
+       ('2024-10-20T17:00:00', 6, 249.24, 376.56, 500, true, '', 2);
 
 insert into catering_dishes(caterings_id, dishes_id)
 values (1, 1),
@@ -78,7 +82,9 @@ values (1, 1),
        (1, 2),
        (1, 3),
        (1, 3),
-       (1, 3);
+       (1, 3),
+       (2, 1),
+       (2, 2);
 
 insert into catering_products(caterings_id, products_id)
 values (1, 7),

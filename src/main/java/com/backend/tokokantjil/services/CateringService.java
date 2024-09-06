@@ -162,7 +162,7 @@ public class CateringService {
         catering.setAgreedPrice(agreedPrice);
         this.cateringRepository.save(catering);
 
-        String response = "Price of catering " + catering.getId() + " set to " + catering.getAgreedPrice() + ".";
+        String response = "Agreed price of catering " + catering.getId() + " set to " + catering.getAgreedPrice() + ".";
         if (catering.getAgreedPrice() < catering.getTotalSellPrice()) {
             response = "Agreed price is lower than total sell price!" + response;
         }

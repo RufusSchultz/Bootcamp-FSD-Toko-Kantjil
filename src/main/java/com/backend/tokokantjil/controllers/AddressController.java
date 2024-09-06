@@ -50,7 +50,7 @@ public class AddressController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateAddress(@Valid @PathVariable Long id, @RequestBody AddressInputDto addressInputDto, BindingResult br) {
+    public ResponseEntity<?> updateAddress(@PathVariable Long id, @Valid @RequestBody AddressInputDto addressInputDto, BindingResult br) {
         validationChecker(br);
         AddressOutputDto addressOutputDto = service.updateAddress(id, addressInputDto);
         return ResponseEntity.ok(addressOutputDto);

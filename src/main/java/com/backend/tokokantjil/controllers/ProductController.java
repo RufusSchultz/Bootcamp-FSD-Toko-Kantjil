@@ -50,7 +50,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduct(@Valid @PathVariable Long id, @RequestBody ProductInputDto productInputDto, BindingResult br) {
+    public ResponseEntity<?> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductInputDto productInputDto, BindingResult br) {
         validationChecker(br);
         ProductOutputDto productOutputDto = service.updateProductWithNewProductInputDto(id, productInputDto);
         return ResponseEntity.ok(productOutputDto);

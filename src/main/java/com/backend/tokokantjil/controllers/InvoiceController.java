@@ -50,7 +50,7 @@ public class InvoiceController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateInvoice(@Valid @PathVariable Long id, @RequestBody InvoiceInputDto invoiceInputDto, BindingResult br) {
+    public ResponseEntity<?> updateInvoice(@PathVariable Long id, @Valid @RequestBody InvoiceInputDto invoiceInputDto, BindingResult br) {
         validationChecker(br);
         InvoiceOutputDto invoiceOutputDto = service.updateInvoice(id, invoiceInputDto);
         return ResponseEntity.ok(invoiceOutputDto);

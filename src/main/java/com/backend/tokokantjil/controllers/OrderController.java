@@ -52,7 +52,7 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateOrder(@Valid @PathVariable Long id, @RequestBody OrderInputDto orderInputDto, BindingResult br) {
+    public ResponseEntity<?> updateOrder(@PathVariable Long id, @Valid @RequestBody OrderInputDto orderInputDto, BindingResult br) {
         validationChecker(br);
         OrderOutputDto orderOutputDto = service.updateOrder(id, orderInputDto);
         return ResponseEntity.ok(orderOutputDto);

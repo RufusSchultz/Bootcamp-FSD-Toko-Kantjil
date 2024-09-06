@@ -50,7 +50,7 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCustomer(@Valid @PathVariable Long id, @RequestBody CustomerInputDto customerInputDto, BindingResult br) {
+    public ResponseEntity<?> updateCustomer(@PathVariable Long id, @Valid @RequestBody CustomerInputDto customerInputDto, BindingResult br) {
         validationChecker(br);
         CustomerOutputDto customerOutputDto = service.updateCustomer(id, customerInputDto);
         return ResponseEntity.ok(customerOutputDto);

@@ -50,9 +50,10 @@ public class CateringController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCatering(@Valid @PathVariable Long id, @RequestBody CateringInputDto cateringInputDto, BindingResult br) {
+    public ResponseEntity<?> updateCatering(@PathVariable Long id, @Valid @RequestBody CateringInputDto cateringInputDto, BindingResult br) {
         validationChecker(br);
         CateringOutputDto cateringOutputDto = service.updateCateringWithNewCateringInputDto(id, cateringInputDto);
+
         return ResponseEntity.ok(cateringOutputDto);
     }
 
