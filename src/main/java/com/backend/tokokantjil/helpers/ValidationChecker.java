@@ -1,12 +1,12 @@
 package com.backend.tokokantjil.helpers;
 
-import org.springframework.http.ResponseEntity;
+import com.backend.tokokantjil.exceptions.UserInputIsUnprocessableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
 public class ValidationChecker {
 
-    public static ResponseEntity<String> validationChecker(BindingResult br) {
+    public static void validationChecker(BindingResult br) {
         if (br.hasFieldErrors()) {
             StringBuilder sb = new StringBuilder();
             for (FieldError fe : br.getFieldErrors()) {
@@ -15,10 +15,7 @@ public class ValidationChecker {
                 sb.append(fe.getDefaultMessage());
                 sb.append("\n");
             }
-            return ResponseEntity.unprocessableEntity().body(sb.toString());
-        } else {
-            return null;
+            throw new UserInputIsUnprocessableException(sb.toString());
         }
     }
-
 }

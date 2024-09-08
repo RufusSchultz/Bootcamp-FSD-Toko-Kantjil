@@ -2,7 +2,6 @@ package com.backend.tokokantjil.controllers;
 
 import com.backend.tokokantjil.dtos.inputs.ProductInputDto;
 import com.backend.tokokantjil.dtos.outputs.ProductOutputDto;
-import com.backend.tokokantjil.exceptions.EnumerationValueIsUnprocessableException;
 import com.backend.tokokantjil.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -36,15 +35,12 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<?> createProduct(@Valid @RequestBody ProductInputDto productInputDto, BindingResult br) {
-            if (validationChecker(br) == null) {
-                ProductOutputDto productOutputDto = service.createNewProduct(productInputDto);
-                URI uri = URI.create(ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/" + productOutputDto.getId()).toUriString());
-                return ResponseEntity.created(uri).body(productOutputDto);
-            } else {
-                return validationChecker(br);
-            }
+        validationChecker(br);
+        ProductOutputDto productOutputDto = service.createNewProduct(productInputDto);
+        URI uri = URI.create(ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/" + productOutputDto.getId()).toUriString());
+        return ResponseEntity.created(uri).body(productOutputDto);
     }
 
     @DeleteMapping("/{id}")
@@ -54,13 +50,10 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduct(@Valid @PathVariable Long id, @RequestBody ProductInputDto productInputDto, BindingResult br) {
-        if (validationChecker(br) == null) {
-            ProductOutputDto productOutputDto = service.updateProductWithNewProductInputDto(id, productInputDto);
-            return ResponseEntity.ok(productOutputDto);
-        } else {
-            return validationChecker(br);
-        }
+    public ResponseEntity<?> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductInputDto productInputDto, BindingResult br) {
+        validationChecker(br);
+        ProductOutputDto productOutputDto = service.updateProductWithNewProductInputDto(id, productInputDto);
+        return ResponseEntity.ok(productOutputDto);
     }
 
     @PostMapping("/{id}/increase-stock")

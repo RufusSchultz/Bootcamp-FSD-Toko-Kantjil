@@ -4,6 +4,7 @@ import com.backend.tokokantjil.dtos.inputs.DishInputDto;
 import com.backend.tokokantjil.dtos.outputs.DishOutputDto;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
 import com.backend.tokokantjil.dtos.mappers.DishMapper;
+import com.backend.tokokantjil.exceptions.UserInputIsUnprocessableException;
 import com.backend.tokokantjil.models.Dish;
 import com.backend.tokokantjil.models.Product;
 import com.backend.tokokantjil.repositories.DishRepository;
@@ -11,6 +12,7 @@ import com.backend.tokokantjil.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -60,12 +62,10 @@ public class DishService {
         return DishMapper.fromDishToDishOutputDto(newDish);
     }
 
-    public DishOutputDto addProductToCollectionOfDish(Long id, Long productId, double amountMultiplier) {
+    public DishOutputDto addProductToCollectionOfDish(Long id, Long productId) {
         Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
         Product product = this.productRepository.findById(productId).orElseThrow(() -> new RecordNotFoundException("No product with id " + productId + " found."));
 
-        dish.setProductionPrice(dish.getProductionPrice() + product.getBuyPrice() * amountMultiplier);
-        dish.setSellPrice(dish.getSellPrice() + product.getSellPrice() * amountMultiplier);
         dish.getProducts().add(product);
         dish.setAppraised(false);
         this.dishRepository.save(dish);
@@ -74,16 +74,11 @@ public class DishService {
 
     public String removeProductFromCollectionOfDish(Long id, Long productId) {
         Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
-        Product baseProduct = this.productRepository.findById(productId).orElseThrow(() -> new RecordNotFoundException("No product with id " + productId + " found."));
         Set<Product> productSet = dish.getProducts();
         String response = "";
 
         for (Product product : dish.getProducts()) {
             if (product.getId().equals(productId)) {
-                double amountMultiplier = baseProduct.getBuyPrice() / product.getBuyPrice();
-
-                dish.setProductionPrice(dish.getProductionPrice() - product.getBuyPrice() / amountMultiplier);
-                dish.setSellPrice(dish.getSellPrice() - product.getSellPrice() / amountMultiplier);
                 productSet.remove(product);
                 dish.setAppraised(false);
 
@@ -93,7 +88,7 @@ public class DishService {
         }
 
         if (response.isEmpty()) {
-            throw new RecordNotFoundException("No product with id " + productId + " found in dish " + id + ". Dish is unchanged.");
+            throw new RecordNotFoundException("No product with id " + productId + " found in dish " + id + ".");
         } else {
             dish.setProducts(productSet);
             this.dishRepository.save(dish);
@@ -127,7 +122,7 @@ public class DishService {
         return response;
     }
 
-    public String calculateDishPrices(Long id, double laborCost) {
+    public DishOutputDto calculateDishPrices(Long id, double laborCost) {
         Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
 
         if (!dish.isAppraised()) {
@@ -144,9 +139,9 @@ public class DishService {
             dish.setAppraised(true);
             this.dishRepository.save(dish);
 
-            return "Dish prices calculated. Cost price: " + dish.getProductionPrice() + " and sell price: " + dish.getSellPrice();
+            return DishMapper.fromDishToDishOutputDto(dish);
         } else {
-            return "reset prices first";
+            throw new UserInputIsUnprocessableException("Dish prices are already calculated. Reset prices first if you want to recalculate them.");
         }
     }
 

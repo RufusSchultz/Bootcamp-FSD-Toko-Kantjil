@@ -1,6 +1,5 @@
 package com.backend.tokokantjil.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.HashSet;

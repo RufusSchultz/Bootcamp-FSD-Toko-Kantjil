@@ -35,19 +35,12 @@ public class InvoiceController {
 
     @PostMapping
     public ResponseEntity<?> createInvoice(@Valid @RequestBody InvoiceInputDto invoiceInputDto, BindingResult br) {
-        try {
-            if (validationChecker(br) == null) {
-                InvoiceOutputDto invoiceOutputDto = service.createInvoice(invoiceInputDto);
-                URI uri = URI.create(ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/" + invoiceOutputDto.getId()).toUriString());
-                return ResponseEntity.created(uri).body(invoiceOutputDto);
-            } else {
-                return validationChecker(br);
-            }
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to create invoice.");
-        }
+        validationChecker(br);
+        InvoiceOutputDto invoiceOutputDto = service.createInvoice(invoiceInputDto);
+        URI uri = URI.create(ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/" + invoiceOutputDto.getId()).toUriString());
+        return ResponseEntity.created(uri).body(invoiceOutputDto);
     }
 
     @DeleteMapping("/{id}")
@@ -57,41 +50,22 @@ public class InvoiceController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateInvoice(@Valid @PathVariable Long id, @RequestBody InvoiceInputDto invoiceInputDto, BindingResult br) {
-        if (validationChecker(br) == null) {
-            InvoiceOutputDto invoiceOutputDto = service.updateInvoice(id, invoiceInputDto);
-            return ResponseEntity.ok(invoiceOutputDto);
-        } else {
-            return validationChecker(br);
-        }
+    public ResponseEntity<?> updateInvoice(@PathVariable Long id, @Valid @RequestBody InvoiceInputDto invoiceInputDto, BindingResult br) {
+        validationChecker(br);
+        InvoiceOutputDto invoiceOutputDto = service.updateInvoice(id, invoiceInputDto);
+        return ResponseEntity.ok(invoiceOutputDto);
     }
 
     @PostMapping("/{id}/order")
-    public ResponseEntity<String> assignOrder(@PathVariable Long id, @RequestParam Long orderId, boolean useAgreedPriceIfAny) {
-        String response = service.assignOrderToInvoice(id, orderId, useAgreedPriceIfAny);
-
-        if (response.equals("no catering while expected")) {
-            return ResponseEntity.unprocessableEntity().body("Order has no catering assigned, but is expecting one. Invoice is unchanged.");
-        } else if (response.equals("un-appraised order")) {
-            return ResponseEntity.unprocessableEntity().body("Order has to be appraised first. Invoice is unchanged.");
-        } else {
-            return ResponseEntity.ok(response);
-        }
+    public ResponseEntity<InvoiceOutputDto> assignOrder(@PathVariable Long id, @RequestParam Long orderId, boolean useAgreedPrice) {
+        InvoiceOutputDto invoiceOutputDto = service.assignOrderToInvoice(id, orderId, useAgreedPrice);
+        return ResponseEntity.ok(invoiceOutputDto);
     }
 
     @PostMapping("/{id}/payment")
     public ResponseEntity<String> setPayment(@PathVariable Long id, boolean hasBeenPaid) {
         String response = service.setInvoicePaymentStatus(id, hasBeenPaid);
-
-        if (response.equals("no order")) {
-            return ResponseEntity.unprocessableEntity().body("Invoice has no order assigned. Invoice is unchanged.");
-        } else if (response.equals("already paid")){
-            return ResponseEntity.unprocessableEntity().body("Invoice is already set to paid. Invoice is unchanged.");
-        } else if (response.equals("already unpaid")) {
-            return ResponseEntity.unprocessableEntity().body("Invoice is already set to unpaid. Invoice is unchanged.");
-        } else {
-            return ResponseEntity.ok(response);
-        }
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/customer/{customerId}")

@@ -137,10 +137,10 @@ class CateringServiceTest {
         Mockito.when(cateringRepository.findById(anyLong())).thenReturn(Optional.of(anotherCatering));
         Mockito.when(cateringRepository.save(any(Catering.class))).thenReturn(anotherCatering);
 
-        CateringOutputDto cateringOutputDto = service.updateCateringWithNewCateringInputDto(1L, cateringInputDto);
+        service.updateCateringWithNewCateringInputDto(1L, cateringInputDto);
 
-        assertEquals(LocalDateTime.parse("05-12-2024 15:30", DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")), cateringOutputDto.getDateAndTime());
-        assertEquals(10, cateringOutputDto.getNumberOfPeople());
+        assertEquals(LocalDateTime.parse("05-12-2024 15:30", DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")), anotherCatering.getDateAndTime());
+        assertEquals(10, anotherCatering.getNumberOfPeople());
     }
 
     @Test
@@ -152,12 +152,12 @@ class CateringServiceTest {
         Mockito.when(addressRepository.findById(anyLong())).thenReturn(Optional.of(address));
         Mockito.when(cateringRepository.save(any(Catering.class))).thenReturn(catering);
 
-        CateringOutputDto cateringOutputDto = service.setCateringAddress(1L, 1L);
+        service.setCateringAddress(1L, 1L);
 
-        assertEquals("Party House", cateringOutputDto.getAddress().getName());
-        assertEquals("Feeststraat", cateringOutputDto.getAddress().getStreet());
-        assertEquals(1, cateringOutputDto.getAddress().getHouseNumber());
-        assertEquals("Feeststad", cateringOutputDto.getAddress().getCity());
+        assertEquals("Party House", catering.getAddress().getName());
+        assertEquals("Feeststraat", catering.getAddress().getStreet());
+        assertEquals(1, catering.getAddress().getHouseNumber());
+        assertEquals("Feeststad", catering.getAddress().getCity());
     }
 
     @Test
@@ -169,9 +169,9 @@ class CateringServiceTest {
         Mockito.when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
         Mockito.when(cateringRepository.save(any(Catering.class))).thenReturn(catering);
 
-        String response = service.addProductToListOfCatering(1L, 1L);
+        service.addProductToListOfCatering(1L, 1L);
 
-        assertEquals("Added product 1 to catering.", response);
+        assertEquals("sambal", catering.getProducts().get(1).getName());
         assertEquals(2, catering.getProducts().size());
     }
 
@@ -198,9 +198,9 @@ class CateringServiceTest {
         Mockito.when(dishRepository.findById(anyLong())).thenReturn(Optional.of(dish));
         Mockito.when(cateringRepository.save(any(Catering.class))).thenReturn(catering);
 
-        String response = service.addDishToListOfCatering(1L, 1L);
+        service.addDishToListOfCatering(1L, 1L);
 
-        assertEquals("Added dish 1 to catering.", response);
+        assertEquals("main", catering.getDishes().get(1).getName());
         assertEquals(2, catering.getDishes().size());
     }
 
@@ -253,10 +253,10 @@ class CateringServiceTest {
         Mockito.when(cateringRepository.findById(anyLong())).thenReturn(Optional.of(anotherCatering));
         Mockito.when(cateringRepository.save(any(Catering.class))).thenReturn(anotherCatering);
 
-        CateringOutputDto cateringOutputDto = service.setCateringPricesToZero(1L);
+        service.setCateringPricesToZero(1L);
 
-        assertEquals(0, cateringOutputDto.getTotalCostPrice());
-        assertEquals(0, cateringOutputDto.getTotalSellPrice());
-        assertFalse(cateringOutputDto.isAppraised());
+        assertEquals(0, anotherCatering.getTotalCostPrice());
+        assertEquals(0, anotherCatering.getTotalSellPrice());
+        assertFalse(anotherCatering.isAppraised());
     }
 }

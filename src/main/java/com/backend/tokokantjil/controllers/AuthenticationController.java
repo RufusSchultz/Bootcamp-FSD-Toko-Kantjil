@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AuthenticationController {
-
     private final AuthenticationManager authManager;
     private final JwtService jwtService;
 
@@ -27,21 +26,20 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<Object> signIn(@RequestBody AuthenticationInputDto authenticationInputDto) {
-            UsernamePasswordAuthenticationToken up =
-                    new UsernamePasswordAuthenticationToken(authenticationInputDto.username, authenticationInputDto.password);
+        UsernamePasswordAuthenticationToken up =
+                new UsernamePasswordAuthenticationToken(authenticationInputDto.username, authenticationInputDto.password);
 
-            try {
-                Authentication auth = authManager.authenticate(up);
+        try {
+            Authentication auth = authManager.authenticate(up);
 
-                UserDetails ud = (UserDetails) auth.getPrincipal();
-                String token = jwtService.generateToken(ud);
+            UserDetails ud = (UserDetails) auth.getPrincipal();
+            String token = jwtService.generateToken(ud);
 
-                return ResponseEntity.ok()
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                        .body("Token generated");
-            }
-            catch (AuthenticationException ex) {
-                return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
-            }
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                    .body("Token generated");
+        } catch (AuthenticationException ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+        }
     }
 }

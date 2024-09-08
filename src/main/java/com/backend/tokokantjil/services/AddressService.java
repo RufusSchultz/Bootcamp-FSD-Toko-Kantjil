@@ -21,7 +21,7 @@ public class AddressService {
 
     public List<AddressOutputDto> getAllAddresss() {
         List<AddressOutputDto> list = new ArrayList<>();
-        for (Address address: this.addressRepository.findAll()) {
+        for (Address address : this.addressRepository.findAll()) {
             list.add(AddressMapper.fromAddressToAddressOutputDto(address));
         }
         return list;
@@ -38,7 +38,7 @@ public class AddressService {
     }
 
     public void deleteAddress(Long id) {
-        if(this.addressRepository.findById(id).isPresent()) {
+        if (this.addressRepository.findById(id).isPresent()) {
             this.addressRepository.deleteById(id);
         } else {
             throw new RecordNotFoundException("No address with id " + id + " found.");

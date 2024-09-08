@@ -15,7 +15,7 @@ public class UserOutputDto {
     private long phoneNumber;
     private double salary;
     private String notes;
-    @JsonIgnoreProperties(value = {"contents","contentType"} )
+    @JsonIgnoreProperties(value = {"contents", "contentType"})
     private UserPhoto userPhoto;
 
     public String getUsername() {

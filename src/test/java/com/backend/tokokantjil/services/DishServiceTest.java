@@ -29,6 +29,7 @@ class DishServiceTest {
     Dish anotherDish;
     DishInputDto dishInputDto;
     Product product;
+    Product anotherProduct;
 
     @Mock
     DishRepository dishRepository;
@@ -41,10 +42,11 @@ class DishServiceTest {
     @BeforeEach
     void setUp() {
         product = new Product("sambal", State.packaged, 300, "gram", 1.20, 2.20, true, 10, "");
+        anotherProduct = new Product("rice", State.packaged, 10, "kilo", 50, 100, false, 1, "");
         Set<Product> productSet = new HashSet<>();
         productSet.add(product);
         dish = new Dish("main", 6, 5, 10, false, 1, "", productSet, null, null);
-        anotherDish = new Dish("starter", 10, 4, 12, true , 2, "", null, null, null);
+        anotherDish = new Dish("starter", 10, 4, 12, true, 2, "", null, null, null);
         dishInputDto = new DishInputDto(
                 dish.getName(),
                 dish.getServings(),
@@ -53,7 +55,7 @@ class DishServiceTest {
                 dish.getStock(),
                 dish.getNotes()
         );
-           }
+    }
 
     @AfterEach
     void tearDown() {
@@ -131,16 +133,16 @@ class DishServiceTest {
     @DisplayName("Should correctly add correct product to correct dish")
     void addProductToCollectionOfDish() {
         dish.setId(1L);
-        product.setId(1L);
+        anotherProduct.setId(1L);
         Mockito.when(dishRepository.findById(anyLong())).thenReturn(Optional.of(dish));
-        Mockito.when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
+        Mockito.when(productRepository.findById(anyLong())).thenReturn(Optional.of(anotherProduct));
         Mockito.when(dishRepository.save(any(Dish.class))).thenReturn(dish);
 
-        DishOutputDto dishOutputDto = service.addProductToCollectionOfDish(1L, 1L, 2);
+        DishOutputDto dishOutputDto = service.addProductToCollectionOfDish(1L, 1L);
 
         assertEquals("main", dishOutputDto.getName());
-        assertEquals("sambal", dishOutputDto.getProducts().get(0).getName());
-        assertEquals(14.4, dishOutputDto.getSellPrice());
+        assertEquals("rice", dishOutputDto.getProducts().get(0).getName());
+        assertFalse(dishOutputDto.isAppraised());
     }
 
     @Test
@@ -149,13 +151,13 @@ class DishServiceTest {
         dish.setId(1L);
         product.setId(1L);
         Mockito.when(dishRepository.findById(anyLong())).thenReturn(Optional.of(dish));
-        Mockito.when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
         Mockito.when(dishRepository.save(any(Dish.class))).thenReturn(dish);
 
         String response = service.removeProductFromCollectionOfDish(1L, 1L);
 
         assertEquals("Product with id 1 removed from dish", response);
         assertEquals(0, dish.getProducts().size());
+        assertFalse(dish.isAppraised());
     }
 
     @Test

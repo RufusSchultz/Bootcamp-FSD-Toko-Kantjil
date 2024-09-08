@@ -1,11 +1,8 @@
 package com.backend.tokokantjil.models;
 
-import com.backend.tokokantjil.models.Invoice;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static jakarta.persistence.GenerationType.IDENTITY;

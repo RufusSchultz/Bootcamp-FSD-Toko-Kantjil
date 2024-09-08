@@ -1,6 +1,5 @@
 package com.backend.tokokantjil.dtos.outputs;
 
-
 public class InvoiceOutputDto {
     private Long id;
     private double finalPrice;

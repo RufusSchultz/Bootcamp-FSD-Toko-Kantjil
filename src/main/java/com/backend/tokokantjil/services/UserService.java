@@ -63,7 +63,7 @@ public class UserService {
 
     public UserOutputDto createUser(UserInputDto userInputDto) {
         if (this.userRepository.findByUsername(userInputDto.username) != null) {
-         throw new UsernameAlreadyExistsException("Username already exists.");
+            throw new UsernameAlreadyExistsException("Username already exists.");
         }
         User user = UserMapper.fromUserInputDtoToUser(userInputDto);
         user.setPassword(encoder.encode(userInputDto.password));

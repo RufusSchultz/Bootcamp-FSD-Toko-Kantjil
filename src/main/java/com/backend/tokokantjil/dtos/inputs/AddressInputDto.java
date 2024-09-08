@@ -12,7 +12,7 @@ public class AddressInputDto {
     @Positive
     public int houseNumber;
     public String houseNumberSuffix;
-    //custom validation needed
+    @NotBlank
     public String postalCode;
     @NotBlank
     public String city;

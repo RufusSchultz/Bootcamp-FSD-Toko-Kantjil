@@ -4,6 +4,7 @@ import com.backend.tokokantjil.dtos.inputs.InvoiceInputDto;
 import com.backend.tokokantjil.dtos.mappers.InvoiceMapper;
 import com.backend.tokokantjil.dtos.outputs.InvoiceOutputDto;
 import com.backend.tokokantjil.exceptions.RecordNotFoundException;
+import com.backend.tokokantjil.exceptions.UserInputIsUnprocessableException;
 import com.backend.tokokantjil.models.*;
 import com.backend.tokokantjil.repositories.CustomerRepository;
 import com.backend.tokokantjil.repositories.InvoiceRepository;
@@ -61,60 +62,58 @@ public class InvoiceService {
         return InvoiceMapper.fromInvoiceToInvoiceOutputDto(newInvoice);
     }
 
-    public String assignOrderToInvoice(Long id, Long orderId, boolean useAgreedPriceIfAny) {
+    public InvoiceOutputDto assignOrderToInvoice(Long id, Long orderId, boolean useAgreedPrice) {
         Invoice invoice = this.invoiceRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No invoice with id " + id + " found."));
-        Order order = this.orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No order with id " + orderId + " found."));
-        String response = "";
+        Order order = this.orderRepository.findById(orderId).orElseThrow(() -> new RecordNotFoundException("No order with id " + orderId + " found."));
 
         if (order.isAppraised()) {
-            if (useAgreedPriceIfAny && order.isCateringOrder()) {
-                if(order.getCatering() != null) {
-                    invoice.setFinalPrice(priceInCentsRounder(order.getCatering().getAgreedPrice()));
-                    invoice.setOrder(order);
-                    this.invoiceRepository.save(invoice);
-
-                    response = "Order " + order.getTitle() + " assigned to invoice. Final price set to " + invoice.getFinalPrice() + ".";
+            if (order.isCateringOrder()) {
+                if (order.getCatering() != null) {
+                    if(useAgreedPrice) {
+                        invoice.setFinalPrice(priceInCentsRounder(order.getCatering().getAgreedPrice()));
+                    } else {
+                        invoice.setFinalPrice(priceInCentsRounder(order.getCatering().getTotalSellPrice()));
+                    }
                 } else {
-                    response = "no catering while expected";
+                    throw new UserInputIsUnprocessableException("Order has no catering assigned, but is expecting one.");
                 }
             } else {
                 invoice.setFinalPrice(priceInCentsRounder(order.getTotalPrice()));
-                invoice.setOrder(order);
-                this.invoiceRepository.save(invoice);
-
-                response = "Order " + order.getTitle() + " assigned to invoice. Final price set to " + invoice.getFinalPrice() + ".";
             }
+            invoice.setOrder(order);
+            this.invoiceRepository.save(invoice);
+
+            return InvoiceMapper.fromInvoiceToInvoiceOutputDto(invoice);
         } else {
-            response = "un-appraised order";
+            throw new UserInputIsUnprocessableException("Order has to be appraised first.");
         }
-        return response;
     }
 
-    public String setInvoicePaymentStatus(Long id, boolean hasBeenPaid){
+    public String setInvoicePaymentStatus(Long id, boolean hasBeenPaid) {
         Invoice invoice = this.invoiceRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No invoice with id " + id + " found."));
         String response = "";
 
         if (hasBeenPaid) {
             if (!invoice.isPaid()) {
-                if(invoice.getOrder() != null) {
+                if (invoice.getOrder() != null) {
                     invoice.setPaid(true);
                     this.invoiceRepository.save(invoice);
 
                     response = "Invoice is set to paid.";
                 } else {
-                    response = "no order";
+                    throw new UserInputIsUnprocessableException("Invoice has no order assigned.");
                 }
             } else {
-                response = "already paid";
+                throw new UserInputIsUnprocessableException("Invoice is already set to paid.");
             }
         } else {
-            if (invoice.isPaid()){
+            if (invoice.isPaid()) {
                 invoice.setPaid(false);
                 this.invoiceRepository.save(invoice);
 
                 response = "Invoice is set to unpaid.";
             } else {
-                response = "already unpaid";
+                throw new UserInputIsUnprocessableException("Invoice is already set to unpaid.");
             }
         }
         return response;
@@ -125,12 +124,11 @@ public class InvoiceService {
         List<InvoiceOutputDto> invoiceOutputDtoList = new ArrayList<>();
 
         for (Invoice invoice : this.invoiceRepository.findAll()) {
-            if(invoice.getOrder() != null && invoice.getOrder().getCustomer() != null && invoice.getOrder().getCustomer().getId().equals(customerId)) {
+            if (invoice.getOrder() != null && invoice.getOrder().getCustomer() != null && invoice.getOrder().getCustomer().getId().equals(customerId)) {
                 invoiceOutputDtoList.add(InvoiceMapper.fromInvoiceToInvoiceOutputDto(invoice));
             }
         }
 
         return invoiceOutputDtoList;
     }
-
 }

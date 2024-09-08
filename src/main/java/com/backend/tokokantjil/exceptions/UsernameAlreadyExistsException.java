@@ -1,7 +1,7 @@
 package com.backend.tokokantjil.exceptions;
 
 public class UsernameAlreadyExistsException extends RuntimeException {
-    public UsernameAlreadyExistsException(){
+    public UsernameAlreadyExistsException() {
         super();
     }
 

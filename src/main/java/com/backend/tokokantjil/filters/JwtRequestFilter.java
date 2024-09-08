@@ -18,7 +18,6 @@ import java.io.IOException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
-
     private final UserDetailsService userDetailsService;
 
     private final JwtService jwtService;
@@ -51,9 +50,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             if (jwtService.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken
                         usernamePasswordAuthenticationToken = new
-                            UsernamePasswordAuthenticationToken(
-                            userDetails, null,
-                            userDetails.getAuthorities()
+                        UsernamePasswordAuthenticationToken(
+                        userDetails, null,
+                        userDetails.getAuthorities()
                 );
                 usernamePasswordAuthenticationToken.setDetails(new
                         WebAuthenticationDetailsSource().buildDetails(request));

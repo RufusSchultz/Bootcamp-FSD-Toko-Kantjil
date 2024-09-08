@@ -35,19 +35,12 @@ public class CateringController {
 
     @PostMapping
     public ResponseEntity<?> createCatering(@Valid @RequestBody CateringInputDto cateringInputDto, BindingResult br) {
-        try {
-            if (validationChecker(br) == null) {
-                CateringOutputDto cateringOutputDto = service.createNewCatering(cateringInputDto);
-                URI uri = URI.create(ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/" + cateringOutputDto.getId()).toUriString());
-                return ResponseEntity.created(uri).body(cateringOutputDto);
-            } else {
-                return validationChecker(br);
-            }
-        } catch (Exception ex) {
-            return ResponseEntity.unprocessableEntity().body("Failed to create catering.");
-        }
+        validationChecker(br);
+        CateringOutputDto cateringOutputDto = service.createNewCatering(cateringInputDto);
+        URI uri = URI.create(ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/" + cateringOutputDto.getId()).toUriString());
+        return ResponseEntity.created(uri).body(cateringOutputDto);
     }
 
     @DeleteMapping("/{id}")
@@ -57,13 +50,11 @@ public class CateringController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCatering(@Valid @PathVariable Long id, @RequestBody CateringInputDto cateringInputDto, BindingResult br) {
-        if (validationChecker(br) == null) {
-            CateringOutputDto cateringOutputDto = service.updateCateringWithNewCateringInputDto(id, cateringInputDto);
-            return ResponseEntity.ok(cateringOutputDto);
-        } else {
-            return validationChecker(br);
-        }
+    public ResponseEntity<?> updateCatering(@PathVariable Long id, @Valid @RequestBody CateringInputDto cateringInputDto, BindingResult br) {
+        validationChecker(br);
+        CateringOutputDto cateringOutputDto = service.updateCateringWithNewCateringInputDto(id, cateringInputDto);
+
+        return ResponseEntity.ok(cateringOutputDto);
     }
 
     @PostMapping("/{id}/address")
@@ -73,14 +64,9 @@ public class CateringController {
     }
 
     @PostMapping("/{id}/products")
-    public ResponseEntity<String> addProductToCatering(@PathVariable Long id, @RequestParam Long productId) {
-        String response = service.addProductToListOfCatering(id, productId);
-
-        if (response.equals("product is bulk only")) {
-            return ResponseEntity.unprocessableEntity().body("Unable to add product " + productId + ". Product is not for retail.");
-        } else {
-            return ResponseEntity.ok(response);
-        }
+    public ResponseEntity<CateringOutputDto> addProductToCatering(@PathVariable Long id, @RequestParam Long productId) {
+        CateringOutputDto cateringOutputDto = service.addProductToListOfCatering(id, productId);
+        return ResponseEntity.ok(cateringOutputDto);
     }
 
     @DeleteMapping("/{id}/products")
@@ -90,14 +76,9 @@ public class CateringController {
     }
 
     @PostMapping("/{id}/dishes")
-    public ResponseEntity<String> addDishToCatering(@PathVariable Long id, @RequestParam Long dishId) {
-        String response = service.addDishToListOfCatering(id, dishId);
-
-        if (response.equals("no dish prices set")) {
-            return ResponseEntity.unprocessableEntity().body("Unable to add dish to catering. Set prices dish " + dishId + " first.");
-        } else {
-            return ResponseEntity.ok(response);
-        }
+    public ResponseEntity<CateringOutputDto> addDishToCatering(@PathVariable Long id, @RequestParam Long dishId) {
+        CateringOutputDto cateringOutputDto = service.addDishToListOfCatering(id, dishId);
+        return ResponseEntity.ok(cateringOutputDto);
     }
 
     @DeleteMapping("/{id}/dishes")
@@ -115,12 +96,7 @@ public class CateringController {
     @PostMapping("/{id}/prices")
     public ResponseEntity<String> calculateCateringPrices(@PathVariable Long id, @RequestParam double laborAndMaterialCost) {
         String response = service.calculateCateringPrices(id, laborAndMaterialCost);
-
-        if (response.equals("reset prices first")) {
-            return ResponseEntity.unprocessableEntity().body("Catering prices are already calculated. Reset prices first if you want to recalculate them.");
-        } else {
-            return ResponseEntity.ok(response);
-        }
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/{id}/prices/reset")

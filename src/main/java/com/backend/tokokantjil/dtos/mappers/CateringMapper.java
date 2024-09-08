@@ -58,7 +58,6 @@ public class CateringMapper {
             cateringOutputDto.setAddress(AddressMapper.fromAddressToAddressOutputDto(catering.getAddress()));
         }
 
-
         return cateringOutputDto;
     }
 

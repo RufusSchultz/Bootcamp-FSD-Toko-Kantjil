@@ -1,6 +1,5 @@
 package com.backend.tokokantjil.dtos.inputs;
 
-import com.backend.tokokantjil.enumerations.State;
 import jakarta.validation.constraints.*;
 
 public class ProductInputDto {

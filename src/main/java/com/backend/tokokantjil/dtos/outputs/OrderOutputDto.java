@@ -1,6 +1,5 @@
 package com.backend.tokokantjil.dtos.outputs;
 
-import com.backend.tokokantjil.enumerations.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
