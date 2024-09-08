@@ -4,12 +4,14 @@ values ('ROLE_ADMIN'),
 
 insert into users(username, password, first_name, last_name, email, phone_number, salary, notes)
 values ('Ben', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Ben', 'de Baas', 'b.debaas@kantjil.nl', 31612345678, 4000, ''),
-       ('Jan', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Jan', 'Jansen', 'j.janssen@kantjil.nl', 31687654321, 3000, '');
+       ('Jan', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Jan', 'Jansen', 'j.janssen@kantjil.nl', 31687654321, 3000, ''),
+       ('Kees', '$2a$12$bdJZ0EFvKN90z9Ym1fG0TO3/47xqWcDX0wYiUznc/4svsW7QWrEu.', 'Kees', 'Klaar', 'k.klaar@kantjil.nl', 31687651234, 3000, '');
 
 insert into user_roles(users_username, roles_role_name)
 values ('Ben', 'ROLE_ADMIN'),
        ('Ben', 'ROLE_STAFF'),
-       ('Jan', 'ROLE_STAFF');
+       ('Jan', 'ROLE_STAFF'),
+       ('Kees', 'ROLE_STAFF');
 
 insert into products(name, state, amount, amount_unit, buy_price, sell_price, is_for_retail, stock, notes)
 values ('jasmine rice', 1, 300, 'gram', 0.85, 1.5, false, 5, ''),

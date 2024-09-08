@@ -12,7 +12,6 @@ import com.backend.tokokantjil.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -96,28 +95,27 @@ public class DishService {
         }
     }
 
-    public String increaseDishStock(Long id, int amount) {
+    public String alterDishStock(Long id, int amount) {
         Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
+        double originalStock = dish.getStock();
+        String response = "";
 
         dish.setStock(dish.getStock() + amount);
         this.dishRepository.save(dish);
 
-        String response = "Stock increased to " + dish.getStock() + ".";
-        if (dish.getStock() < 0) {
-            response = "Stock is still less than zero! " + response;
+        if (amount == 0) {
+            response = "Stock is unaltered.";
+        } else if (amount < 0) {
+            response = "Stock decreased to " + dish.getStock() + ".";
+        } else {
+            response = "Stock increased to " + dish.getStock() + ".";
         }
-        return response;
-    }
-
-    public String decreaseDishStock(Long id, int amount) {
-        Dish dish = this.dishRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No dish with id " + id + " found."));
-
-        dish.setStock(dish.getStock() - amount);
-        this.dishRepository.save(dish);
-
-        String response = "Stock decreased to " + dish.getStock() + ".";
         if (dish.getStock() < 0) {
-            response = "Stock is now less than zero! " + response;
+            if (originalStock < 0) {
+                response = "Stock is still less than zero! " + response;
+            } else {
+                response = "Stock is now less than zero! " + response;
+            }
         }
         return response;
     }
