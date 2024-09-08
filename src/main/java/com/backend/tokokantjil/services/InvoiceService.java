@@ -62,33 +62,31 @@ public class InvoiceService {
         return InvoiceMapper.fromInvoiceToInvoiceOutputDto(newInvoice);
     }
 
-    public String assignOrderToInvoice(Long id, Long orderId, boolean useAgreedPriceIfAny) {
+    public InvoiceOutputDto assignOrderToInvoice(Long id, Long orderId, boolean useAgreedPrice) {
         Invoice invoice = this.invoiceRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No invoice with id " + id + " found."));
-        Order order = this.orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("No order with id " + orderId + " found."));
-        String response = "";
+        Order order = this.orderRepository.findById(orderId).orElseThrow(() -> new RecordNotFoundException("No order with id " + orderId + " found."));
 
         if (order.isAppraised()) {
-            if (useAgreedPriceIfAny && order.isCateringOrder()) {
+            if (order.isCateringOrder()) {
                 if (order.getCatering() != null) {
-                    invoice.setFinalPrice(priceInCentsRounder(order.getCatering().getAgreedPrice()));
-                    invoice.setOrder(order);
-                    this.invoiceRepository.save(invoice);
-
-                    response = "Order " + order.getTitle() + " assigned to invoice. Final price set to " + invoice.getFinalPrice() + ".";
+                    if(useAgreedPrice) {
+                        invoice.setFinalPrice(priceInCentsRounder(order.getCatering().getAgreedPrice()));
+                    } else {
+                        invoice.setFinalPrice(priceInCentsRounder(order.getCatering().getTotalSellPrice()));
+                    }
                 } else {
                     throw new UserInputIsUnprocessableException("Order has no catering assigned, but is expecting one.");
                 }
             } else {
                 invoice.setFinalPrice(priceInCentsRounder(order.getTotalPrice()));
-                invoice.setOrder(order);
-                this.invoiceRepository.save(invoice);
-
-                response = "Order " + order.getTitle() + " assigned to invoice. Final price set to " + invoice.getFinalPrice() + ".";
             }
+            invoice.setOrder(order);
+            this.invoiceRepository.save(invoice);
+
+            return InvoiceMapper.fromInvoiceToInvoiceOutputDto(invoice);
         } else {
             throw new UserInputIsUnprocessableException("Order has to be appraised first.");
         }
-        return response;
     }
 
     public String setInvoicePaymentStatus(Long id, boolean hasBeenPaid) {

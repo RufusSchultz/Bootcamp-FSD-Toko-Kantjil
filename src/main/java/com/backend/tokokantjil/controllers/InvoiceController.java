@@ -57,9 +57,9 @@ public class InvoiceController {
     }
 
     @PostMapping("/{id}/order")
-    public ResponseEntity<String> assignOrder(@PathVariable Long id, @RequestParam Long orderId, boolean useAgreedPriceIfAny) {
-        String response = service.assignOrderToInvoice(id, orderId, useAgreedPriceIfAny);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<InvoiceOutputDto> assignOrder(@PathVariable Long id, @RequestParam Long orderId, boolean useAgreedPrice) {
+        InvoiceOutputDto invoiceOutputDto = service.assignOrderToInvoice(id, orderId, useAgreedPrice);
+        return ResponseEntity.ok(invoiceOutputDto);
     }
 
     @PostMapping("/{id}/payment")

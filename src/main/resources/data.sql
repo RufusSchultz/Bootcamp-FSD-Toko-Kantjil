@@ -72,6 +72,7 @@ values ('Kassa', '01', 'info@kantjil.nl', 3100000000, 'Main point of sales in ph
 
 insert into caterings(date_and_time, number_of_people, total_cost_price, total_sell_price, agreed_price, is_appraised, notes, address_id)
 values ('2024-10-28T15:00:00', 15, 1012.8, 1531.69, 2000, true, '', 3),
+       ('2024-10-20T17:00:00', 6, 249.24, 376.56, 500, true, '', 2),
        ('2024-10-20T17:00:00', 6, 249.24, 376.56, 500, true, '', 2);
 
 insert into catering_dishes(caterings_id, dishes_id)
@@ -84,7 +85,9 @@ values (1, 1),
        (1, 3),
        (1, 3),
        (2, 1),
-       (2, 2);
+       (2, 2),
+       (3, 1),
+       (3, 2);
 
 insert into catering_products(caterings_id, products_id)
 values (1, 7),
@@ -94,17 +97,23 @@ values (1, 7),
 
 insert into orders(title, created_at, status, total_cost, total_price, is_catering_order, catering_id, customer_id, is_appraised, created_by)
 values ('Bert Steentjes Birthday party', '2024-07-27T13:56:47.584277', 0, 1012.8, 1531.69, true, 1, 2, true, 'Ben'),
-       ('Order 2', '2024-07-27T13:56:47.584277', 2, 25.25, 39.28, false, null, 1, true, 'Jan');
+       ('Order 2', '2024-07-27T13:56:47.584277', 2, 25.25, 39.28, false, null, 1, true, 'Jan'),
+       ('Test catering order', '2024-01-27T13:56:47.584277', 0, 12.34, 56.78, true, null, null, false, 'Ben'),
+       ('Test order no catering', '2024-01-27T13:56:47.584277', 0, 0, 0, false, null, null, false, 'Ben'),
+       ('Test catering order 2', '2024-01-27T13:56:47.584277', 0, 12.34, 56.78, true, 2, 2, true, 'Ben');
 
 insert into order_dishes(orders_id, dishes_id)
 values (2, 1),
-       (2, 3);
+       (2, 3),
+       (4, 1);
 
 insert into order_products(orders_id, products_id)
 values (2, 7),
-       (2, 18);
+       (2, 18),
+       (4, 18);
 
 insert into invoices(final_price, is_paid, order_id, notes)
 values (2000, false, 1, ''),
-       (39.28, true, 2, '');
+       (39.28, true, 2, ''),
+       (1234.56, false, null, '');
 
