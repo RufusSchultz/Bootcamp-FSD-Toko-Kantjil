@@ -68,15 +68,9 @@ public class DishController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{id}/increase-stock")
-    public ResponseEntity<String> stockDish(@PathVariable long id, @RequestParam int amount) {
-        String response = service.increaseDishStock(id, amount);
-        return ResponseEntity.ok(response);
-    }
-
-    @PostMapping("/{id}/decrease-stock")
-    public ResponseEntity<String> consumeDish(@PathVariable long id, @RequestParam int amount) {
-        String response = service.decreaseDishStock(id, amount);
+    @PostMapping("/{id}/stock")
+    public ResponseEntity<String> alterStockOfDish(@PathVariable long id, @RequestParam int amount) {
+        String response = service.alterDishStock(id, amount);
         return ResponseEntity.ok(response);
     }
 

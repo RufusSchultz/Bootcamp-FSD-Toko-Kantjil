@@ -56,15 +56,9 @@ public class ProductController {
         return ResponseEntity.ok(productOutputDto);
     }
 
-    @PostMapping("/{id}/increase-stock")
-    public ResponseEntity<String> stockProduct(@PathVariable long id, @RequestParam int amount) {
-        String response = service.increaseProductStock(id, amount);
-        return ResponseEntity.ok(response);
-    }
-
-    @PostMapping("/{id}/decrease-stock")
-    public ResponseEntity<String> consumeProduct(@PathVariable long id, @RequestParam int amount) {
-        String response = service.decreaseProductStock(id, amount);
+    @PostMapping("/{id}/stock")
+    public ResponseEntity<String> alterStockOfProduct(@PathVariable long id, @RequestParam int amount) {
+        String response = service.alterProductStock(id, amount);
         return ResponseEntity.ok(response);
     }
 }
