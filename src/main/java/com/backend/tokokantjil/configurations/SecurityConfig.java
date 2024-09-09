@@ -53,7 +53,11 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
 //                                .requestMatchers("/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/dishes", "/products").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.POST,
+                                        "/dishes",
+                                        "/dishes/*/products",
+                                        "/products"
+                                ).hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.PUT,
                                         "/addresses/**",
                                         "/caterings/**",
