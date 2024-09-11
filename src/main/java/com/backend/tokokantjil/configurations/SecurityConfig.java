@@ -56,6 +56,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST,
                                         "/dishes",
                                         "/dishes/*/products",
+                                        "/dishes/*/prices",
+                                        "/dishes/*/prices/**",
                                         "/products"
                                 ).hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.PUT,
