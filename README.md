@@ -1,7 +1,7 @@
 # Toko Kantjil
 This is a collection of all endpoints used in the current version of the Toko Kantjil backend application.
 # Authorization 
-
+All authorization endpoints. After logging in users can be authorized as ADMIN and/or STAFF.
 
 ## End-point: Log in
 Used for acquiring a JWT. This is the only endpoint reachable without any authorizations. The following attributes are needed for the request body:
@@ -16,7 +16,7 @@ password : string
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 # Role 
-
+All Role endpoints.
 
 ## End-point: Get all roles
 Returns a list of all available roles. Reachable by ADMIN.
@@ -27,7 +27,7 @@ Returns a list of all available roles. Reachable by ADMIN.
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 # User 
-
+User related endpoints, including the endpoints for user photos.
 
 ## End-point: Get all users
 Returns a list of all users. All user information is visible to ADMIN. STAFF will only see a selection of user information.
@@ -42,7 +42,7 @@ Returns a list of all users. All user information is visible to ADMIN. STAFF wil
 Returns a specific user. Reachable by ADMIN. Only their own information reachable by STAFF.
 ### Method: GET
 >```
->/users/
+>/users/{username}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -96,7 +96,7 @@ salary : double
 notes : string
 ### Method: PUT
 >```
->/users/
+>/users/{username}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -105,7 +105,7 @@ notes : string
 Uploads a photo to set it as the photo for a specific user. Most recent upload will be set as photo. Reachable by ADMIN.
 ### Method: POST
 >```
->/users//photo
+>/users/{username}/photo
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -114,7 +114,7 @@ Uploads a photo to set it as the photo for a specific user. Most recent upload w
 Returns the photo of a specific user. Reachable by ADMIN and STAFF.
 ### Method: GET
 >```
->/users//photo
+>/users/{username}/photo
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -123,7 +123,7 @@ Returns the photo of a specific user. Reachable by ADMIN and STAFF.
 Deletes a specific user. Reachable by ADMIN.
 ### Method: DELETE
 >```
->/users/
+>/users/{username}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -137,7 +137,7 @@ Deletes all photos that aren't used as user photo. Reachable by ADMIN.
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 # Products 
-
+All Product related endpoints.
 
 ## End-point: Get all products
 Returns a list of all products. Reachable by ADMIN and STAFF.
@@ -152,7 +152,7 @@ Returns a list of all products. Reachable by ADMIN and STAFF.
 Returns a specific product. Reachable by ADMIN and STAFF.
 ### Method: GET
 >```
->/products/
+>/products/{product_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -188,7 +188,7 @@ notes : string
 Alters the stock value of a specific product with param amount={integer}. Positive numbers increase stock and negative numbers decrease stock. Reachable by ADMIN and STAFF.
 ### Method: POST
 >```
->/products//stock
+>/products/{product_id}/stock
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -215,7 +215,7 @@ stock : double
 notes : string
 ### Method: PUT
 >```
->/products/
+>/products/{product_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -224,12 +224,12 @@ notes : string
 Deletes a specific product. Reachable by ADMIN.
 ### Method: DELETE
 >```
->/products/
+>/products/{product_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 # Dishes 
-
+All dish related endpoints.
 
 ## End-point: Get all dishes
 Returns a list of all dishes. Reachable by ADMIN and STAFF.
@@ -244,7 +244,7 @@ Returns a list of all dishes. Reachable by ADMIN and STAFF.
 Returns a specific dish. Reachable by ADMIN and STAFF.
 ### Method: GET
 >```
->/dishes/
+>/dishes/{dish_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -274,7 +274,7 @@ notes : string
 Adds a product to a specific dish. Uses param productId={product id}. Reachable by ADMIN.
 ### Method: POST
 >```
->/dishes//products
+>/dishes/{dish_id}/products
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -283,7 +283,7 @@ Adds a product to a specific dish. Uses param productId={product id}. Reachable 
 Removes a product from a specific dish. Uses param productId={product id}. Reachable by ADMIN.
 ### Method: DELETE
 >```
->/dishes//products
+>/dishes/{dish_id}/products
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -292,7 +292,7 @@ Removes a product from a specific dish. Uses param productId={product id}. Reach
 Alters the stock value of a specific dish with param amount={integer}. Positive numbers increase stock and negative numbers decrease stock. Reachable by ADMIN and STAFF.
 ### Method: POST
 >```
->/dishes//stock
+>/dishes/{dish_id}/stock
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -301,7 +301,7 @@ Alters the stock value of a specific dish with param amount={integer}. Positive 
 Calculates and sets the prices of a specific dish with param laborCost={double}. Reachable by ADMIN.
 ### Method: POST
 >```
->/dishes//prices
+>/dishes/{dish_id}/prices
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -310,7 +310,7 @@ Calculates and sets the prices of a specific dish with param laborCost={double}.
 Sets the prices of a specific dish to 0. Reachable by ADMIN.
 ### Method: POST
 >```
->/dishes//prices/reset
+>/dishes/{dish_id}/prices/reset
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -331,7 +331,7 @@ stock : double
 notes : string
 ### Method: PUT
 >```
->/dishes/
+>/dishes/{dish_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -340,12 +340,12 @@ notes : string
 Deletes a specific dish. Reachable by ADMIN.
 ### Method: DELETE
 >```
->/dishes/
+>/dishes/{dish_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 # Addresses 
-
+List of endpoints used for addresses.
 
 ## End-point: Get all addresses
 Returns a list of all addresses. Reachable by ADMIN and STAFF.
@@ -360,7 +360,7 @@ Returns a list of all addresses. Reachable by ADMIN and STAFF.
 Returns a specific address. Reachable by ADMIN and STAFF.
 ### Method: GET
 >```
->/addresses/
+>/addresses/{address_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -406,7 +406,7 @@ city : string
 notes : string
 ### Method: PUT
 >```
->/addresses/
+>/addresses/{address_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -415,12 +415,12 @@ notes : string
 Deletes a specific address. Reachable by ADMIN.
 ### Method: DELETE
 >```
->/addresses/
+>/addresses/{address_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 # Customer 
-
+List of endpoints used for customers.
 
 ## End-point: Get all customers
 Returns a list of all customers. Reachable by ADMIN and STAFF.
@@ -435,7 +435,7 @@ Returns a list of all customers. Reachable by ADMIN and STAFF.
 Returns a specific customer. Reachable by ADMIN and STAFF.
 ### Method: GET
 >```
->/customers/
+>/customers/{customer_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -463,7 +463,7 @@ notes : string
 Sets the address for a specific customer. Uses param addressId={addres id}. Reachable by ADMIN and STAFF.
 ### Method: POST
 >```
->/customers//address
+>/customers/{customer_id}/address
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -482,7 +482,7 @@ phoneNumber : string
 notes : string
 ### Method: PUT
 >```
->/customers/
+>/customers/{customer_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -491,12 +491,12 @@ notes : string
 Deletes a specific customer. Reachable by ADMIN.
 ### Method: DELETE
 >```
->/customers/
+>/customers/{customer_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 # Caterings 
-
+List of endpoints used for caterings.
 
 ## End-point: Get all caterings
 Returns a list of all caterings. Reachable by ADMIN and STAFF.
@@ -511,7 +511,7 @@ Returns a list of all caterings. Reachable by ADMIN and STAFF.
 Returns a specific catering. Reachable by ADMIN and STAFF.
 ### Method: GET
 >```
->/caterings/
+>/caterings/{catering_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -537,7 +537,7 @@ notes : string
 Sets the address for a specific catering. Uses param addressId={address id}. Reachable by ADMIN and STAFF.
 ### Method: POST
 >```
->/caterings//address
+>/caterings/{catering_id}/address
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -546,7 +546,7 @@ Sets the address for a specific catering. Uses param addressId={address id}. Rea
 Adds a product to a specific catering. Uses param productId={product id}. Reachable by ADMIN and STAFF.
 ### Method: POST
 >```
->/caterings//products
+>/caterings/{catering_id}/products
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -555,7 +555,7 @@ Adds a product to a specific catering. Uses param productId={product id}. Reacha
 Removes a product from a specific catering. Uses param productId={product id}. Reachable by ADMIN and STAFF.
 ### Method: DELETE
 >```
->/caterings//products
+>/caterings/{catering_id}/products
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -564,7 +564,7 @@ Removes a product from a specific catering. Uses param productId={product id}. R
 Adds a dish to a specific catering. Uses param dishId={dish id}. Reachable by ADMIN and STAFF.
 ### Method: POST
 >```
->/caterings//dishes
+>/caterings/{catering_id}/dishes
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -573,7 +573,7 @@ Adds a dish to a specific catering. Uses param dishId={dish id}. Reachable by AD
 Removes a dish from a specific catering. Uses param dishId={dish id}. Reachable by ADMIN and STAFF.
 ### Method: DELETE
 >```
->/caterings//dishes
+>/caterings/{catering_id}/dishes
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -582,7 +582,7 @@ Removes a dish from a specific catering. Uses param dishId={dish id}. Reachable 
 Sets the agreed price for a specific catering. Uses param agreedPrice={double}. Reachable by ADMIN and STAFF.
 ### Method: POST
 >```
->/caterings//prices/agreed-price
+>/caterings/{catering_id}/prices/agreed-price
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -591,7 +591,7 @@ Sets the agreed price for a specific catering. Uses param agreedPrice={double}. 
 Calculates and sets the prices of a specific catering with param laborAndMaterialCost={double}. Reachable by ADMIN and STAFF.
 ### Method: POST
 >```
->/caterings//prices
+>/caterings/{catering_id}/prices
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -600,7 +600,7 @@ Calculates and sets the prices of a specific catering with param laborAndMateria
 Sets the prices of a specific catering to 0. Reachable by ADMIN and STAFF.
 ### Method: POST
 >```
->/caterings//prices/reset
+>/caterings/{catering_id}/prices/reset
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -617,7 +617,7 @@ agreedPrice : double
 notes : string
 ### Method: PUT
 >```
->/caterings/
+>/caterings/{catering_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -626,12 +626,12 @@ notes : string
 Deletes a specific catering. Reachable by ADMIN.
 ### Method: DELETE
 >```
->/caterings/
+>/caterings/{catering_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 # Orders 
-
+List if endpoints used for orders.
 
 ## End-point: Get all orders
 Returns a list of all orders. Reachable by ADMIN and STAFF.
@@ -646,7 +646,7 @@ Returns a list of all orders. Reachable by ADMIN and STAFF.
 Returns a specific order. Reachable by ADMIN and STAFF.
 ### Method: GET
 >```
->/orders/
+>/orders/{order_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -668,7 +668,7 @@ isCateringOrder : boolean
 Sets the customer of a specific order. Uses param customerId={customer id}. Reachable by ADMIN and STAFF.
 ### Method: POST
 >```
->/orders//customer
+>/orders/{order_id}/customer
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -677,7 +677,7 @@ Sets the customer of a specific order. Uses param customerId={customer id}. Reac
 Sets a catering to a specific order. Uses param cateringId={catering id}. Reachable by ADMIN and STAFF.
 ### Method: POST
 >```
->/orders//catering
+>/orders/{order_id}/catering
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -692,7 +692,7 @@ processing
 done
 ### Method: POST
 >```
->/orders//status
+>/orders/{order_id}/status
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -701,7 +701,7 @@ done
 Adds a product to a specific order. Uses param productId={product id}. Reachable by ADMIN and STAFF.
 ### Method: POST
 >```
->/orders//products
+>/orders/{order_id}/products
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -710,7 +710,7 @@ Adds a product to a specific order. Uses param productId={product id}. Reachable
 Removes a product from a specific order. Uses param productId={product id}. Reachable by ADMIN and STAFF.
 ### Method: DELETE
 >```
->/orders//products
+>/orders/{order_id}/products
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -719,7 +719,7 @@ Removes a product from a specific order. Uses param productId={product id}. Reac
 Adds a dish to a specific order. Uses param dishId={dish id}. Reachable by ADMIN and STAFF.
 ### Method: POST
 >```
->/orders//dishes
+>/orders/{order_id}/dishes
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -728,7 +728,7 @@ Adds a dish to a specific order. Uses param dishId={dish id}. Reachable by ADMIN
 Removes a dish from a specific order. Uses param dishId={dish id}. Reachable by ADMIN and STAFF.
 ### Method: DELETE
 >```
->/orders//dishes
+>/orders/{order_id}/dishes
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -737,7 +737,7 @@ Removes a dish from a specific order. Uses param dishId={dish id}. Reachable by 
 Calculates and sets the prices of a specific order. Reachable by ADMIN and STAFF.
 ### Method: POST
 >```
->/orders//prices
+>/orders/{order_id}/prices
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -746,7 +746,7 @@ Calculates and sets the prices of a specific order. Reachable by ADMIN and STAFF
 Sets the prices of a specific order to 0. Reachable by ADMIN and STAFF.
 ### Method: POST
 >```
->/orders//prices/reset
+>/orders/{order_id}/prices/reset
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -759,7 +759,7 @@ title : string
 isCateringOrder : boolean
 ### Method: PUT
 >```
->/orders/
+>/orders/{order_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -768,12 +768,12 @@ isCateringOrder : boolean
 Deletes a specific order. Reachable by ADMIN.
 ### Method: DELETE
 >```
->/orders/
+>/orders/{order_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 # Invoices 
-
+List of endpoints used for invoices.
 
 ## End-point: Get all invoices
 Returns a list off all invoices. Reachable by ADMIN and STAFF.
@@ -788,7 +788,7 @@ Returns a list off all invoices. Reachable by ADMIN and STAFF.
 Returns a specific invoice. Reachable by ADMIN and STAFF.
 ### Method: GET
 >```
->/invoices/
+>/invoices/{invoice_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -814,7 +814,7 @@ If the final price of the invoice is to be set by an agreed price of the caterin
 If the final price of the invoice is to be set by the total sell price of the order, use useAgreedPrice=false.
 ### Method: POST
 >```
->/invoices//order
+>/invoices/{invoice_id}/order
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -823,7 +823,7 @@ If the final price of the invoice is to be set by the total sell price of the or
 Sets the payment status of a specific invoice. Uses param hasBeenPaid={boolean}. Reachable by ADMIN and STAFF.
 ### Method: POST
 >```
->/invoices//payment
+>/invoices/{invoice_id}/payment
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -832,7 +832,7 @@ Sets the payment status of a specific invoice. Uses param hasBeenPaid={boolean}.
 Returns the invoice history of a specific customer.
 ### Method: GET
 >```
->/invoices/customer/
+>/invoices/customer/{customer_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -843,7 +843,7 @@ Updates a specific invoice. Reachable by ADMIN. The request body uses the follow
 notes : string
 ### Method: PUT
 >```
->/invoices/
+>/invoices/{invoice_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
@@ -852,7 +852,7 @@ notes : string
 Deletes a specific invoice. Reachable by ADMIN.
 ### Method: DELETE
 >```
->/invoices/
+>/invoices/{invoice_id}
 >```
 
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
