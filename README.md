@@ -829,7 +829,7 @@ Sets the payment status of a specific invoice. Uses param hasBeenPaid={boolean}.
 ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
 
 ## End-point: Get invoice history of customer
-Returns the invoice history of a specific customer.
+Returns the invoice history of a specific customer. Reachable by ADMIN and STAFF.
 ### Method: GET
 >```
 >/invoices/customer/{customer_id}
