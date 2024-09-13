@@ -169,15 +169,10 @@ class CateringControllerTest {
     @Test
     @DisplayName("Should correctly add product to catering")
     void addProductToCatering() throws Exception {
-        MvcResult result = this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/caterings/{id}/products?productId={productId}", 1, 1))
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/caterings/{id}/products?productId={productId}", 1, 1))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        String response = result.getResponse().getContentAsString();
-
-        assertEquals("Added product 1 to catering.", response);
+                .andExpect(MockMvcResultMatchers.jsonPath("$.products.size()", is(2)));
     }
 
     @Test
@@ -197,15 +192,10 @@ class CateringControllerTest {
     @Test
     @DisplayName("Should correctly add dish to catering")
     void addDishToCatering() throws Exception {
-        MvcResult result = this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/caterings/{id}/dishes?dishId={dishId}", 1, 1))
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/caterings/{id}/dishes?dishId={dishId}", 1, 1))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        String response = result.getResponse().getContentAsString();
-
-        assertEquals("Added dish 1 to catering.", response);
+                .andExpect(MockMvcResultMatchers.jsonPath("$.dishes.size()", is(2)));
     }
 
     @Test
@@ -233,7 +223,7 @@ class CateringControllerTest {
 
         String response = result.getResponse().getContentAsString();
 
-        assertEquals("Price of catering 1 set to 12345.0.", response);
+        assertEquals("Agreed price of catering 1 set to 12345.0.", response);
     }
 
     @Test

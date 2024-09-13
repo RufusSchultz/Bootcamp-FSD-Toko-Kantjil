@@ -137,15 +137,10 @@ class DishControllerTest {
     @Test
     @DisplayName("Should correctly add product to dish")
     void addProductToDish() throws Exception {
-        MvcResult result = this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/dishes/{id}/products?productId={productId}&amountMultiplier={amountMultiplier}", 1, 1, 0.5))
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/dishes/{id}/products?productId={productId}", 1, 1))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        String response = result.getResponse().getContentAsString();
-
-        assertEquals("Added product 1 to dish 1 with a multiplier of 0.5.", response);
+                .andExpect(MockMvcResultMatchers.jsonPath("$.products.size()", is(1)));
     }
 
     @Test
@@ -163,10 +158,10 @@ class DishControllerTest {
     }
 
     @Test
-    @DisplayName("Should correctly increase stock of dish")
-    void stockDish() throws Exception {
+    @DisplayName("Should correctly alter stock of dish")
+    void alterStockOfDish() throws Exception {
         MvcResult result = this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/dishes/{id}/increase-stock?amount={amount}", 1, 1))
+                .perform(MockMvcRequestBuilders.post("/dishes/{id}/stock?amount={amount}", 1, 1))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
@@ -174,20 +169,6 @@ class DishControllerTest {
         String response = result.getResponse().getContentAsString();
 
         assertEquals("Stock increased to 2.0.", response);
-    }
-
-    @Test
-    @DisplayName("Should correctly decrease stock of dish")
-    void consumeDish() throws Exception {
-        MvcResult result = this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/dishes/{id}/decrease-stock?amount={amount}", 1, 1))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        String response = result.getResponse().getContentAsString();
-
-        assertEquals("Stock decreased to 0.0.", response);
     }
 
     @Test

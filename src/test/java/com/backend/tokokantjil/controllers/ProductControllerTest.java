@@ -127,10 +127,10 @@ class ProductControllerTest {
     }
 
     @Test
-    @DisplayName("Should correctly increase stock of product")
-    void stockProduct() throws Exception {
+    @DisplayName("Should correctly alter stock of product")
+    void alterStockOfProduct() throws Exception {
         MvcResult result = this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/products/{id}/increase-stock?amount={amount}", 1, 1))
+                .perform(MockMvcRequestBuilders.post("/products/{id}/stock?amount={amount}", 1, 1))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
@@ -138,19 +138,5 @@ class ProductControllerTest {
         String response = result.getResponse().getContentAsString();
 
         assertEquals("Stock increased to 11.0.", response);
-    }
-
-    @Test
-    @DisplayName("Should correctly decrease stock of product")
-    void consumeProduct() throws Exception {
-        MvcResult result = this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/products/{id}/decrease-stock?amount={amount}", 1, 1))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        String response = result.getResponse().getContentAsString();
-
-        assertEquals("Stock decreased to 9.0.", response);
     }
 }
