@@ -227,7 +227,7 @@ class CateringServiceTest {
 
         String response = service.setAgreedPriceOfCatering(1L, 1234);
 
-        assertEquals("Price of catering 1 set to 1234.0.", response);
+        assertEquals("Agreed price of catering 1 set to 1234.0.", response);
         assertEquals(1234, catering.getAgreedPrice());
     }
 

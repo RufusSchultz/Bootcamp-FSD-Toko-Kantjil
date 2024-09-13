@@ -161,27 +161,15 @@ class DishServiceTest {
     }
 
     @Test
-    @DisplayName("Should correctly increase stock of dish")
-    void increaseDishStock() {
+    @DisplayName("Should correctly alter stock of dish")
+    void alterDishStock() {
         dish.setId(1L);
         Mockito.when(dishRepository.findById(anyLong())).thenReturn(Optional.of(dish));
         Mockito.when(dishRepository.save(any(Dish.class))).thenReturn(dish);
 
-        service.increaseDishStock(1L, 10);
+        service.alterDishStock(1L, 10);
 
         assertEquals(11, dish.getStock());
-    }
-
-    @Test
-    @DisplayName("Should correctly decrease stock of dish")
-    void decreaseDishStock() {
-        dish.setId(1L);
-        Mockito.when(dishRepository.findById(anyLong())).thenReturn(Optional.of(dish));
-        Mockito.when(dishRepository.save(any(Dish.class))).thenReturn(dish);
-
-        service.decreaseDishStock(1L, 10);
-
-        assertEquals(-9, dish.getStock());
     }
 
     @Test

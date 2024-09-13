@@ -49,7 +49,7 @@ class ProductServiceTest {
                 product.isForRetail(),
                 product.getStock(),
                 product.getNotes()
-                );
+        );
     }
 
     @AfterEach
@@ -58,6 +58,7 @@ class ProductServiceTest {
         anotherProduct = null;
         productInputDto = null;
     }
+
     @Test
     @DisplayName("Should return every product")
     void getEveryProduct() {
@@ -140,26 +141,14 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("Should correctly increase stock of product")
-    void increaseProductStock() {
+    @DisplayName("Should correctly alter stock of product")
+    void alterProductStock() {
         product.setId(1L);
         Mockito.when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
         Mockito.when(productRepository.save(any(Product.class))).thenReturn(product);
 
-        service.increaseProductStock(1L, 1);
+        service.alterProductStock(1L, 1);
 
         assertEquals(11, product.getStock());
-    }
-
-    @Test
-    @DisplayName("Should correctly decrease stock of product")
-    void decreaseProductStock() {
-        product.setId(1L);
-        Mockito.when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
-        Mockito.when(productRepository.save(any(Product.class))).thenReturn(product);
-
-        service.decreaseProductStock(1L, 1);
-
-        assertEquals(9, product.getStock());
     }
 }
